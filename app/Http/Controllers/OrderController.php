@@ -1,0 +1,477 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Model\Address;
+use App\Model\Delivery;
+use App\Model\MapColorSize;
+use App\Model\Paytm;
+use App\Model\Shop;
+use App\Model\Transaction;
+use App\Model\TxnMasterGst;
+use App\Model\TxnOrder;
+use App\Model\TxnOrderDetail;
+use App\Model\TxnUser;
+use App\Services\LogisticService;
+use Cart;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+
+class OrderController extends Controller
+{
+    public function index()
+    {
+        if (Cart::getContent()->count() <= 0) {
+
+            connectify('error', 'Add Item', 'Please Add few Product in your cart first !');
+
+            return redirect(route('search'));
+        }
+        $addresses = [];
+        if (auth('user')->check()) {
+
+            $addresses = Address::where('user_id', auth('user')->user()->id)->get();
+        }
+
+        $promocodes = DB::table('txn_users')->select('*')->where('elite', true)->inRandomOrder()->limit(5)->get();
+        return view('frontend.order.checkout', compact('promocodes', 'addresses'));
+    }
+
+    public function checkout(Request $request, LogisticService $logistic)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'payment_mode' => 'required',
+                'pincode' => 'required|digits:6',
+                'choose_address' => 'required|numeric|min:1|exists:addresses,id',
+            ],
+            [
+                'payment_mode.required' => 'Please Select Any of the Payment Mode !',
+                'pincode.required' => 'Please Enter Pincode',
+                'pincode.digits' => 'Pincode should be of 6 digits',
+                'choose_address.required' => 'Please Choose Any Address',
+                'choose_address.numeric' => 'Invalid Address provided',
+                'choose_address.min' => 'Invalid Address provided',
+                'choose_address.exists' => 'Address does not exists',
+            ]
+        );
+
+        if ($validator->fails()) {
+            connectify('error', 'Checkout Error', $validator->errors()->first());
+            return redirect(route('checkout'))->withInput();
+        }
+
+        $res = $logistic->verify($request->pincode);
+        $res1 = json_decode($res, true);
+
+        if (isset($res1['status']) && $res1['status'] == 200) {
+
+            $cartTotalQuantity = Cart::getTotalQuantity();
+
+            $total = 0;
+            $user = auth('user')->user();
+            $cod = false;
+            $totalGst = 0;
+            $promocode = null;
+            $is_valid_promocode = false;
+            $is_discount = false;
+            $gst_value = 0;
+            if ($request->session()->has('promocode')) {
+                // $a = $request->session()->get('promocode');
+                $a = $request->session()->pull('promocode', 'default');
+                if ($a['promocode']) {
+                    $promo = TxnUser::select('promocode')->where('promocode', $a['promocode'])->first();
+                    $promocode = $promo['promocode'];
+                } elseif ($a['shop_code']) {
+                    $promo = Shop::select('shop_code')->where('shop_code', $a['shop_code'])->where('status', true)->first();
+                    $promocode = $promo['shop_code'];
+                    $is_valid_promocode = true;
+                    $is_discount = true;
+                }
+            }
+
+            foreach (Cart::getContent() as $item) {
+
+                $size = MapColorSize::select(['*'])->where('id', $item->attributes->map_id)->first();
+
+                $total += $size->mrp * $item->quantity;
+
+                $gst = TxnMasterGst::where('id', $size->product->gst_id)->first();
+
+                $gst_value = 1 + ($gst->gst_value / 100);
+
+                // $before_gst_price = round($size->mrp / $gst_value);
+
+                // $totalGst += round(($size->mrp - $before_gst_price) * $item->quantity);
+
+            }
+            if ($request->payment_mode === 'cod') {
+                $cod = true;
+            }
+
+            $request['status'] = 'nc';
+
+            $request['payment_mode'] = $cod ? 'cod' : 'paytm';
+
+            $request['shipingcharge'] = 0;
+
+            $request['discount'] = $is_valid_promocode ? round($total * 0.10, 2) : 0;
+
+            $balance = $total - $request->discount;
+
+            if ($total < 1000) {
+                $balance = $balance + $request->shipingcharge;
+            }
+
+            $request['tbt'] = round($balance / $gst_value, 2);
+
+            $request['tax'] = round($balance - $request->tbt, 2);
+
+            $add = Address::where('id', $request->choose_address)->first();
+
+            $order = TxnOrder::create([
+                'total' => $balance,
+                'status' => $request->status,
+                'user_id' => $user->id,
+                'user_name' => $add->name,
+                'promocode' => $promocode,
+                'discount' => $request->discount,
+                'address' => $add->address,
+                'pincode' => $add->pincode,
+                'city' => $add->city,
+                'territory' => $add->territory,
+                'landmark' => $add->landmark,
+                'country' => $add->country,
+                'type_of_address' => $add->type_of_address,
+                'tbt' => $request->tbt,
+                'tax' => $request->tax,
+                'payment_mode' => $request->payment_mode,
+                'payment_status' => "Pending",
+                'is_discount' => $is_discount,
+            ]);
+
+            $user->update([
+                'address' => $add->address,
+                'city' => $add->city,
+                'territory' => $add->territory,
+                'landmark' => $add->landmark,
+                'pincode' => $add->pincode,
+                'country' => $add->country,
+                'address_id' => $add->id,
+                'mobile' => $add->mobile,
+            ]);
+
+            foreach (Cart::getContent() as $item) {
+
+                TxnOrderDetail::create([
+                    'title' => $item->name,
+                    'map_id' => $item->attributes->map_id,
+                    'mrp' => $item->price,
+                    'quantity' => $item->quantity,
+                    'product_id' => $item->attributes->product_id,
+                    'order_id' => $order->id,
+                    'size_id' => $item->attributes->size_id,
+                    'color_id' => $item->attributes->color_id,
+                    'offers' => $item->attributes->offers,
+                ]);
+            }
+
+            if ($request->payment_mode == 'cod') {
+
+                $OrderCreation = $logistic->OrderCreation($order, $user, "COD");
+
+                if ($OrderCreation != false) {
+
+                    $order->update([
+                        'status' => 'Booked',
+                        'shipment_id' => $OrderCreation['shipment_id'],
+                        'shipment_order_id' => $OrderCreation['order_id'],
+                    ]);
+
+                    // SMS::send($order->user->mobile, 'Aura Hearing Care  - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
+
+                    Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
+                        $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
+                        $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+                    });
+
+                    Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
+                        $message->to('order-confirmation@easyfithearing.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
+                        $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+                    });
+                }
+
+                Cart::clear();
+
+                connectify('success', 'Order Placed', 'Your Order has been placed Successfully !');
+
+                return redirect()->route('order.success', encrypt($order->id));
+            } elseif ($request->payment_mode == 'paytm') {
+                // dd($user->id);
+
+                $transaction_data = array(
+                    'merchantId' => env('PHONEPE_MERCHANT_ID'),
+                    'merchantTransactionId' => $order->id,
+                    'amount' =>  $balance * 100,
+                    "merchantUserId" => strval($user->id),
+                    "param1" => strval($user->id),
+                    'redirectUrl' => route('paytm.callback'),
+                    'redirectMode' => "POST",
+                    'callbackUrl' => route('paytm.callback'),
+                    "paymentInstrument" => array(
+                        "type" => "PAY_PAGE",
+                    )
+                );
+
+                $encode = json_encode($transaction_data);
+                $payloadMain = base64_encode($encode);
+                $salt_index = 1; //key index 1
+                $payload = $payloadMain . "/pg/v1/pay" . env('PHONEPE_API_KEY');
+                $sha256 = hash("sha256", $payload);
+                $final_x_header = $sha256 . '###' . $salt_index;
+                $request = json_encode(array('request' => $payloadMain));
+                $curl = curl_init();
+
+                curl_setopt_array($curl, [
+                    CURLOPT_URL => "https://api.phonepe.com/apis/hermes/pg/v1/pay",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => $request,
+                    CURLOPT_HTTPHEADER => [
+                        "Content-Type: application/json",
+                        "X-VERIFY: " . $final_x_header,
+                        "accept: application/json"
+                    ],
+                ]);
+
+                $response = curl_exec($curl);
+                $err = curl_error($curl);
+
+                curl_close($curl);
+
+                if ($err) {
+                    echo "cURL Error #:" . $err;
+                } else {
+                    $res = json_decode($response);
+
+
+                    // Store information into database
+
+                    // $data = [
+                    //     'amount' => $amount,
+                    //     'transaction_id' => $order_id,
+                    //     'payment_status' => 'PAYMENT_PENDING',
+                    //     'response_msg' => $response,
+                    //     'providerReferenceId' => '',
+                    //     'merchantOrderId' => '',
+                    //     'checksum' => ''
+                    // ];
+
+                    // Payment::create($data);
+
+                    // end database insert
+
+                    if (isset($res->code) && ($res->code == 'PAYMENT_INITIATED')) {
+
+                        $payUrl = $res->data->instrumentResponse->redirectInfo->url;
+
+                        return redirect()->away($payUrl);
+                    } else {
+                        //HANDLE YOUR ERROR MESSAGE HERE
+                        dd('ERROR : ' . json_encode($res));
+                    }
+                }
+
+
+
+
+                // $paytm = new Paytm();
+                // $paramList = [];
+                // $paramList["MID"] = env('PAYTM_MERCHANT_MID');
+                // $paramList["ORDER_ID"] = $order->id;
+                // $paramList["CUST_ID"] = 'CUST' . $user->id;
+                // $paramList["INDUSTRY_TYPE_ID"] = env('INDUSTRY_TYPE_ID');
+                // $paramList["CHANNEL_ID"] = 'WEB';
+                // $paramList["MOBILE_NO"] = $user->mobile;
+                // $paramList["EMAIL"] = $user->email;
+                // $paramList["TXN_AMOUNT"] = $balance;
+                // $paramList["WEBSITE"] = env('PAYTM_MERCHANT_WEBSITE');
+                // $paramList["CALLBACK_URL"] = route('paytm.callback');
+                // $paramList["CHECKSUMHASH"] = $paytm->getChecksumFromArray($paramList, env('PAYTM_MERCHANT_KEY'));
+
+                // return view('frontend.order.pg-redirect')->with('paramList', $paramList);
+            }
+        }
+
+        connectify('error', 'Delivery Not Available', 'Delivery Not Available at ' . $request->pincode);
+
+        return redirect(route('checkout'));
+    }
+
+    public function handleCallbackofCOD($orderid)
+    {
+        $order = TxnOrder::where('id', decrypt($orderid))->with('details', 'user', 'transaction')->firstOrFail();
+        return view('frontend.order.transaction-success', compact('order'));
+    }
+
+    public function handleCallbackFromPaytm(Request $request, LogisticService $logistic)
+    {
+        // dd($request->all());
+        $paramList = $request->all();
+
+        if ($request->code == 'PAYMENT_SUCCESS') {
+            $txnres = $request->all();
+            Log::info(['Payment Success' => $txnres]);
+            // unset($txnres['MID']);
+            // unset($txnres['ORDERID']);
+            // unset($txnres['CURRENCY']);
+            // unset($txnres['CHECKSUMHASH']);
+
+            $order = TxnOrder::where('id', $request->transactionId)->with('details', 'user', 'transaction')->firstOrFail();
+
+            if ($order->status == 'nc') {
+
+                if ($order->payment_mode == 'paytm') {
+                    $OrderCreation = $logistic->OrderCreation($order, $order->user, "Prepaid");
+                }
+
+                $order->update([
+                    'status' => 'Booked',
+                    'payment_status' => 'Paid',
+                    // 'shipment_id' => $order->payment_mode == 'paytm' ? $OrderCreation['shipment_id'] : null,
+                    // 'shipment_order_id' => $order->payment_mode == 'paytm' ? $OrderCreation['order_id'] : null,
+                ]);
+
+                // $transaction = Transaction::create([
+                //     'order_id' => $request->transactionId,
+                //     'MID' => $request->providerReferenceId,
+                //     'TXNID' => $request->transactionId,
+                //     'TXNAMOUNT' => $request->amount,
+                //     'PAYMENTMODE' => 'Online',
+                //     'CURRENCY' => 'INR',
+                //     'TXNDATE' => '',
+                //     'STATUS' => 'Payment Success',
+                //     'RESPCODE' => 'Payment Success',
+                //     'RESPMSG' => 'Payment Success',
+                //     'GATEWAYNAME' => 'Online',
+                //     'BANKTXNID' => '',
+                //     'CHECKSUMHASH' => $request->checksum,
+                // ]);
+
+                // if (array_key_exists('BANKNAME', $paramList)) {
+                //     $transaction->update([
+                //         'BANKNAME' => $paramList['BANKNAME'],
+                //     ]);
+                // }
+
+                Delivery::orderCreation($order, $order->user);
+
+                // SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
+
+                // SMS::send('9223324655', 'Aura Hearing Care - New Order Placed with Order No : ' . $order->id);
+
+                Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
+                    $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
+                    $message->from('order-confirmation@easyfithearing.com', 'Easy Fit Hearing');
+                });
+
+                Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
+                    $message->to('order-confirmation@easyfithearing.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
+                    $message->from('order-confirmation@easyfithearing.com', 'Easy Fit Hearing');
+                });
+
+                Cart::clear();
+            }
+            return view('frontend.order.transaction-success')->with('order', $order)->with('TXNID', $request->transactionId);
+        } else {
+            return view('frontend.order.transaction-failed')->with('data', $request->except(['MID', 'CHECKSUMHASH']));
+
+        }
+
+        // $paramList = $request->all();
+        // $isValidChecksum = "FALSE";
+        // $paytmChecksum = $request->checksum;
+        // $paytm = new Paytm();
+        // $isValidChecksum = $paytm->verifychecksum_e($paramList, env('PAYTM_MERCHANT_KEY'), $paytmChecksum);
+        // if ($isValidChecksum == "TRUE") {
+        //     if ($paramList["STATUS"] == "TXN_SUCCESS") {
+        //         $txnres = $request->all();
+        //         Log::info(['Payment Success' => $txnres]);
+        //         unset($txnres['MID']);
+        //         unset($txnres['ORDERID']);
+        //         unset($txnres['CURRENCY']);
+        //         unset($txnres['CHECKSUMHASH']);
+
+        //         $order = TxnOrder::where('id', $request->ORDERID)->with('details', 'user', 'transaction')->firstOrFail();
+
+        //         if ($order->status == 'nc') {
+
+        //             if ($order->payment_mode == 'paytm') {
+        //                 $OrderCreation = $logistic->OrderCreation($order, $order->user, "Prepaid");
+        //             }
+
+        //             $order->update([
+        //                 'status' => 'Booked',
+        //                 'payment_status' => 'Paid',
+        //                 'shipment_id' => $order->payment_mode == 'paytm' ? $OrderCreation['shipment_id'] : null,
+        //                 'shipment_order_id' => $order->payment_mode == 'paytm' ? $OrderCreation['order_id'] : null,
+        //             ]);
+
+        //             $transaction = Transaction::create([
+        //                 'order_id' => $paramList['ORDERID'],
+        //                 'MID' => $paramList['MID'],
+        //                 'TXNID' => $paramList['TXNID'],
+        //                 'TXNAMOUNT' => $paramList['TXNAMOUNT'],
+        //                 'PAYMENTMODE' => $paramList['PAYMENTMODE'],
+        //                 'CURRENCY' => $paramList['CURRENCY'],
+        //                 'TXNDATE' => $paramList['TXNDATE'],
+        //                 'STATUS' => $paramList['STATUS'],
+        //                 'RESPCODE' => $paramList['RESPCODE'],
+        //                 'RESPMSG' => $paramList['RESPMSG'],
+        //                 'GATEWAYNAME' => $paramList['GATEWAYNAME'],
+        //                 'BANKTXNID' => $paramList['BANKTXNID'],
+        //                 'CHECKSUMHASH' => $paramList['CHECKSUMHASH'],
+        //             ]);
+
+        //             if (array_key_exists('BANKNAME', $paramList)) {
+        //                 $transaction->update([
+        //                     'BANKNAME' => $paramList['BANKNAME'],
+        //                 ]);
+        //             }
+
+        //             Delivery::orderCreation($order, $order->user);
+
+        //             // SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
+
+        //             // SMS::send('9223324655', 'Aura Hearing Care - New Order Placed with Order No : ' . $order->id);
+
+        //             Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
+        //                 $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
+        //                 $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+        //             });
+
+        //             Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
+        //                 $message->to('order-confirmation@easyfithearing.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
+        //                 $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+        //             });
+
+        //             Cart::clear();
+        //         }
+        //         return view('frontend.order.transaction-success')->with('order', $order)->with('TXNID', $txnres['TXNID']);
+        //     } else {
+        //         return view('frontend.order.transaction-failed')->with('data', $request->except(['MID', 'CHECKSUMHASH']));
+        //     }
+        // } else {
+        //     return view('frontend.order.transaction-failed')->with('data', $request->except(['MID', 'CHECKSUMHASH']));
+        // }
+    }
+}

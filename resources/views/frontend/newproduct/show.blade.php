@@ -1,0 +1,813 @@
+@extends('layouts.master')
+@section('title')
+    {{ $product->title }}
+@endsection
+@section('content')
+
+    <section class="breadcrumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="breadcrumb-start">
+                        <ul class="breadcrumb-url">
+                            <li class="breadcrumb-url-li">
+                                <a href="{{ route('index') }}">Home</a>
+                            </li>
+                            <li class="breadcrumb-url-li">
+                                <span>{{ $product->title }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product info start -->
+    <section class="section-tb-padding pro-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12 pro-image">
+                    <div class="row">
+                        <div class="col-lg-5 col-xl-5 col-md-6 col-12 col-xs-12 larg-image">
+                            <div class="tab-content large_image">
+
+                            </div>
+                            <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme thumb_image">
+
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-12 col-xs-12 pro-info">
+                            <h4>{{ $product->title }}</h4>
+                            @if ($product->category)
+                                <span class="pro-details">
+                                    <a href="{{ route('cate', [$product->category->slug_url]) }}" class="mb--10 text-black">
+                                        <span>{{ $product->category->name }}</span>
+                                    </a>
+                                </span>
+                            @endif
+                            @if ($product->review_status)
+                                <div class="rating">
+                                    @for ($i = 1; $i <= $product->reviews->avg('rating'); $i++)
+                                        <i class="fa fa-star d-star"></i>
+                                    @endfor
+                                    @for ($i = 1; $i <= 5 - $product->reviews->avg('rating'); $i++)
+                                        <i class="fa fa-star-o"></i>
+                                    @endfor
+
+                                    @if ($product->reviews->count('id'))
+                                        <a href="javascript:void(0)" id="writeReview">({{ $product->reviews->count('id') }}
+                                            customer
+                                            review)</a>
+                                    @endif
+                                </div>
+                            @endif
+                            <div class="pro-availabale">
+                                @if ($product->colors[0]->stock <= 0)
+                                    <span class="available">Availability:</span>
+                                    <span class="pro-instock text-danger">
+                                        <i class="ti-close"></i> Out of Stock
+                                    </span>
+                                @else
+                                    <span class="available">Availability:</span>
+                                    <span class="pro-instock text-success">
+                                        <i class="ti-check-box"></i> In stock
+                                        {{-- @if ($product->isCodAvailable)
+                                    <span class="text-success">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                        | Cash on Delivery Available
+                                    </span>
+                                    @else
+                                    <span class="text-danger">
+                                        <i class="fa fa-ban" aria-hidden="true"></i>
+                                        | Cash on Delivery Not Available
+                                    </span>
+                                    @endif --}}
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="pro-price">
+                                <span class="new-price"><i class="fa fa-inr"></i> {{ $product->colors[0]->mrp }}</span>
+                                @if ($product->colors[0]->mrp < $product->colors[0]->starting_price)
+                                    <span class="old-price">
+                                        <del>
+                                            <i class="fa fa-inr"></i> {{ $product->colors[0]->starting_price }}
+                                        </del>
+                                    </span>
+                                @endif
+                                @php
+                                    $getDiff = $product->colors[0]->starting_price - $product->colors[0]->mrp;
+                                    if ($getDiff > 0) {
+                                        $getOffer = round(($getDiff / $product->colors[0]->starting_price) * 100, 0);
+                                    } else {
+                                        $getOffer = 0;
+                                    }
+                                @endphp
+                                @if ($getOffer > 0)
+                                    <div class="Pro-lable mt-2">
+                                        <span class="p-discount"> {{ $getOffer }}% off</span>
+                                    </div>
+                                @endif
+                            </div>
+                            {{-- {{ dd($product) }} --}}
+                            @if (count($product->sizes) > 0)
+                                <div class="pro-items d-none">
+                                    <span class="pro-size">Size:</span>
+                                    <ul class="pro-wight">
+                                        @foreach ($product->sizes as $key => $item)
+                                            @if (!empty($product->unit))
+                                                <li>
+                                                    <a href="javascript:void(0)"
+                                                        class="size_btn {{ $key == 0 ? 'active' : '' }}"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        title="{{ $item->title . ' ' . $product->unit->unit }}"
+                                                        data-size-id="{{ $item->size_id }}"
+                                                        data-prod-id="{{ $product->id }}">
+                                                        {{ $item->title . ' ' }}
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li>
+                                                    <a href="javascript:void(0)"
+                                                        class="size_btn {{ $key == 0 ? 'active' : '' }}"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        title="{{ $item->title . ' GM' }}"
+                                                        data-size-id="{{ $item->size_id }}"
+                                                        data-prod-id="{{ $product->id }}">
+                                                        {{ $item->title . ' GM' }}
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="featured_bullet d-none">
+                                <span style="min-width: 105px;
+                            font-weight: 600;"
+                                    class="qty">Sizecart:</span>
+                                {!! $product->sizecart !!}
+                            </div>
+
+                            <div class="product-color">
+                                <span class="color-label">Colors:</span>
+                                <span class="color" id="colorDiv">
+                                    @foreach ($product->colors as $key => $item)
+                                        <a href="javascript:void(0)" class="color_btn {{ $key == 0 ? 'active' : '' }}"
+                                            data-toggle="tooltip" data-placement="top" title="{{ $item->color->title }}"
+                                            data-color-id="{{ $item->color_id }}" data-prod-id="{{ $product->id }}">
+                                            <span style="background-color: {{ $item->color->color_code }}"></span>
+                                        </a>
+                                    @endforeach
+                                </span>
+                            </div>
+                            <div class="pro-qty">
+                                <span class="qty">Quantity:</span>
+                                <div class="plus-minus">
+                                    <span>
+                                        <a href="javascript:void(0)" class="minus-btn text-black">-</a>
+                                        <input type="text" class="quantity-input" name="qty" id="qty"
+                                            value="1">
+                                        <a href="javascript:void(0)" class="plus-btn text-black">+</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pro-btn">
+
+                                @if (auth('user')->check())
+                                    @if ($product->wishlist && $product->wishlist->product_id == $product->id)
+                                        <a href="javascript:void(0)" class="w-c-q-icn btn-style1 wishlist-remove"
+                                            data-w-id="{{ $product->wishlist->id }}" title="Remove from Wishlist"><i
+                                                class="fa fa-heart"></i></a>
+                                    @else
+                                        <a href="javascript:void(0)" class="w-c-q-icn btn-style1 wishlist"
+                                            title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                    @endif
+                                @else
+                                    <a href="javascript:void(0)" class="w-c-q-icn btn-style1 wishlist-login"
+                                        title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                @endif
+
+                                <a href="javascript:void(0)" class="btn btn-style1 add-cart">
+                                    <i class="fa fa-shopping-bag"></i> Add to cart
+                                </a>
+                                {{-- <a href="javascript:void(0)" class="btn btn-style1">Buy now</a> --}}
+                            </div>
+                            {{-- <div class="share">
+                            <span class="share-lable">Share:</span>
+                            <ul class="share-icn">
+                                <li><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-pinterest"></i></a></li>
+                            </ul>
+                        </div> --}}
+                            <div class="pay-img">
+                                <a href="javascript:void(0)">
+                                    <img src="{!! asset('assets/image/pay-image.jpg') !!}" class="img-fluid" alt="pay-image">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product info end -->
+    <!-- product page tab start -->
+    <section class="section-b-padding pro-page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="pro-page-tab">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#description"
+                                    id="descriptionTab">Description</a>
+                            </li>
+                            @if (count($product->reviews) && $product->review_status)
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#review" id="reviewTab">Reviews
+                                        ({{ $product->reviews->count('id') }})</a>
+                                </li>
+                            @endif
+                        </ul>
+                        <style>
+                            .pro-features h4,
+                            .tech-spec h4,
+                            .pack-detl h4,
+                            .certification h4 {
+                                text-transform: capitalize;
+                            }
+
+                            /* .specification{
+                                                                        display: flex;
+                                                                    } */
+                        </style>
+
+                        <style>
+                            th {
+                                font-size: 20px;
+                                text-transform: capitalize;
+                                border: 1px solid black;
+                                padding: 10px;
+                            }
+
+                            td {
+                                padding: 10px;
+                                border: 1px solid black;
+                            }
+
+                            @media screen and (max-width: 1199px) {
+                                table {
+                                    margin-bottom: 60px;
+                                }
+                            }
+
+                            @media screen and (max-width: 768px) {
+                                .specification-table {
+                                    display: none;
+                                }
+                            }
+                        </style>
+
+
+
+                        <style>
+                            .specification {
+                                display: none;
+                                border: 1px solid #d6d6d6;
+                            }
+
+                            .specification h3 {
+                                padding: 20px 25px;
+                                border-bottom: 1px solid #d6d6d6;
+                            }
+
+                            .pro-features,
+                            .read-more-btn,
+                            .tech-spec,
+                            .pack-detl,
+                            .certification {
+                                border-bottom: 1px solid #d6d6d6;
+                            }
+
+                            .pro-features h4,
+                            .tech-spec h4,
+                            .pack-detl h4,
+                            .certification h4 {
+                                padding: 20px 25px;
+                                border-bottom: 1px solid #d6d6d6;
+                            }
+
+                            .pro-features ul,
+                            .tech-spec ul,
+                            .pack-detl ul,
+                            .certification ul {
+                                padding: 20px 25px;
+                            }
+
+                            .pro-features li,
+                            .tech-spec li,
+                            .pack-detl li,
+                            .certification li {
+                                line-height: 25px;
+                            }
+
+                            /* .read-more-btn{
+                                                                        position: relative;
+                                                                        font-size:18px;
+                                                                        cursor: pointer;
+                                                                    } */
+                            /* .read-more-btn:before{
+                                                                        position: absolute;
+                                                                        content:"";
+                                                                        width: 100%;
+                                                                        height: 30px;
+                                                                        background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
+                                                                        left: 0;
+                                                                        top: -30px;
+                                                                    } */
+                            /* .tech-spec, .pack-detl, .certification{
+                                                                        display: none;
+                                                                    } */
+                            @media screen and (max-width: 768px) {
+                                .specification {
+                                    display: block;
+                                    border: 1px solid #d6d6d6;
+                                }
+                            }
+                        </style>
+                        {!! $product->description !!}
+
+                        {{-- specification-table-desktop --}}
+
+                        {{-- specification-table-desktop end here --}}
+                        {{-- specification-table-mobile --}}
+
+
+                        {{-- specification-table-mobile end here --}}
+
+                        <!-- <div class="tab-content">
+                                                                    <div class="tab-pane fade show active" id="description">
+                                                                        <div class="tab-1content">
+                                                                        </div>
+                                                                        <div class="tab-2content">
+                                                                            <h4>Key specification</h4>
+                                                                            @if ($product->brand)
+    <ul class="tab-description">
+                                                                                    <li> Brand: {{ $product->brand->brand_name }}</li>
+                                                                                </ul>
+    @endif
+                                                                            @if ($product->warranty)
+    <ul class="tab-description">
+                                                                                    <li> Warranty: {{ $product->warranty->title }}</li>
+                                                                                </ul>
+    @endif
+                                                                            <ul class="tab-description">
+                                                                                @foreach ($product->custom_fields as $field)
+    <li>{{ $field->field_name }}: {{ $field->field_value }}</li>
+    @endforeach
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    @if (count($product->reviews) && $product->review_status)
+    <div class="tab-pane fade show" id="review">
+                                                                            {{-- <a href="#add-review" data-bs-toggle="collapse">Write a review</a> --}}
+                                                                            <div class="review-form collapse" id="add-review">
+                                                                                <h4>Write a review</h4>
+                                                                                <form>
+                                                                                    <label>Name</label>
+                                                                                    <input type="text" name="name" placeholder="Enter your name">
+                                                                                    <label>Email</label>
+                                                                                    <input type="text" name="mail" placeholder="Enter your Email">
+                                                                                    <label>Rating</label>
+                                                                                    <span>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                        <i class="fa fa-star"></i>
+                                                                                    </span>
+                                                                                    <label>Review title</label>
+                                                                                    <input type="text" name="mail" placeholder="Review title">
+                                                                                    <label>Add comments</label>
+                                                                                    <textarea name="comment" placeholder="Write your comments"></textarea>
+                                                                                </form>
+                                                                            </div>
+                                                                            <div class="customer-reviews">
+                                                                                <section class="testimonial-6 ">
+                                                                                    <div class="container">
+                                                                                        <div class="row">
+                                                                                            <div class="col">
+                                                                                                <div class="section-title3">
+                                                                                                    <h2>What Customers Say ?</h2>
+                                                                                                </div>
+                                                                                                <div class="testi-6 owl-carousel owl-theme">
+                                                                                                    @foreach ($product->reviews as $review)
+    <div class="items">
+                                                                                                            <div class="testimonial-content">
+                                                                                                                <div class="testimonial-area">
+                                                                                                                    <div class="testi-name">
+                                                                                                                        <span
+                                                                                                                            class="tsti-title">{{ $review->name }}</span>
+                                                                                                                        @if ($review->rating)
+    <span>
+                                                                                                                                @for ($i = 1; $i <= $review->rating; $i++)
+    <i
+                                                                                                                                        class="fa fa-star e-star"></i>
+    @endfor
+                                                                                                                                @for ($i = 1; $i <= 5 - $review->rating; $i++)
+    <i class="fa fa-star-o"></i>
+    @endfor
+                                                                                                                            </span>
+    @endif
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <p>{{ $review->comment }}</p>
+                                                                                                                <h6>
+                                                                                                                    {{ date('F d, Y', strtotime($review->created_at)) }}
+                                                                                                                </h6>
+                                                                                                            </div>
+                                                                                                        </div>
+    @endforeach
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
+                                                                        </div>
+    @endif
+                                                                </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product page tab end -->
+    <!-- releted product start -->
+    <section class="section-b-padding pro-releted">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="section-title">
+                        <h2>Related Products</h2>
+                    </div>
+                    <div class="releted-products owl-carousel owl-theme">
+                        @foreach ($related_products as $product)
+                            @php
+                                $colors = explode(',', $product->color_codes);
+                                $getDiff = $product->starting_price - $product->mrp;
+                                if ($getDiff > 0) {
+                                    $getOffer = round(($getDiff / $product->starting_price) * 100, 0);
+                                } else {
+                                    $getOffer = 0;
+                                }
+                            @endphp
+                            <div class="items">
+                                <div class="tred-pro">
+                                    <div class="tr-pro-img">
+                                        <a href="{{ route('product', $product->slug_url) }}">
+                                            <img class="img-fluid lazy" src="{!! asset('storage/images/products/' . $product->image_url) !!}"
+                                                alt="{{ $product->title }}">
+                                            <img class="img-fluid additional-image lazy" src="{!! asset('storage/images/products/' . $product->image_url1) !!}"
+                                                alt="{{ $product->title }}">
+                                        </a>
+                                    </div>
+                                    <div class="Pro-lable">
+                                        <span class="p-text">New</span>
+                                        @if ($getOffer > 0)
+                                            <span class="p-discount"> {{ $getOffer }}% off</span>
+                                        @endif
+                                    </div>
+                                    <div class="pro-icn">
+                                        @if (auth()->check())
+                                            @if (auth()->user()->id == $product->w_u_id && $product->w_product_id == $product->id)
+                                                <a href="javascript:void(0)" class="w-c-q-icn wishlist-remove"
+                                                    data-w-id="{{ $product->w_id }}" title="Remove from Wishlist"><i
+                                                        class="fa fa-heart"></i></a>
+                                            @else
+                                                <a href="javascript:void(0)" class="w-c-q-icn wishlist"
+                                                    data-p-id="{{ $product->product_id }}"
+                                                    data-c-id="{{ $product->c_id }}" data-s-id="{{ $product->s_id }}"
+                                                    title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                            @endif
+                                        @else
+                                            <a href="javascript:void(0)" class="w-c-q-icn wishlist-login"
+                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                        @endif
+                                        <a href="javascript:void(0)"
+                                            onclick="addToCart('{{ $product->product_id }}', '{{ $product->stock }}', '{{ $product->c_id }}', '{{ $product->s_id }}')"
+                                            class="w-c-q-icn" title="Add to Cart"><i class="fa fa-shopping-bag"></i></a>
+                                        <a href="{{ route('product', $product->slug_url) }}" class="w-c-q-icn"><i
+                                                class="fa fa-eye"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="caption">
+                                    <h3>
+                                        <span class="pull-left">
+                                            <a href="{{ route('product', $product->slug_url) }}">
+                                                {{ Str::length($product->title) > 20 ? Str::substr($product->title, 0, 20) . '...' : $product->title }}
+                                            </a>
+                                        </span>
+                                        <span class="pull-right">
+                                            @foreach ($colors as $color)
+                                                <span
+                                                    style="background: {{ $color }};border-radius:50%;height:10px;width:10px;display:inline-block;box-shadow: 1px 2px 3px 0px #5f5f5f"></span>
+                                            @endforeach
+                                        </span>
+                                        <div class="clearfix"></div>
+                                    </h3>
+                                    <div>
+                                        <div class="pro-price pull-left">
+                                            <span class="new-price"><i class="fa fa-inr"></i> {{ $product->mrp }}</span>
+                                            @if ($product->mrp < $product->starting_price)
+                                                <span class="old-price"><del><i class="fa fa-inr"></i>
+                                                        {{ $product->starting_price }}</del></span>
+                                            @endif
+                                        </div>
+                                        @if ($product->review_status)
+                                            <div class="rating pull-right">
+                                                @for ($i = 1; $i <= $product->rating; $i++)
+                                                    <i class="fa fa-star b-star"></i>
+                                                @endfor
+                                                @for ($i = 1; $i <= 5 - $product->rating; $i++)
+                                                    <i class="fa fa-star-o"></i>
+                                                @endfor
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- releted product end -->
+
+
+
+@endsection
+
+@section('extrajs')
+    <script>
+        $(document).ready(function() {
+
+
+            var param = {};
+            param = {
+                size_id: $('.size_btn:first-child').data('size-id'),
+                product_id: $('.size_btn:first-child').data('prod-id'),
+                color_id: $('.color_btn:first-child').data('color-id'),
+                source: 'size'
+            };
+            console.log('param', param);
+
+            getProduct(param);
+
+            $('#writeReview').click(function(event) {
+                event.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $("#reviewTab").offset().top - 250
+                }, 1000);
+                $('#description').removeClass('active show');
+                $('#descriptionTab').removeClass('active');
+                $('#reviewTab').addClass('active');
+                $('#review').addClass('active show');
+            });
+
+            $('.add-cart').click(function() {
+                var quantity = $('#qty').val();
+                var color_id = $('#cart_color_id').val();
+                var size_id = $('#cart_size_id').val();
+                if (color_id.length < 1) {
+                    swal('Add to Cart', 'Please Choose Color', 'error');
+                } else if (quantity < 1) {
+                    swal('Add to Cart', 'Please Choose Atleast One Quantity to add in Cart', 'error');
+                } else if (size_id.length < 1) {
+                    swal('Add to Cart', 'Please Choose Size', 'error');
+                } else {
+                    $('#cart_qty').val(quantity);
+                    $('#cartForm').submit();
+                    $(this).html(
+                        '<i class="fa fa-spinner fa-pulse fa-fw text-light"></i><span class="sr-only">Loading...</span>'
+                    );
+                }
+            });
+
+            $('.size_btn').click(function() {
+                var param = {};
+                param = {
+                    size_id: $(this).data('size-id'),
+                    product_id: $(this).data('prod-id'),
+                    color_id: $('#cart_color_id').val(),
+                    source: 'size'
+                };
+
+                getProduct(param);
+
+                var ac = $('.size_btn').hasClass('active');
+                if (ac == true) {
+                    $('.size_btn').removeClass('active');
+                }
+                $(this).addClass('active');
+            });
+
+            $('.color_btn').click(function() {
+
+                attachClickListener('.color_btn');
+
+            });
+
+
+            $('.add-cart').click(function() {
+                $(this).html(
+                    `<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>`
+                );
+                $('#cartForm').submit();
+            });
+
+        });
+
+        function attachClickListener(elementName) {
+            const elements = $(elementName);
+
+            elements.each((index, element) => {
+
+                element.addEventListener('click', function() {
+
+                    var param = {};
+                    param = {
+                        color_id: $(element).data('color-id'),
+                        product_id: $(element).data('prod-id'),
+                        size_id: $('#cart_size_id').val(),
+                        source: 'color'
+                    };
+
+                    getProduct(param);
+
+                    var ac = $(elementName).hasClass('active');
+                    if (ac == true) {
+                        $(elementName).removeClass('active');
+                    }
+                    $(element).addClass('active');
+
+                });
+            });
+        }
+
+        function getProduct(param) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('get.sizes') }}",
+                type: 'POST',
+                data: param,
+                success: function(result) {
+                    if (result.success) {
+                        var data = result.success[0];
+                        var mrp = data.mrp;
+                        var starting_price = data.starting_price;
+                        var getDiff = starting_price - mrp;
+                        getOffer = Math.round((getDiff / starting_price) * 100, 0);
+                        $('.p-discount').html(getOffer + "% off");
+                        $('.new-price').html('<i class="fa fa-inr"></i> ' + mrp);
+                        $('.old-price').html('<del><i class="fa fa-inr"></i> ' + starting_price + '</del>');
+                        $('#cart_prod_id').val(param.product_id);
+                        $('#cart_qty').val($('#qty').val());
+                        $('#cart_color_id').val(data.color_id);
+                        $('#cart_size_id').val(data.size_id);
+                        $('.wishlist').attr('data-p-id', param.product_id);
+                        $('.wishlist').attr('data-c-id', data.color_id);
+                        $('.wishlist').attr('data-s-id', data.size_id);
+                        setImages(result.images);
+
+                        if (result.source == "size") {
+                            setColor(result.available_colors);
+                        }
+                        checkStock(data.stock);
+                    }
+                }
+            });
+        }
+
+        function setImages(images) {
+            var large_image = '';
+            var thumb_image = '';
+            var path = "{!! asset('storage/images/multi-products') !!}";
+
+            images.forEach((element, index) => {
+                var active = index === 0 ? 'show active' : '';
+                var thumb_active = index === 0 ? 'active' : '';
+
+                large_image += `<div class="tab-pane fade ${active}" id="image-${element.id}">
+                <a href="javascript:void(0)" class="long-img">
+                    <figure class="zoom" onmousemove="zoom(event)"
+                        style="background-image: url(${path+'/'+element.image_url})">
+                        <img src="${path+'/'+element.image_url}"
+                            class="img-fluid" alt="{{ $product->title }}">
+                    </figure>
+                </a>
+            </div>`;
+
+                thumb_image += `
+            <li class="nav-item items">
+                <a class="thumb_image_active nav-link ${thumb_active}" data-bs-toggle="tab" href="#image-${element.id}">
+                    <img src="${path}/${element.image_url}" class="img-fluid" alt="{{ $product->title }}">
+                </a>
+            </li>`;
+            });
+
+            $('.large_image').html(large_image);
+            $('.thumb_image').html(thumb_image);
+
+            // Initialize Owl Carousel
+            $('.thumb_image').trigger('destroy.owl.carousel');
+            $('.thumb_image').owlCarousel({
+                // items: images.length,
+                // loop: true,
+                // margin: 5,
+
+                items: 6,
+                nav: false,
+                margin: 5,
+                autoplay: false,
+                autoplayTimeout: 5000,
+                loop: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    578: {
+                        items: 4
+                    },
+                    768: {
+                        items: 5
+                    }
+                }
+            });
+
+            // Thumbnail click event
+            $('.thumb_image_active').click(function() {
+                $('.thumb_image_active').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Zoom functionality
+            $('.zoom').on('mousemove', function(event) {
+                // Implement your zoom logic here using event.pageX, event.pageY, etc.
+            });
+        }
+
+
+        function setColor(available_colors) {
+
+            if (available_colors.length > 0) {
+                var color_html = '';
+                available_colors.forEach((item, index) => {
+                    color_html += `<a href="javascript:void(0)" class="color_btn ${index==0 ? 'active' : ''}"
+                    data-toggle="tooltip" data-placement="top" title="${item.color.title}"
+                    data-color-id="${item.color_id}" data-prod-id="${item.product_id}">
+                    <span style="background-color: ${item.color.color_code}"></span>
+                </a>`;
+                })
+
+                $('#colorDiv').html(color_html);
+
+                attachClickListener('.color_btn');
+            }
+        }
+
+        function zoom(e) {
+            var zoomer = e.currentTarget;
+            e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+            e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+            x = offsetX / zoomer.offsetWidth * 100
+            y = offsetY / zoomer.offsetHeight * 100
+            zoomer.style.backgroundPosition = x + '% ' + y + '%';
+        }
+
+        function checkStock(params) {
+            if (params <= 0) {
+                $('.add-cart').addClass('disabled', 'disabled');
+                $('.pro-availabale').html(
+                    `<span class="available">Availability:</span><span class="pro-instock text-danger"><i class="ti-close"></i> Out of Stock </span>`
+                );
+            } else {
+                $('.add-cart').removeClass('disabled');
+                $('.pro-availabale').html(
+                    `<span class="available">Availability:</span><span class="pro-instock text-success"><i class="ti-check-box"></i> In Stock </span>`
+                );
+            }
+        }
+    </script>
+@endsection

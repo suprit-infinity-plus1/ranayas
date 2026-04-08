@@ -1,0 +1,64 @@
+[15-Mar-2022 18:15:20 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:15:20 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:15:20 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:32:40 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:32:40 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:32:40 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:34:58 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:34:58 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:34:58 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:34:59 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:34:59 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:34:59 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:39:19 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:39:19 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:39:19 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:39:26 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:39:26 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:39:26 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:22 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:22 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:22 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:23 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:23 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:23 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:23 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:23 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:23 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:25 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:25 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:25 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:25 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:25 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:25 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:26 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:26 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:26 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:27 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:27 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:27 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:28 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:28 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:28 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:28 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:28 UTC] PHP Warning:  require(/home3/vardhdd5/public_html/../vendor/autoload.php): failed to open stream: No such file or directory in /home3/vardhdd5/public_html/index.php on line 24
+[15-Mar-2022 18:42:28 UTC] PHP Fatal error:  require(): Failed opening required '/home3/vardhdd5/public_html/../vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home3/vardhdd5/public_html/index.php on line 24
+[26-Jul-2022 23:15:36 Asia/Kolkata] PHP Fatal error:  Uncaught ErrorException: Method ReflectionParameter::getClass() is deprecated in /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php:871
+Stack trace:
+#0 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(871): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8192, 'Method Reflecti...', '/home3/vardhdd5...', 871)
+#1 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(834): Illuminate\Container\Container->resolveDependencies(Array)
+#2 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(681): Illuminate\Container\Container->build('App\\Exceptions\\...')
+#3 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(265): Illuminate\Container\Container->resolve('App\\Exceptions\\...', Array, false)
+#4 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(799): Illuminate\Container\Container->Illuminate\Container\{closure}(Object(Illuminate\Foundation\Application), Array)
+#5 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(681): Illuminate\Container\Container->build(Object(Closure))
+#6 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php(629): Illuminate\Container\Container->resolve('Illuminate\\Cont...', Array)
+#7 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(768): Illuminate\Container\Container->make('Illuminate\\Cont...', Array)
+#8 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(170): Illuminate\Foundation\Application->make('Illuminate\\Cont...')
+#9 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(123): Illuminate\Foundation\Bootstrap\HandleExceptions->getExceptionHandler()
+#10 /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(100): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(ErrorException))
+#11 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#12 {main}
+  thrown in /home3/vardhdd5/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 871
+[11-May-2024 11:19:06 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 400560128 bytes) in /home3/easyfmkg/public_html/app/Http/Controllers/MainController.php on line 135
+[11-May-2024 11:30:17 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 400560128 bytes) in /home3/easyfmkg/public_html/app/Http/Controllers/MainController.php on line 135
+[11-May-2024 11:42:36 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 400560128 bytes) in /home3/easyfmkg/public_html/app/Http/Controllers/MainController.php on line 135
