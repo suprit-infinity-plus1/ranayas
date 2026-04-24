@@ -81,18 +81,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'category_name' => 'required|string',
             'image_path' => 'required|image|mimes:png,jpg,jpeg|max:1024',
+            'status' => 'required|boolean',
+            'categorystatus' => 'required|boolean',
+            'image_path' => 'image|mimes:png,jpg,jpeg|min:10|max:1024',
         ],
             [
                 'category_name.required' => 'Please Enter Category Name',
                 'category_name.unique' => $request->category_name . ' Category Already Available',
                 'image_path.required' => 'Please Upload Category Image',
-                'image_path.image' => 'Please Upload Proper Image',
-                'image_path.mimes' => 'Please Upload Image of PNG and JPG only',
-                'image_path.max' => 'Please Upload Image of size 1 MB',
+                'status.required' => 'Please select status',
+                'categorystatus.required' => 'Please select home status',
+                'image_path.image' => 'Please upload a valid image file',
+                'image_path.mimes' => 'Only PNG, JPG, JPEG images are allowed',
+                'image_path.max' => 'Image size must not exceed 1 MB',
+                'image_path.min' => 'Image size is too small (minimum ~10KB recommended)',
             ]);
+
+        // dd($validator->errors()->first());
 
         if ($validator->fails()) {
             connectify('error', 'Add Category', $validator->errors()->first());
@@ -101,27 +110,30 @@ class CategoryController extends Controller
         }
 
         $request['txtCategoryID'] = $request->txtCategoryID == null ? '0' : $request->txtCategoryID;
-
+        // dd($request->txtCategoryID);
         $cate = TxnCategory::where('id', $request->txtCategoryID)->first();
-
+        // dd($cate);
         if ($cate) {
             $request['slug_url'] = Str::slug($cate->name . '-' . $request->category_name . $cate->id, '-');
         } else {
             $request['slug_url'] = Str::slug($request->category_name . rand(0, 99), '-');
         }
+        // dd($request['slug_url']);
         $img = null;
         if ($request->hasFile('image_path')) {
             $img = "category_" . Str::slug(Str::limit($request->category_name, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_path->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->image_path->storeAs('public/images/categories', $img);
+            $request->image_path->storeAs('images/categories', $img, 'public');
         }
-
+        // dd($img);
         TxnCategory::create([
             'parent_id' => $request->txtCategoryID,
             'name' => $request->category_name,
-            'status' => true,
+            'status' => $request->status,
+            'categorystatus' => $request->categorystatus,
             'slug_url' => $request->slug_url,
             'image_url' => $img,
         ]);
+        // dd(TxnCategory::all());
 
         connectify('success', 'Added Category', 'Category has been added successfully');
 
@@ -179,22 +191,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:191',
-            'parent_id' => 'required|numeric',
-        ],
-            [
-                'name.required' => 'Please Enter Category Name',
-                'parent_id.required' => 'Please Enter Parent Category',
-            ]);
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:191',
             'parent_id' => 'required|numeric',
+            'status' => 'required|boolean',
+            'categorystatus' => 'required|boolean',
+            'image_path' => 'nullable|image|mimes:png,jpg,jpeg|min:10|max:1024',
         ],
             [
                 'name.required' => 'Please Enter Category Name',
                 'parent_id.required' => 'Please Enter Parent Category',
+                'status.required' => 'Please Select Status',
+                'categorystatus.required' => 'Please Select Home Status',
+                'image_path.image' => 'Please upload a valid image file',
+                'image_path.mimes' => 'Only PNG, JPG, JPEG images are allowed',
+                'image_path.max' => 'Image size must not exceed 1 MB',
+                'image_path.min' => 'Image size is too small (minimum ~10KB recommended)',
             ]);
 
         if ($validator->fails()) {
@@ -207,30 +219,45 @@ class CategoryController extends Controller
             $category = TxnCategory::where('id', $id)->firstOrFail();
 
             if ($category) {
-                $request['slug_url'] = Str::slug($category->name . '-' . $request->category_name . $category->id, '-');
+                $request['slug_url'] = Str::slug($category->name . '-' . $request->name . $category->id, '-');
             } else {
-                $request['slug_url'] = Str::slug($request->category_name . $category->id, '-');
+                $request['slug_url'] = Str::slug($request->name . $category->id, '-');
             }
 
-            $img = null;
+            // $img = $category->image_url;
+
+            // if ($request->hasFile('image_path')) {
+            //     $img = "category_" . Str::slug(Str::limit($request->name, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_path->getClientOriginalName(), PATHINFO_EXTENSION);
+
+            //     $old_image = public_path('/storage/images/categories/' . $category->image_url);
+
+            //     if (File::exists($old_image)) {
+            //         File::delete($old_image);
+            //     }
+
+            //     // $request->image_path->storeAs('public/images/categories', $img);
+            //     $request->image_path->storeAs('images/categories', $img, 'public');
+            // }
+            $img = $category->image_url;
 
             if ($request->hasFile('image_path')) {
-                $img = "category_" . Str::slug(Str::limit($request->category_name, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_path->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $old_image = public_path('/storage/images/categories/' . $category->image_url);
+                $img = "category_" . Str::slug(Str::limit($request->name, 20), '-') . '-' . rand(1000, 9999) . '.' . $request->image_path->extension();
 
-                if (File::exists($old_image)) {
-                    File::delete($old_image);
+                // delete old image
+                if ($category->image_url && Storage::disk('public')->exists('images/categories/' . $category->image_url)) {
+                    Storage::disk('public')->delete('images/categories/' . $category->image_url);
                 }
 
-                $request->image_path->storeAs('public/images/categories', $img);
+                // store new image
+                $request->image_path->storeAs('images/categories', $img, 'public');
             }
 
             $category->update([
                 'name' => $request->name,
                 'parent_id' => $request->parent_id,
                 'status' => $request->status,
-                                'categorystatus' => $request->categorystatus,
+                'categorystatus' => $request->categorystatus,
                 'slug_url' => $request->slug_url,
                 'image_url' => $img,
             ]);

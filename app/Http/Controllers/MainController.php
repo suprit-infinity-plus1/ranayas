@@ -306,12 +306,12 @@ $products = DB::table('txn_products as p')
 
         $category = TxnCategory::where('id', $request->category_id)->where('status', true)->firstOrFail();
 
-        $categories = DB::select(DB::raw("select  id
+        $categories = DB::select("select  id
             from    (select * from txn_categories
                      order by parent_id, id) txn_categories,
                     (select @pv := $category->id) initialisation
             where   find_in_set(parent_id, @pv) > 0
-            and     @pv := concat(@pv, ',', id)"));
+            and     @pv := concat(@pv, ',', id)");
 
         $cateLists = [];
         $cateLists[0] = $category->id;
@@ -360,12 +360,12 @@ $products = DB::table('txn_products as p')
             $sizes = MstSize::where('status', true)->get();
             $category = TxnCategory::where('slug_url', $slug)->where('status', true)->firstOrFail();
 
-            $categories = DB::select(DB::raw("select DISTINCT(name) as category_name, id
+            $categories = DB::select("select DISTINCT(name) as category_name, id
             from    (select * from txn_categories
                      order by parent_id, id) txn_categories,
                     (select @pv := $category->id) initialisation
             where   find_in_set(parent_id, @pv) > 0
-            and     @pv := concat(@pv, ',', id)"));
+            and     @pv := concat(@pv, ',', id)");
 
             $cateLists = [];
             $cateLists[0] = $category->id;

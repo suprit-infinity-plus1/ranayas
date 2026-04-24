@@ -31,6 +31,24 @@
                                 value="{{ old('image_path') }}" required>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="status">Hide Category on Home<span class="text-danger">*</span> </label>
+                            <select name="categorystatus" id="categorystatus" class="form-control" required>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="status">Status <span class="text-danger">*</span> </label>
+                            <select name="status" id="status" class="form-control" required>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -183,6 +201,12 @@
                 image_path: {
                     required: true
                 },
+                categorystatus: {
+                    required: true
+                },
+                status: {
+                    required: true
+                },
             },
             messages: {
                 category_name: {
@@ -190,6 +214,12 @@
                 },
                 image_path: {
                     required: "Please Upload Category Image"
+                },
+                categorystatus: {
+                    required: "Please Select Home Status"
+                },
+                status: {
+                    required: "Please Select Status"
                 },
             },
             submitHandler: function (form) {

@@ -62,50 +62,64 @@
                                 </div>
                             @endif
                             <div class="pro-availabale">
-                                @if ($product->colors[0]->stock <= 0)
-                                    <span class="available">Availability:</span>
-                                    <span class="pro-instock text-danger">
-                                        <i class="ti-close"></i> Out of Stock
-                                    </span>
+                                @if (count($product->colors) > 0)
+                                    @if ($product->colors[0]->stock <= 0)
+                                        <span class="available">Availability:</span>
+                                        <span class="pro-instock text-danger">
+                                            <i class="ti-close"></i> Out of Stock
+                                        </span>
+                                    @else
+                                        <span class="available">Availability:</span>
+                                        <span class="pro-instock text-success">
+                                            <i class="ti-check-box"></i> In stock
+                                            {{-- @if ($product->isCodAvailable)
+                                        <span class="text-success">
+                                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                            | Cash on Delivery Available
+                                        </span>
+                                        @else
+                                        <span class="text-danger">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                            | Cash on Delivery Not Available
+                                        </span>
+                                        @endif --}}
+                                        </span>
+                                    @endif
                                 @else
                                     <span class="available">Availability:</span>
-                                    <span class="pro-instock text-success">
-                                        <i class="ti-check-box"></i> In stock
-                                        {{-- @if ($product->isCodAvailable)
-                                    <span class="text-success">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                        | Cash on Delivery Available
-                                    </span>
-                                    @else
-                                    <span class="text-danger">
-                                        <i class="fa fa-ban" aria-hidden="true"></i>
-                                        | Cash on Delivery Not Available
-                                    </span>
-                                    @endif --}}
+                                    <span class="pro-instock text-danger">
+                                        <i class="ti-close"></i> Unavailable
                                     </span>
                                 @endif
                             </div>
                             <div class="pro-price">
-                                <span class="new-price"><i class="fa fa-inr"></i> {{ $product->colors[0]->mrp }}</span>
-                                @if ($product->colors[0]->mrp < $product->colors[0]->starting_price)
-                                    <span class="old-price">
-                                        <del>
-                                            <i class="fa fa-inr"></i> {{ $product->colors[0]->starting_price }}
-                                        </del>
-                                    </span>
-                                @endif
-                                @php
-                                    $getDiff = $product->colors[0]->starting_price - $product->colors[0]->mrp;
-                                    if ($getDiff > 0) {
-                                        $getOffer = round(($getDiff / $product->colors[0]->starting_price) * 100, 0);
-                                    } else {
-                                        $getOffer = 0;
-                                    }
-                                @endphp
-                                @if ($getOffer > 0)
-                                    <div class="Pro-lable mt-2">
-                                        <span class="p-discount"> {{ $getOffer }}% off</span>
-                                    </div>
+                                @if (count($product->colors) > 0)
+                                    <span class="new-price"><i class="fa fa-inr"></i> {{ $product->colors[0]->mrp }}</span>
+                                    @if ($product->colors[0]->mrp < $product->colors[0]->starting_price)
+                                        <span class="old-price">
+                                            <del>
+                                                <i class="fa fa-inr"></i> {{ $product->colors[0]->starting_price }}
+                                            </del>
+                                        </span>
+                                    @endif
+                                    @php
+                                        $getDiff = $product->colors[0]->starting_price - $product->colors[0]->mrp;
+                                        if ($getDiff > 0) {
+                                            $getOffer = round(
+                                                ($getDiff / $product->colors[0]->starting_price) * 100,
+                                                0,
+                                            );
+                                        } else {
+                                            $getOffer = 0;
+                                        }
+                                    @endphp
+                                    @if ($getOffer > 0)
+                                        <div class="Pro-lable mt-2">
+                                            <span class="p-discount"> {{ $getOffer }}% off</span>
+                                        </div>
+                                    @endif
+                                @else
+                                    <span class="new-price">Price Unavailable</span>
                                 @endif
                             </div>
                             {{-- {{ dd($product) }} --}}
@@ -241,8 +255,8 @@
                             }
 
                             /* .specification{
-                                                                        display: flex;
-                                                                    } */
+                                                                            display: flex;
+                                                                        } */
                         </style>
 
                         <style>
@@ -315,22 +329,22 @@
                             }
 
                             /* .read-more-btn{
-                                                                        position: relative;
-                                                                        font-size:18px;
-                                                                        cursor: pointer;
-                                                                    } */
+                                                                            position: relative;
+                                                                            font-size:18px;
+                                                                            cursor: pointer;
+                                                                        } */
                             /* .read-more-btn:before{
-                                                                        position: absolute;
-                                                                        content:"";
-                                                                        width: 100%;
-                                                                        height: 30px;
-                                                                        background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
-                                                                        left: 0;
-                                                                        top: -30px;
-                                                                    } */
+                                                                            position: absolute;
+                                                                            content:"";
+                                                                            width: 100%;
+                                                                            height: 30px;
+                                                                            background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
+                                                                            left: 0;
+                                                                            top: -30px;
+                                                                        } */
                             /* .tech-spec, .pack-detl, .certification{
-                                                                        display: none;
-                                                                    } */
+                                                                            display: none;
+                                                                        } */
                             @media screen and (max-width: 768px) {
                                 .specification {
                                     display: block;
@@ -349,97 +363,97 @@
                         {{-- specification-table-mobile end here --}}
 
                         <!-- <div class="tab-content">
-                                                                    <div class="tab-pane fade show active" id="description">
-                                                                        <div class="tab-1content">
-                                                                        </div>
-                                                                        <div class="tab-2content">
-                                                                            <h4>Key specification</h4>
-                                                                            @if ($product->brand)
+                                                                        <div class="tab-pane fade show active" id="description">
+                                                                            <div class="tab-1content">
+                                                                            </div>
+                                                                            <div class="tab-2content">
+                                                                                <h4>Key specification</h4>
+                                                                                @if ($product->brand)
     <ul class="tab-description">
-                                                                                    <li> Brand: {{ $product->brand->brand_name }}</li>
-                                                                                </ul>
+                                                                                        <li> Brand: {{ $product->brand->brand_name }}</li>
+                                                                                    </ul>
     @endif
-                                                                            @if ($product->warranty)
+                                                                                @if ($product->warranty)
     <ul class="tab-description">
-                                                                                    <li> Warranty: {{ $product->warranty->title }}</li>
-                                                                                </ul>
+                                                                                        <li> Warranty: {{ $product->warranty->title }}</li>
+                                                                                    </ul>
     @endif
-                                                                            <ul class="tab-description">
-                                                                                @foreach ($product->custom_fields as $field)
+                                                                                <ul class="tab-description">
+                                                                                    @foreach ($product->custom_fields as $field)
     <li>{{ $field->field_name }}: {{ $field->field_value }}</li>
     @endforeach
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                    @if (count($product->reviews) && $product->review_status)
-    <div class="tab-pane fade show" id="review">
-                                                                            {{-- <a href="#add-review" data-bs-toggle="collapse">Write a review</a> --}}
-                                                                            <div class="review-form collapse" id="add-review">
-                                                                                <h4>Write a review</h4>
-                                                                                <form>
-                                                                                    <label>Name</label>
-                                                                                    <input type="text" name="name" placeholder="Enter your name">
-                                                                                    <label>Email</label>
-                                                                                    <input type="text" name="mail" placeholder="Enter your Email">
-                                                                                    <label>Rating</label>
-                                                                                    <span>
-                                                                                        <i class="fa fa-star"></i>
-                                                                                        <i class="fa fa-star"></i>
-                                                                                        <i class="fa fa-star"></i>
-                                                                                        <i class="fa fa-star"></i>
-                                                                                        <i class="fa fa-star"></i>
-                                                                                    </span>
-                                                                                    <label>Review title</label>
-                                                                                    <input type="text" name="mail" placeholder="Review title">
-                                                                                    <label>Add comments</label>
-                                                                                    <textarea name="comment" placeholder="Write your comments"></textarea>
-                                                                                </form>
+                                                                                </ul>
                                                                             </div>
-                                                                            <div class="customer-reviews">
-                                                                                <section class="testimonial-6 ">
-                                                                                    <div class="container">
-                                                                                        <div class="row">
-                                                                                            <div class="col">
-                                                                                                <div class="section-title3">
-                                                                                                    <h2>What Customers Say ?</h2>
-                                                                                                </div>
-                                                                                                <div class="testi-6 owl-carousel owl-theme">
-                                                                                                    @foreach ($product->reviews as $review)
+                                                                        </div>
+                                                                        @if (count($product->reviews) && $product->review_status)
+    <div class="tab-pane fade show" id="review">
+                                                                                {{-- <a href="#add-review" data-bs-toggle="collapse">Write a review</a> --}}
+                                                                                <div class="review-form collapse" id="add-review">
+                                                                                    <h4>Write a review</h4>
+                                                                                    <form>
+                                                                                        <label>Name</label>
+                                                                                        <input type="text" name="name" placeholder="Enter your name">
+                                                                                        <label>Email</label>
+                                                                                        <input type="text" name="mail" placeholder="Enter your Email">
+                                                                                        <label>Rating</label>
+                                                                                        <span>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                            <i class="fa fa-star"></i>
+                                                                                        </span>
+                                                                                        <label>Review title</label>
+                                                                                        <input type="text" name="mail" placeholder="Review title">
+                                                                                        <label>Add comments</label>
+                                                                                        <textarea name="comment" placeholder="Write your comments"></textarea>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="customer-reviews">
+                                                                                    <section class="testimonial-6 ">
+                                                                                        <div class="container">
+                                                                                            <div class="row">
+                                                                                                <div class="col">
+                                                                                                    <div class="section-title3">
+                                                                                                        <h2>What Customers Say ?</h2>
+                                                                                                    </div>
+                                                                                                    <div class="testi-6 owl-carousel owl-theme">
+                                                                                                        @foreach ($product->reviews as $review)
     <div class="items">
-                                                                                                            <div class="testimonial-content">
-                                                                                                                <div class="testimonial-area">
-                                                                                                                    <div class="testi-name">
-                                                                                                                        <span
-                                                                                                                            class="tsti-title">{{ $review->name }}</span>
-                                                                                                                        @if ($review->rating)
+                                                                                                                <div class="testimonial-content">
+                                                                                                                    <div class="testimonial-area">
+                                                                                                                        <div class="testi-name">
+                                                                                                                            <span
+                                                                                                                                class="tsti-title">{{ $review->name }}</span>
+                                                                                                                            @if ($review->rating)
     <span>
-                                                                                                                                @for ($i = 1; $i <= $review->rating; $i++)
+                                                                                                                                    @for ($i = 1; $i <= $review->rating; $i++)
     <i
-                                                                                                                                        class="fa fa-star e-star"></i>
+                                                                                                                                            class="fa fa-star e-star"></i>
     @endfor
-                                                                                                                                @for ($i = 1; $i <= 5 - $review->rating; $i++)
+                                                                                                                                    @for ($i = 1; $i <= 5 - $review->rating; $i++)
     <i class="fa fa-star-o"></i>
     @endfor
-                                                                                                                            </span>
+                                                                                                                                </span>
     @endif
+                                                                                                                        </div>
                                                                                                                     </div>
+                                                                                                                    <p>{{ $review->comment }}</p>
+                                                                                                                    <h6>
+                                                                                                                        {{ date('F d, Y', strtotime($review->created_at)) }}
+                                                                                                                    </h6>
                                                                                                                 </div>
-                                                                                                                <p>{{ $review->comment }}</p>
-                                                                                                                <h6>
-                                                                                                                    {{ date('F d, Y', strtotime($review->created_at)) }}
-                                                                                                                </h6>
                                                                                                             </div>
-                                                                                                        </div>
     @endforeach
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                </section>
+                                                                                    </section>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
     @endif
-                                                                </div> -->
+                                                                    </div> -->
                     </div>
                 </div>
             </div>
