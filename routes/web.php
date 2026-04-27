@@ -373,13 +373,13 @@ Route::prefix('myaccount')->group(function () {
         Route::POST('/login/otp', '       UserAuth\LoginController@otpLogin')->name('user.login.otp');
         Route::POST('/login', 'UserAuth\LoginController@login')->name('user.login');
         Route::GET('/register', 'UserAuth\LoginController@create')->name('user.register');
-        Route::POST('/register', 'UserAuth\LoginController@store')->name('user.register');
+        Route::POST('/register', 'UserAuth\LoginController@store');
         Route::GET('/otp', 'UserAuth\LoginController@otp')->name('user.otp');
         Route::POST('/otp/resend', 'UserAuth\LoginController@resendOtp')->name('user.otp.resend');
         Route::POST('/otp/verify', 'UserAuth\LoginController@verifyOtp')->name('user.otp.verify');
         Route::GET('/password/email', 'UserResetPassword@showResetRequestForm')->name('user.password.request');
         Route::POST('/password/email', 'UserResetPassword@resetPassword');
-        Route::GET('/password/otp/send', 'UserResetPassword@sendOtp');
+        Route::GET('/password/otp/send', 'UserResetPassword@sendOtp')->name('user.password.otp.send');
         Route::POST('/password/otp/resend', 'UserResetPassword@resendOtp')->name('user.reset-otp.resend');
         Route::POST('/password/otp/verify', 'UserResetPassword@verifyOtp')->name('user.reset-otp.verify');
         Route::GET('/reset/password', 'UserResetPassword@resetForm')->name('user.password.reset.form');

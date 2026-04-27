@@ -45,13 +45,13 @@ class UserResetPassword extends Controller
             SMS::send($user->mobile, 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Aura Hearing Care Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.password-reset-otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user->email)->subject('Aura Hearing Care, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Aura Hearing Care');
+                $message->to($user->email)->subject(config('app.name') . ', One Time Password(OTP)');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
             });
 
             session()->put('user', $user);
 
-            return redirect()->action('UserResetPassword@sendOtp');
+            return redirect()->route('user.password.otp.send');
 
         } catch (\Exception $ex) {
             if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
@@ -91,11 +91,11 @@ class UserResetPassword extends Controller
             SMS::send($user->mobile, 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Aura Hearing Care Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.password-reset-otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user->email)->subject('Aura Hearing Care, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Aura Hearing Care');
+                $message->to($user->email)->subject(config('app.name') . ', One Time Password(OTP)');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
             });
 
-            return redirect()->action('UserResetPassword@sendOtp');
+            return redirect()->route('user.password.otp.send');
 
         } catch (\Exception $ex) {
             if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
@@ -137,7 +137,7 @@ class UserResetPassword extends Controller
                 'otp' => null,
             ]);
 
-            return redirect()->action('UserResetPassword@resetForm');
+            return redirect()->route('user.password.reset.form');
 
         } catch (\Exception $ex) {
             if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {

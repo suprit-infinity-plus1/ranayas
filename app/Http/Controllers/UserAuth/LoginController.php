@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 class LoginController extends Controller
 {
 
-    public function __contruct()
+    public function __construct()
     {
         $this->middleware('guard:user')->except('logout');
     }
@@ -102,11 +102,11 @@ class LoginController extends Controller
         // dd('i m here');
 
         Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-            $message->to($user['email'])->subject('Easy Fit Hearing, One Time Password(OTP)');
-            $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+            $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
+            $message->from(config('mail.from.address'), config('mail.from.name'));
         });
 
-        return redirect()->action('UserAuth\LoginController@otp');
+        return redirect()->route('user.otp');
     }
 
     public function otp(Request $request)
@@ -124,11 +124,11 @@ class LoginController extends Controller
             SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $user['otp'] . ' Easy Fit Hearing Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user['email'])->subject('Easy Fit Hearing, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+                $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
             });
             connectify('success', 'Resend Otp', 'Otp has been resend on registed mobile and email');
-            return redirect()->action('UserAuth\LoginController@otp');
+            return redirect()->route('user.otp');
         }
 
         connectify('error', 'Error', 'Whoops, Email Not Found !');
@@ -152,6 +152,12 @@ class LoginController extends Controller
         }
 
         $userData = $request->session()->get('user');
+
+        // Safeguard against expired sessions
+        if (!$userData) {
+            connectify('error', 'Session Expired', 'Your session has expired. Please try registering again.');
+            return redirect()->route('user.register');
+        }
 
         if ($userData['otp'] == $request->otp) {
 
@@ -182,17 +188,19 @@ class LoginController extends Controller
 
             Auth::guard('user')->login($user, true);
 
+            // Cleanup registration session data
+            $request->session()->forget('user');
+
             connectify('success', 'Registered Successfully', 'You are successfully Registered !');
 
-            return redirect(url($userData['url']));
+            // Fallback to dashboard if original URL is missing
+            $redirectUrl = $userData['url'] ?? route('user.dashboard');
+            return redirect($redirectUrl);
 
         } else {
-
             connectify('error', 'Error', 'The Entered Otp is Invalid !');
-
             return back();
         }
-
     }
 
     public function showOtpLoginForm()
@@ -236,13 +244,13 @@ class LoginController extends Controller
             SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Easy Fit Hearing Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user['email'])->subject('Easy Fit Hearing, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+                $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
             });
 
             connectify('success', 'Otp Send', 'Otp has been sent on mobile & email !');
 
-            return redirect()->action('UserAuth\LoginController@otp');
+            return redirect()->route('user.otp');
 
         } catch (\Exception $ex) {
             if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
