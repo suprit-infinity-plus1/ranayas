@@ -7,9 +7,9 @@ use App\Model\TxnCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class CategoryController extends Controller
 {
@@ -81,72 +81,71 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'category_name' => 'required|string',
-            'image_path' => 'required|image|mimes:png,jpg,jpeg|max:1024',
+            'category_name' => 'required|string|unique:txn_categories,name',
+            'image_path' => 'required|image|mimes:png,jpg,jpeg|min:10|max:1024',
             'status' => 'required|boolean',
             'categorystatus' => 'required|boolean',
-            'image_path' => 'image|mimes:png,jpg,jpeg|min:10|max:1024',
-        ],
-            [
-                'category_name.required' => 'Please Enter Category Name',
-                'category_name.unique' => $request->category_name . ' Category Already Available',
-                'image_path.required' => 'Please Upload Category Image',
-                'status.required' => 'Please select status',
-                'categorystatus.required' => 'Please select home status',
-                'image_path.image' => 'Please upload a valid image file',
-                'image_path.mimes' => 'Only PNG, JPG, JPEG images are allowed',
-                'image_path.max' => 'Image size must not exceed 1 MB',
-                'image_path.min' => 'Image size is too small (minimum ~10KB recommended)',
-            ]);
-
-        // dd($validator->errors()->first());
-
+        ], [
+            'category_name.required' => 'Please Enter Category Name',
+            'category_name.unique' => $request->category_name . ' Category Already Available',
+            'image_path.required' => 'Please Upload Category Image',
+            'status.required' => 'Please select status',
+            'categorystatus.required' => 'Please select home status',
+            'image_path.image' => 'Please upload a valid image file',
+            'image_path.mimes' => 'Only PNG, JPG, JPEG images are allowed',
+            'image_path.max' => 'Image size must not exceed 1 MB',
+            'image_path.min' => 'Image size is too small (minimum ~10KB recommended)',
+        ]);
         if ($validator->fails()) {
             connectify('error', 'Add Category', $validator->errors()->first());
             return redirect(route('admin.categories.create'))
-                ->withInput();
+                ->withInput()
+                ->with('messageDanger', $validator->errors()->first());
         }
 
-        $request['txtCategoryID'] = $request->txtCategoryID == null ? '0' : $request->txtCategoryID;
-        // dd($request->txtCategoryID);
-        $cate = TxnCategory::where('id', $request->txtCategoryID)->first();
-        // dd($cate);
-        if ($cate) {
-            $request['slug_url'] = Str::slug($cate->name . '-' . $request->category_name . $cate->id, '-');
-        } else {
-            $request['slug_url'] = Str::slug($request->category_name . rand(0, 99), '-');
-        }
-        // dd($request['slug_url']);
-        $img = null;
-        if ($request->hasFile('image_path')) {
-            $img = "category_" . Str::slug(Str::limit($request->category_name, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_path->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->image_path->storeAs('images/categories', $img, 'public');
-        }
-        // dd($img);
-        TxnCategory::create([
-            'parent_id' => $request->txtCategoryID,
-            'name' => $request->category_name,
-            'status' => $request->status,
-            'categorystatus' => $request->categorystatus,
-            'slug_url' => $request->slug_url,
-            'image_url' => $img,
-        ]);
-        // dd(TxnCategory::all());
+        try {
+            $parent_id = $request->txtCategoryID ?? 0;
+            $cate = TxnCategory::find($parent_id);
+            
+            if ($cate) {
+                $slug_url = Str::slug($cate->name . '-' . $request->category_name . $cate->id, '-');
+            } else {
+                $slug_url = Str::slug($request->category_name . '-' . rand(10, 99), '-');
+            }
 
-        connectify('success', 'Added Category', 'Category has been added successfully');
+            $img = null;
+            if ($request->hasFile('image_path')) {
+                $img = "category_" . Str::slug(Str::limit($request->category_name, 20), '-') . '-' . rand(1000, 9999) . '.' . $request->image_path->extension();
+                $request->image_path->storeAs('images/categories', $img, 'public');
+            }
 
-        return redirect(route('admin.categories.create'));
+            TxnCategory::create([
+                'parent_id' => $parent_id,
+                'name' => $request->category_name,
+                'status' => $request->status,
+                'categorystatus' => $request->categorystatus,
+                'slug_url' => $slug_url,
+                'image_url' => $img,
+            ]);
+
+            connectify('success', 'Added Category', 'Category has been added successfully');
+            return redirect(route('admin.categories.create'));
+
+        } catch (\Exception $ex) {
+            Log::error(['Add Category' => $ex->getMessage()]);
+            connectify('error', 'Add Category', 'Whoops, Something Went Wrong!');
+            return redirect(route('admin.categories.create'))->withInput();
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Category  $Category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $Category)
+    public function show($id)
     {
         //
     }
@@ -154,7 +153,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Category  $Category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -295,6 +294,11 @@ class CategoryController extends Controller
 
             $category = TxnCategory::where('id', $id)->firstOrFail();
 
+            // Delete image from storage
+            if ($category->image_url && Storage::disk('public')->exists('images/categories/' . $category->image_url)) {
+                Storage::disk('public')->delete('images/categories/' . $category->image_url);
+            }
+
             $category->delete();
 
             return redirect(route('admin.categories.all'))->with('messageSuccess', 'Category has been deleted Successfully !');
@@ -304,7 +308,8 @@ class CategoryController extends Controller
             if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
                 return redirect(route('admin.categories.all'))->with('messageDanger', 'Whoops, Category Not Found with id : ' . $id);
             }
-            return redirect(route('admin.categories.all'))->with('messageDanger', 'Error, ' . $ex->getMessage());
+            Log::error(['Delete Category' => $ex->getMessage()]);
+            return redirect(route('admin.categories.all'))->with('messageDanger', 'Error, Something went wrong!');
         }
     }
 

@@ -90,7 +90,7 @@ Route::middleware(['AuthUser'])->group(function () {
     Route::post('/wishlist/remove', 'WishlistController@destroy')->name('wishlist.remove');
 });
 
-Route::prefix('adeasy753')->group(function () {
+Route::prefix('adranayas753')->group(function () {
 
 
     // Route::get('/test-view', [StarttestController::class, 'testlist'])->name('test.start.all');

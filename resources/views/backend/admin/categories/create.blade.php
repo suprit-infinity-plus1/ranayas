@@ -16,7 +16,16 @@
                 id="formAddCategory" enctype="multipart/form-data" novalidate>
                 @csrf
                 <div class="modal-body">
-                    <input type="hidden" name="txtCategoryID" id="txtCategoryID">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input type="hidden" name="txtCategoryID" id="txtCategoryID" value="{{ old('txtCategoryID') }}">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="name">Category Name <span class="text-danger">*</span></label>
@@ -231,6 +240,10 @@
 
         $('.collapsible').addClass('active');
         $('.category_div').show();
+
+        @if ($errors->any() || old('category_name'))
+            $('#myModal').modal('show');
+        @endif
     });
 </script>
 @endsection
