@@ -197,12 +197,12 @@ class OrderController extends Controller
 
                     Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
                         $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
-                        $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
+                        $message->from(config('mail.from.address'), config('app.name'));
                     });
 
                     Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
-                        $message->to('order-confirmation@ranayas.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
-                        $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
+                        $message->to(config('mail.from.address'))->subject('You have a new order ! [order id : ' . $order->id . ']');
+                        $message->from(config('mail.from.address'), config('app.name'));
                     });
                 }
 
@@ -381,12 +381,12 @@ class OrderController extends Controller
 
                 Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
                     $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
-                    $message->from('order-confirmation@ranayas.com', 'Easy Fit Hearing');
+                    $message->from(config('mail.from.address'), config('app.name'));
                 });
 
                 Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
-                    $message->to('order-confirmation@ranayas.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
-                    $message->from('order-confirmation@ranayas.com', 'Easy Fit Hearing');
+                    $message->to(config('mail.from.address'))->subject('You have a new order ! [order id : ' . $order->id . ']');
+                    $message->from(config('mail.from.address'), config('app.name'));
                 });
 
                 Cart::clear();

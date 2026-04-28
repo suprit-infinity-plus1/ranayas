@@ -22,6 +22,27 @@
     <link rel="stylesheet" href="{!! asset('admin/bundles/summernote/summernote-bs4.css') !!}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
     @notifyCss
+    <style>
+        #laravel-notify,
+        #laravel-notify .notify,
+        #laravel-notify .notify.fixed,
+        .notify-alert,
+        .drake-alert,
+        .smiley-alert,
+        .connectify-alert {
+            position: fixed !important;
+            z-index: 99999 !important;
+            top: 20px !important;
+            right: 20px !important;
+            left: auto !important;
+        }
+
+        #laravel-notify .notify {
+            inset: 0 auto auto 0 !important;
+            width: auto !important;
+            min-width: 420px !important;
+        }
+    </style>
     @yield('extracss')
 </head>
 
@@ -358,6 +379,7 @@
     </script>
     @yield('extrajs')
     @include('notify::components.notify')
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @notifyJs
 </body>
 
