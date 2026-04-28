@@ -62,12 +62,14 @@ class LoginController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'mobile' => 'required|digits:10|unique:txn_users,mobile',
-            'email' => 'required|email|max:191|unique:txn_users,email',
-            'password' => 'required',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'mobile' => 'required|digits:10|unique:txn_users,mobile',
+                'email' => 'required|email|max:191|unique:txn_users,email',
+                'password' => 'required',
+            ],
             [
                 'name.required' => 'Please Enter Name',
                 'mobile.required' => 'Please Enter Mobile Number',
@@ -77,7 +79,8 @@ class LoginController extends Controller
                 'password.required' => 'Please Enter Password',
                 'email.unique' => 'Email Already Registered with us',
                 'mobile.unique' => 'Mobile Already Registered with us',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Register Failed', $validator->errors()->first());
@@ -103,7 +106,7 @@ class LoginController extends Controller
 
         Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
             $message->to($user['email'])->subject('Easy Fit Hearing, One Time Password(OTP)');
-            $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+            $message->from('info@ranayas.com', 'Easy Fit Hearing');
         });
 
         return redirect()->action('UserAuth\LoginController@otp');
@@ -125,7 +128,7 @@ class LoginController extends Controller
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user['email'])->subject('Easy Fit Hearing, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+                $message->from('info@ranayas.com', 'Easy Fit Hearing');
             });
             connectify('success', 'Resend Otp', 'Otp has been resend on registed mobile and email');
             return redirect()->action('UserAuth\LoginController@otp');
@@ -139,12 +142,15 @@ class LoginController extends Controller
 
     public function verifyOTP(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'otp' => 'required|max:6',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'otp' => 'required|max:6',
+            ],
             [
                 'otp.required' => 'Please Enter OTP',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Invalid Otp', $validator->errors()->first());
@@ -155,9 +161,10 @@ class LoginController extends Controller
 
         if ($userData['otp'] == $request->otp) {
 
-            $user = TxnUser::updateOrCreate([
-                'email' => $userData['email'],
-            ],
+            $user = TxnUser::updateOrCreate(
+                [
+                    'email' => $userData['email'],
+                ],
                 [
 
                     'name' => $userData['name'],
@@ -169,11 +176,13 @@ class LoginController extends Controller
                     'otp' => null,
                     'last_login' => \Carbon\Carbon::now(),
                     'is_subcribed' => true,
-                ]);
+                ]
+            );
 
-            Subscriber::updateOrCreate([
-                'email' => $userData['email'],
-            ],
+            Subscriber::updateOrCreate(
+                [
+                    'email' => $userData['email'],
+                ],
                 [
                     'email' => $userData['email'],
                     'status' => true,
@@ -202,14 +211,17 @@ class LoginController extends Controller
 
     public function otpLogin(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'mobile' => 'required|digits:10|exists:txn_users,mobile',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'mobile' => 'required|digits:10|exists:txn_users,mobile',
+            ],
             [
                 'mobile.required' => 'Please Enter Mobile Number',
                 'mobile.digits' => 'Please Enter 10 digits Mobile Number',
                 'mobile.exists' => 'Mobile Number does Not exists in our records !',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Otp Login', $validator->errors()->first());
@@ -237,7 +249,7 @@ class LoginController extends Controller
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user['email'])->subject('Easy Fit Hearing, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+                $message->from('info@ranayas.com', 'Easy Fit Hearing');
             });
 
             connectify('success', 'Otp Send', 'Otp has been sent on mobile & email !');

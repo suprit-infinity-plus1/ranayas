@@ -29,8 +29,8 @@
                             <h2 class="text-left mb-1 mt-3 fs-3 fw-normal">After Shipment :</h2>
                             <p class="text-secondary lh-base">Incase you change your mind and wish to cancel an order that
                                 has been
-                                shipped or out for Delivery, email us at <a
-                                    href="mailto:info@easy.in">info@easyfithearing.com</a>.</p>
+                                shipped or out for Delivery, email us at <a href="mailto:info@easy.in">info@ranayas.com</a>.
+                            </p>
 
                             <div class="divider mt-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 256 256">
@@ -64,7 +64,7 @@
                             <p class="text-secondary lh-base">Incase you change your mind and wish to cancel an order that
                                 has not
                                 been shipped, immediately email us at <a
-                                    href="mailto:info@easyfithearing.com">info@easyfithearing.com</a>.
+                                    href="mailto:info@ranayas.com">info@ranayas.com</a>.
                             </p>
                             <p class="text-secondary lh-base">In such circumstances the order will be cancelled and the
                                 total money
@@ -102,25 +102,26 @@
 
                             <h4 class="fs-6 fw-normal lh-base mt-3">2] Can I cancel the order ?</h4>
                             <p class="text-secondary lh-base">
-                            A] Yes. Cancellation is possible in both “After Shipment “ and “ Before Shipment “. For more
-                            details kindly check Cancellation Policy.
+                                A] Yes. Cancellation is possible in both “After Shipment “ and “ Before Shipment “. For more
+                                details kindly check Cancellation Policy.
                             </p>
 
                             <h4 class="fs-6 fw-normal lh-base mt-3">3] Procedure to cancel Order ?</h4>
                             <p class="text-secondary lh-base">
-                            A] Kindly mail us on <a href="mailto:info@easyfithearing.com">info@easyfithearing.com</a>
-                            along with your order ID that you wish to cancel your order.
+                                A] Kindly mail us on <a href="mailto:info@ranayas.com">info@ranayas.com</a>
+                                along with your order ID that you wish to cancel your order.
                             </p>
-                            
+
                             <h4 class="fs-6 fw-normal lh-base mt-3">4] When will I get my money refunded post Cancellation
                                 of Order ?</h4>
 
                             <p class="text-secondary lh-base">
-                            A] Incase of “Before Shipment “We initiate the refund immediately upon cancellations. The
-                            time for the refund to reflect in your source account might vary depending on method of
-                            Payment and it will be refunded in 48 to 72 Business Hours.
+                                A] Incase of “Before Shipment “We initiate the refund immediately upon cancellations. The
+                                time for the refund to reflect in your source account might vary depending on method of
+                                Payment and it will be refunded in 48 to 72 Business Hours.
                             </p>
-                            <p class="text-secondary lh-base mt-1">However incase of “After Shipment “ only after inspection we
+                            <p class="text-secondary lh-base mt-1">However incase of “After Shipment “ only after inspection
+                                we
                                 will return your balance money
                                 after deducting Shipping Charges and Return Expenses within 10 to 15 Working Days after
                                 cancellation request is duly processed by our Team.</p>

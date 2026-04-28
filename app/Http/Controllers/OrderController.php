@@ -197,12 +197,12 @@ class OrderController extends Controller
 
                     Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
                         $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
-                        $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+                        $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
                     });
 
                     Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
-                        $message->to('order-confirmation@easyfithearing.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
-                        $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+                        $message->to('order-confirmation@ranayas.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
+                        $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
                     });
                 }
 
@@ -217,7 +217,7 @@ class OrderController extends Controller
                 $transaction_data = array(
                     'merchantId' => env('PHONEPE_MERCHANT_ID'),
                     'merchantTransactionId' => $order->id,
-                    'amount' =>  $balance * 100,
+                    'amount' => $balance * 100,
                     "merchantUserId" => strval($user->id),
                     "param1" => strval($user->id),
                     'redirectUrl' => route('paytm.callback'),
@@ -381,12 +381,12 @@ class OrderController extends Controller
 
                 Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
                     $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
-                    $message->from('order-confirmation@easyfithearing.com', 'Easy Fit Hearing');
+                    $message->from('order-confirmation@ranayas.com', 'Easy Fit Hearing');
                 });
 
                 Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
-                    $message->to('order-confirmation@easyfithearing.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
-                    $message->from('order-confirmation@easyfithearing.com', 'Easy Fit Hearing');
+                    $message->to('order-confirmation@ranayas.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
+                    $message->from('order-confirmation@ranayas.com', 'Easy Fit Hearing');
                 });
 
                 Cart::clear();
@@ -456,12 +456,12 @@ class OrderController extends Controller
 
         //             Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
         //                 $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
-        //                 $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+        //                 $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
         //             });
 
         //             Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
-        //                 $message->to('order-confirmation@easyfithearing.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
-        //                 $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+        //                 $message->to('order-confirmation@ranayas.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
+        //                 $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
         //             });
 
         //             Cart::clear();

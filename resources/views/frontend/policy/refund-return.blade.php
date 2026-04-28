@@ -29,7 +29,7 @@
 
                             <p class="text-secondary lh-base">
                                 With our policy of ensuring customer satisfaction, this return and refund Policy of
-                                www.easyfithearing.com list procedures and policies in accepting Product returns, once a
+                                www.ranayas.com list procedures and policies in accepting Product returns, once a
                                 Product has been delivered to a customer after purchase from our website. Any return of
                                 Products by customer shall be governed by and subject to the terms and conditions set in
                                 this Return and Refund Policy.
@@ -135,7 +135,7 @@
                                 within 72 Hrs of receiving the order:</p>
                             <ul>
                                 <li><strong>Step 1:</strong> Contact our Customer Support team via email (<a
-                                        href="mailto:info@easyfithearing.com">info@easyfithearing.com</a>)
+                                        href="mailto:info@ranayas.com">info@ranayas.com</a>)
                                     within 72 hrs from the time of receiving the order.</a>) within 72 hrs from the time of
                                     receiving the order.</li>
                                 <li><strong>Step 2:</strong> Kindly share your Invoice number and an image of the product.
@@ -174,7 +174,7 @@
                             <h4 class="fs-6 fw-normal lh-base mt-3">1] How do I return my Product ?</h4>
                             <p class="text-secondary lh-base">
                                 A] Incase you wish to return your product kindly send us email on <a
-                                    href="mailto:info@easyfithearing.com">info@easyfithearing.com</a>
+                                    href="mailto:info@ranayas.com">info@ranayas.com</a>
                                 Along with your Order ID and reason for return.
                             </p>
 
@@ -186,7 +186,8 @@
                                 partner.
                             </p>
 
-                            <h4 class="fs-6 fw-normal lh-base mt-3">3] Will I be refunded the shipping charges incase of return ?
+                            <h4 class="fs-6 fw-normal lh-base mt-3">3] Will I be refunded the shipping charges incase of
+                                return ?
                             </h4>
                             <p class="text-secondary lh-base">
                                 A] No we deduct Shipping Charges from your paid amount.
@@ -199,11 +200,12 @@
                                 refund your amount in 10 to 15 days.
                             </p>
 
-                            <h4 class="fs-6 fw-normal lh-base mt-3">5] I have still not received my refund Amount kindly help ?
+                            <h4 class="fs-6 fw-normal lh-base mt-3">5] I have still not received my refund Amount kindly
+                                help ?
                             </h4>
                             <p class="text-secondary lh-base">
                                 A] We apologize for delay and request you to send a mail with subject : “Urgent Refund
-                                Pending” to <a href="mailto:info@easyfithearing.com">info@easyfithearing.com</a> with your
+                                Pending” to <a href="mailto:info@ranayas.com">info@ranayas.com</a> with your
                                 Order
                                 Number and we shall do the needful.
                             </p>

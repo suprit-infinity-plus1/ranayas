@@ -41,13 +41,15 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'product_id' => 'required|integer|exists:txn_products,id',
-            'review_date' => 'required|date_format:Y-m-d',
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string|max:255',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'product_id' => 'required|integer|exists:txn_products,id',
+                'review_date' => 'required|date_format:Y-m-d',
+                'rating' => 'required|integer|min:1|max:5',
+                'comment' => 'required|string|max:255',
+            ],
             [
                 'name.required' => 'Please Enter Customer Name',
                 'product_id.required' => 'Please Select Product to Rate',
@@ -59,14 +61,15 @@ class ReviewController extends Controller
                 'rating.min' => 'Please Select Min 1 Rating',
                 'rating.max' => 'Please Select Max 5 Rating',
                 'comment.required' => 'Please Enter Your Review',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Add Review', $validator->errors()->first());
             return redirect(route('admin.reviews.all'))->withInput();
         }
 
-        $request['email'] = 'admin@easyfithearing.com';
+        $request['email'] = 'admin@ranayas.com';
 
         TxnReview::updateOrCreate([
             'product_id' => $request->product_id,
@@ -136,14 +139,16 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'status' => 'required',
-            'product_id' => 'required|integer|exists:txn_products,id',
-            'review_date' => 'required|date_format:Y-m-d',
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string|max:255',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'status' => 'required',
+                'product_id' => 'required|integer|exists:txn_products,id',
+                'review_date' => 'required|date_format:Y-m-d',
+                'rating' => 'required|integer|min:1|max:5',
+                'comment' => 'required|string|max:255',
+            ],
             [
                 'name.required' => 'Please Enter Customer Name',
                 'status.required' => 'Please Select Status',
@@ -156,7 +161,8 @@ class ReviewController extends Controller
                 'rating.min' => 'Please Select Min 1 Rating',
                 'rating.max' => 'Please Select Max 5 Rating',
                 'comment.required' => 'Please Enter Your Review',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Update Review', $validator->errors()->first());

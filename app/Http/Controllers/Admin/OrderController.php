@@ -140,12 +140,14 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
-            'status' => 'required|string',
-        ],
+        $request->validate(
+            [
+                'status' => 'required|string',
+            ],
             [
                 'status' => 'Please Select Status',
-            ]);
+            ]
+        );
         try {
 
             $order = TxnOrder::where('id', $id)->with('user', 'details')->firstOrFail();
@@ -183,7 +185,7 @@ class OrderController extends Controller
                 $pdf = PDF::loadView('backend.admin.invoices.download', ['invoice' => $order]);
 
                 Mail::send(['html' => 'backend.admin.invoices.empty'], ['invoice' => $order], function ($message) use ($order, $pdf) {
-                    $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+                    $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
                     $message->to($order->user->email, $order->user->name);
                     $message->subject('Invoice copy of Order No ' . $order->id . ' From Aura Hearing Care');
                     $message->attachData($pdf->output(), 'invoice_no_' . $order->id . '.pdf');
@@ -212,12 +214,14 @@ class OrderController extends Controller
     public function returnUpdate(Request $request, $id)
     {
 
-        $request->validate([
-            'return_status' => 'required|string',
-        ],
+        $request->validate(
+            [
+                'return_status' => 'required|string',
+            ],
             [
                 'return_status' => 'Please Select Status',
-            ]);
+            ]
+        );
         try {
 
             $order = TxnOrder::where('id', $id)->with('user')->firstOrFail();

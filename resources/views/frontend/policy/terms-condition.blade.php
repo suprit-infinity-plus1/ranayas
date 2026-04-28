@@ -130,7 +130,7 @@
                                 objection, the Company,
                                 its officers, partners, employees and agents from and against any claims, actions and/or
                                 demands and/or liabilities and/or losses and/or damages whatsoever arising from or resulting
-                                from their use of <a href="http://www.easyfithearing.com">www.easyfithearing.com</a> heir
+                                from their use of <a href="http://www.ranayas.com">www.ranayas.com</a> heir
                                 breach
                                 of the terms . </p>
                             
@@ -193,11 +193,11 @@
                             </div>
                             
                             <h2 class="text-left mb-1 mt-3 fs-3 fw-normal">Children</h2>
-                            <p class="color--light-3 text-secondary lh-base">easyfithearing.com is available only to persons
+                            <p class="color--light-3 text-secondary lh-base">ranayas.com is available only to persons
                                 who can form a legally
                                 binding contract under
                                 the Indian Contract Act, 1872. If you are a minor i.e. under the age of 18 years, you may
-                                use easyfithearing.com only with the involvement of a parent or guardian.
+                                use ranayas.com only with the involvement of a parent or guardian.
                             </p>
                             
                             <div class="divider mt-4">

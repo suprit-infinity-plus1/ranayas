@@ -84,9 +84,9 @@
 
                 <div class="popup-body">
 
-                    <div class="img-popup mb-5">
-                        <img width="100%" src="{!! asset('assets/image/logo/logoo.png') !!}" alt="img">
-                    </div>
+                    {{-- <div class="img-popup mb-5">
+                        <img width="300px" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="img">
+                    </div> --}}
                     <form id="modal-form-ctc" name="modal_contact_form" class="contact-form" action="javascript:void(0)"
                         method="post">
                         <div class="popup mb-5">
@@ -177,7 +177,7 @@
                                 <!-- logo start -->
                                 <div class="header-element logo">
                                     <a href="{{ route('index') }}">
-                                        <img src="{!! asset('assets/image/logo/logoo.png') !!}" alt="logo" class="img-fluid">
+                                        <img src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="logo" class="img-fluid">
                                     </a>
                                 </div>
                                 <!-- logo end -->
@@ -534,7 +534,7 @@
                                 <ul class="footer-ul">
                                     <li class="footer-li footer-logo">
                                         <a href="{{ route('index') }}">
-                                            <img class="img-fluid" src="{!! asset('assets/image/logo/logoo.png') !!}" alt="">
+                                            <img class="img-fluid" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="">
                                         </a>
                                     </li>
                                     <li class="footer-li footer-contact">
@@ -553,8 +553,8 @@
                                                 <i class="ion-ios-email"></i>
                                             </li>
                                             <li class="footer-info">
-                                                <a href="mailto: info@easyfithearingcom">
-                                                    info@easyfithearing.com</a>
+                                                <a href="mailto: info@ranayas.com">
+                                                    info@ranayas.com</a>
                                             </li>
                                         </ul>
                                     </li>

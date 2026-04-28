@@ -92,14 +92,17 @@ class ReturnticketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'description' => 'nullable|string',
-            'status' => 'required|integer|max:1',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'description' => 'nullable|string',
+                'status' => 'required|integer|max:1',
+            ],
             [
                 'status.required' => 'Please Select Status',
                 'status.max' => 'Invalid status provided',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -122,7 +125,7 @@ class ReturnticketController extends Controller
                 ]);
 
                 Mail::send(['html' => 'backend.mails.ticket-closed'], ['ticket' => $ticket], function ($message) use ($ticket) {
-                    $message->from('info@easyfithearing.com', 'Easy Fit Hearing ');
+                    $message->from('info@ranayas.com', 'Easy Fit Hearing ');
                     $message->to($ticket->email, 'Easy Heat Hearing');
                     $message->subject('Closed:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
                 });

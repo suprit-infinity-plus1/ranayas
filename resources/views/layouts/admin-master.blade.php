@@ -80,7 +80,7 @@
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <a href="{{ route('admin.dashboard') }}">
-                            <img alt="image" src="{!! asset('assets/image/logo/logoo.png') !!}" class="header-logo" />
+                            <img alt="image" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" class="header-logo" />
                             {{-- <span class="logo-name">Easy Fit Hearing</span> --}}
                         </a>
                     </div>

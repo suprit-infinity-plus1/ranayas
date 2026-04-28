@@ -18,14 +18,17 @@ class UserResetPassword extends Controller
 
     public function resetPassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:txn_users,email',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email|exists:txn_users,email',
+            ],
             [
                 'email.required' => 'Please Enter Email',
                 'email.email' => 'Please Enter Proper Email',
                 'email.exists' => 'Invalid Email ID !',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -46,7 +49,7 @@ class UserResetPassword extends Controller
 
             Mail::send(['html' => 'backend.mails.password-reset-otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user->email)->subject('Aura Hearing Care, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Aura Hearing Care');
+                $message->from('info@ranayas.com', 'Aura Hearing Care');
             });
 
             session()->put('user', $user);
@@ -92,7 +95,7 @@ class UserResetPassword extends Controller
 
             Mail::send(['html' => 'backend.mails.password-reset-otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user->email)->subject('Aura Hearing Care, One Time Password(OTP)');
-                $message->from('info@easyfithearing.com', 'Aura Hearing Care');
+                $message->from('info@ranayas.com', 'Aura Hearing Care');
             });
 
             return redirect()->action('UserResetPassword@sendOtp');
@@ -114,20 +117,22 @@ class UserResetPassword extends Controller
 
     public function verifyOTP(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'otp' => 'required|max:6',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'otp' => 'required|max:6',
+            ],
             [
                 'otp.required' => 'Please Enter OTP',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
             return back()->withInput();
         }
 
-        try
-        {
+        try {
 
             $userData = session()->get('user');
 
@@ -167,26 +172,28 @@ class UserResetPassword extends Controller
 
     public function reset(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:191|exists:txn_users,email',
-            'password' => 'required_with:con_password|string|max:191',
-            'con_password' => 'required_with:password|same:password|string|max:191',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email|max:191|exists:txn_users,email',
+                'password' => 'required_with:con_password|string|max:191',
+                'con_password' => 'required_with:password|same:password|string|max:191',
+            ],
             [
                 'email.required' => 'Please Enter Email ID',
                 'email.exists' => 'Please Enter Valid Email ID',
                 'password.required_with' => 'Please Enter Confirm Password to Reset Password',
                 'con_password.required_with' => 'Please Enter Password to Reset Password',
                 'con_password.same' => 'Please Enter Confirm Password same as Password',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
             return back()->withInput();
         }
 
-        try
-        {
+        try {
 
             $userData = session()->get('user');
 
