@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'sms' => [
+        'user' => env('SMS_USER'),
+        'password' => env('SMS_PASSWORD'),
+        'senderid' => env('SMS_SENDER_ID'),
+        'route' => env('SMS_ROUTE'),
+        'peid' => env('SMS_PEID'),
+    ],
+
 ];

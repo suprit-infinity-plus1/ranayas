@@ -11,7 +11,7 @@ use Lang;
 class LoginController extends Controller
 {
 
-    public function __contruct()
+    public function __construct()
     {
         $this->middleware('guard:admin')->except('logout');
     }

@@ -65,8 +65,8 @@ class TicketController extends Controller
         ]);
 
         Mail::send(['html' => 'backend.mails.ticket'], ['ticket' => $ticket], function ($message) use ($ticket) {
-            $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
-            $message->to($ticket->email, 'Easy Fit Hearing');
+            $message->from(config('mail.from.address'), config('app.name'));
+            $message->to($ticket->email, config('app.name'));
             $message->subject('RE:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
         });
 
@@ -152,8 +152,8 @@ class TicketController extends Controller
                 ]);
 
                 Mail::send(['html' => 'backend.mails.ticket-closed'], ['ticket' => $ticket], function ($message) use ($ticket) {
-                    $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
-                    $message->to($ticket->email, 'Easy Fit Hearing');
+                    $message->from(config('mail.from.address'), config('app.name'));
+                    $message->to($ticket->email, config('app.name'));
                     $message->subject('Closed:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
                 });
 

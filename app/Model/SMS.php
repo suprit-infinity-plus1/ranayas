@@ -8,14 +8,24 @@ use \GuzzleHttp\Client;
 
 class SMS implements ShouldQueue
 {
-    public static $user = "KANWARJI";
-    public static $password = "ABC@789";
-    public static $senderid = "KNWRJI";
-    public static $route = "06";
-    public static $peid = "1501397000000038703";
+    public static $user;
+    public static $password;
+    public static $senderid;
+    public static $route;
+    public static $peid;
+
+    public static function init()
+    {
+        self::$user = config('services.sms.user');
+        self::$password = config('services.sms.password');
+        self::$senderid = config('services.sms.senderid');
+        self::$route = config('services.sms.route');
+        self::$peid = config('services.sms.peid');
+    }
 
     public static function send($mobile, $text, $templateid = '')
     {
+        self::init();
         $val = Validator::make(['mobile' => $mobile, 'text' => $text], [
             'mobile' => 'required|digits:10',
             'text' => 'required|string|max:250',

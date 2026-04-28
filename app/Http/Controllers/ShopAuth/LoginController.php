@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Lang;
 class LoginController extends Controller
 {
 
-    public function __contruct()
+    public function __construct()
     {
         $this->middleware('guard:shop')->except('logout');
     }
