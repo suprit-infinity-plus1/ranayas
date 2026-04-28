@@ -1411,7 +1411,7 @@ button.navbar-toggler span.line::after{
 .caption .rating i.c-star,
 .caption .rating i.d-star,
 .caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .caption .rating i:last-child{
     margin-right: 0px;
@@ -2026,7 +2026,7 @@ button.navbar-toggler span.line::after{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;

@@ -134,9 +134,9 @@
 <body>
     <div class="container">
         <div>
-            <a href="{{ url('/') }}" title="Aura Hearing Care">
-                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Aura Hearing Care" />
-                {{-- Easy Fit Hearing --}}
+            <a href="{{ url('/') }}" title="Ranayas">
+                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Ranayas" />
+                {{-- Ranayas --}}
             </a>
         </div>
         <div class="row">
@@ -150,7 +150,7 @@
                 <hr>
                 <div class="heading">
                     <h3>Your One Time Password(OTP) is : <span>{{ $user['otp'] }}</span><br> for more details please <a
-                            href="{{ url('/') }}/reach-us" title="Aura Hearing Care">Reach Us</a></h3>
+                            href="{{ url('/') }}/reach-us" title="Ranayas">Reach Us</a></h3>
                 </div>
 
                 <hr>

@@ -56,9 +56,9 @@ class EnquiryController extends Controller
         ]);
 
         Mail::send(['html' => 'backend.mails.enquiry'], ['data' => $data], function ($message) {
-            $message->from('contact@ranayas.com', 'EasyFit Hearing Aids ');
-            $message->to('contact@ranayas.com', 'EasyFit Hearing Aids');
-            $message->subject('New Enquiry From EasyFit Hearing Aids');
+            $message->from('contact@ranayas.com', 'Ranayas');
+            $message->to('contact@ranayas.com', 'Ranayas');
+            $message->subject('New Enquiry From Ranayas');
         });
 
         connectify('success', 'Enquiry Success', 'Thank you for contacting us, we\'ll get back to you soon !');

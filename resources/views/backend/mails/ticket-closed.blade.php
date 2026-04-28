@@ -134,9 +134,9 @@
 <body>
     <div class="container">
         <div>
-            <a href="{{ url('/') }}" title="Aura Hearing Care">
-                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Aura Hearing Care" />
-                {{-- Easy Fit Hearing --}}
+            <a href="{{ url('/') }}" title="Ranayas">
+                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Ranayas" />
+                {{-- Ranayas --}}
             </a>
         </div>
         <div class="row">
@@ -161,7 +161,7 @@
                     <hr />
                     <pre>
                     Thank you & Ragards,
-                                    <a href="{{ url('/') }}">Aura Hearing Care Team</a>
+                                    <a href="{{ url('/') }}">Ranayas Team</a>
                     </pre>
 
                 </div>

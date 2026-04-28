@@ -39,12 +39,14 @@ class BulkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'mobile' => 'required|digits_between:8,12',
-            'email' => 'required|email|max:191',
-            'message' => 'required|string',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'mobile' => 'required|digits_between:8,12',
+                'email' => 'required|email|max:191',
+                'message' => 'required|string',
+            ],
             [
                 'name.required' => 'Please Enter Your Name',
                 'mobile.required' => 'Please Enter Your Mobile Number',
@@ -52,7 +54,8 @@ class BulkOrderController extends Controller
                 'email.required' => 'Please Enter Email ID',
                 'email.email' => 'Please Enter Proper Email ID',
                 'message.required' => 'Please Enter Message',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -67,9 +70,9 @@ class BulkOrderController extends Controller
         ]);
 
         Mail::send(['html' => 'backend.mails.enquiry'], ['data' => $data], function ($message) {
-            $message->from('abhishekgupta5544@gmail.com', 'Aura Hearing Care');
-            $message->to('abhishekgupta5544@gmail.com', 'Aura Hearing Care');
-            $message->subject('New Bulk Order Enquiry From Aura Hearing Care');
+            $message->from('abhishekgupta5544@gmail.com', 'Ranayas');
+            $message->to('abhishekgupta5544@gmail.com', 'Ranayas');
+            $message->subject('New Bulk Order Enquiry From Ranayas');
         });
 
         connectify('success', 'Enquiry Success', 'Thank you for contacting us, we\'ll get back to you soon !');

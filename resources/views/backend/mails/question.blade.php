@@ -159,14 +159,14 @@
 
     <div class="container">
         <div>
-            <h3>Aura Hearing Gaids</h3>
+            <h3>Ranayas</h3>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="alert alert-success">
                     <h3>
-                        Hi, You have a new Question of {{ $product->title }} on {{ date('d-M-Y h:i A',
-                        strtotime($qna->created_at)) }} !
+                        Hi, You have a new Question of {{ $product->title }} on
+                        {{ date('d-M-Y h:i A', strtotime($qna->created_at)) }} !
                     </h3>
                 </div>
                 <table class="table table-bordered table-responsive">

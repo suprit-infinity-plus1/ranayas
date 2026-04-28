@@ -1195,7 +1195,7 @@ button.navbar-toggler span.line::after{
     background-color: #c1c1c1;
 }
 .mini-cart ul.cart-item-loop::-webkit-scrollbar-thumb:hover{
-    background-color: #d25200;
+    background-color: var(--theme-color);
 }
 .mini-cart ul.cart-item-loop li.cart-item{
     display: flex;
@@ -1818,7 +1818,7 @@ button.navbar-toggler span.line::after{
 .tab-product .tab-caption .rating i.c-star,
 .tab-product .tab-caption .rating i.d-star,
 .tab-product .tab-caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .tab-product .tab-caption .rating i:last-child{
     margin-right: 0px;
@@ -1987,7 +1987,7 @@ button.navbar-toggler span.line::after{
 .caption .rating i.c-star,
 .caption .rating i.d-star,
 .caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .caption .pro-price{
     margin-top: 11px;
@@ -2142,7 +2142,7 @@ a.responsive-collapse span{
     line-height: 1;
 }
 .testimonial-3 .testi-3 .testimonial-area .testi-name span{
-    color: #d25200;
+    color: var(--theme-color);
     margin-top: 15px;
     display: flex;
 }
@@ -2219,7 +2219,7 @@ a.responsive-collapse span{
     color: #ccc;
 }
 .deal .deal-area .deal-caption .deal-rating span i.d-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .deal .deal-area .deal-caption h3.deal-pro-name{
     margin-bottom: 3px;
@@ -2530,7 +2530,7 @@ a.responsive-collapse span{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;
@@ -3070,7 +3070,7 @@ a.scroll:hover span{
     font-size: 18px;
 }
 .pro-page .pro-image .pro-info .rating i.d-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .pro-page .pro-image .pro-info .pro-availabale{
     margin-top: 12px;
@@ -3369,7 +3369,7 @@ a.scroll:hover span{
     padding-top: 30px;
 }
 .pro-page-content .pro-page-tab .tab-content .tab-pane .customer-reviews span.p-rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
     font-size: 18px;
 }
 .pro-page-content .pro-page-tab .tab-content .tab-pane .customer-reviews p.review-desck{

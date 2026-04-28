@@ -99,12 +99,12 @@ class ShopController extends Controller
         ]);
 
         Mail::send(['html' => 'backend.mails.shop'], ['shop' => $shop, 'password' => $request->password], function ($message) use ($shop) {
-            $message->from('info@ranayas.com', 'Easy Fit Hearing');
+            $message->from('info@ranayas.com', 'Ranayas');
             $message->to($shop->email, $shop->name);
-            $message->subject('Easy Fit Hearing - Shop Credentials');
+            $message->subject('Ranayas - Dealer Credentials');
         });
 
-        connectify('success', 'Shop Added', 'Shop has been added successfully !');
+        connectify('success', 'Dealer Added', 'Dealer has been added successfully !');
 
         return redirect(route('admin.shops.all'));
     }

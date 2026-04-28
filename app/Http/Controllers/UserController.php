@@ -343,13 +343,13 @@ class UserController extends Controller
                 'description' => 'Applied for Return and Refund against Order ID : ' . $order->id,
             ]);
 
-            SMS::send($order->user->mobile, 'Aura Hearing Care - You have applied for Return and Refund against Order ID : ' . $order->id . ', Stay tuned for approval on ' . route('user.login'));
+            SMS::send($order->user->mobile, 'Ranayas - You have applied for Return and Refund against Order ID : ' . $order->id . ', Stay tuned for approval on ' . route('user.login'));
 
             Mail::send(['html' => 'backend.mails.ticket'], ['ticket' => $ticket], function ($message) use ($ticket) {
-                $message->from('info@ranayas.com', 'Aura Hearing Care');
-                $message->to($ticket->email, 'Aura Hearing Care');
-                $message->bcc('info@ranayas.com', 'Aura Hearing Care');
-                $message->subject('Aura Hearing Care RE:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
+                $message->from('info@ranayas.com', 'Ranayas');
+                $message->to($ticket->email, 'Ranayas');
+                $message->bcc('info@ranayas.com', 'Ranayas');
+                $message->subject('Ranayas RE:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
             });
 
             connectify('success', 'Return Order', 'Order Return applied successfully, stay tuned for approval !');
@@ -386,11 +386,11 @@ class UserController extends Controller
                     'status' => 'Cancelled',
                 ]);
 
-                // SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order ID : ' . $order->id . ', has been Cancelled successfully,  Login for more detail on ' . url('/'));
+                // SMS::send($order->user->mobile, 'Ranayas - Your Order ID : ' . $order->id . ', has been Cancelled successfully,  Login for more detail on ' . url('/'));
 
                 Mail::send(['html' => 'backend.mails.order-cancel'], ['order' => $order], function ($message) use ($order) {
                     $message->to('info@ranayas.com')->subject('Order has been Cancelled ! [order id : ' . $order->id . ']');
-                    $message->from('info@ranayas.com', 'Aura Hearing Care');
+                    $message->from('info@ranayas.com', 'Ranayas');
                 });
 
                 connectify('success', 'Order Cancel', 'Order Cancelled Successfully !');
@@ -441,10 +441,10 @@ class UserController extends Controller
             ]);
 
             Mail::send(['html' => 'backend.mails.ticket'], ['ticket' => $ticket], function ($message) use ($ticket) {
-                $message->from('info@ranayas.com', 'Aura Hearing Care');
-                $message->to($ticket->email, 'Aura Hearing Care');
-                $message->bcc('info@ranayas.com', 'Aura Hearing Care');
-                $message->subject('Aura Hearing Care' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
+                $message->from('info@ranayas.com', 'Ranayas');
+                $message->to($ticket->email, 'Ranayas');
+                $message->bcc('info@ranayas.com', 'Ranayas');
+                $message->subject('Ranayas' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
             });
 
             connectify('success', 'Need Help', 'Your query has been sent successfully, our expert will get in touch with you soon, stay tuned !');

@@ -164,7 +164,7 @@
     <div class="container">
         <div>
             <a href="{{ url('/') }}">
-                <img src="{{ asset('assets/img/logo/logo.png') }}" alt="Aura Hearing Gaids" />
+                <img src="{{ asset('assets/img/logo/logo.png') }}" alt="Ranayas" />
             </a>
         </div>
         <div class="row">

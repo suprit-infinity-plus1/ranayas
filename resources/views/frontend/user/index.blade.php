@@ -1,4 +1,4 @@
-@extends('layouts.master') @section('title','Dashboard') @section('content')
+@extends('layouts.master') @section('title', 'Dashboard') @section('content')
 
 <!-- Breadcrumb area Start -->
 <section class="breadcrumb-area">
@@ -31,8 +31,7 @@
                         <div class="order-pro">
                             <div class="pro-img">
                                 <a href="javascript:void(0)">
-                                    <img src="{!! asset('assets/image/user-dark.png') !!}" alt="img" class="img-fluid"
-                                        width="90">
+                                    <img src="{!! asset('assets/image/user-dark.png') !!}" alt="img" class="img-fluid" width="90">
                                 </a>
                             </div>
                             <div class="order-name">
@@ -90,19 +89,19 @@
                                 <h3 class="heading-tertiary heading-color mb--20">
                                     Hi {{ auth()->user()->name }},
                                 </h3>
-                                <h3>Welcome to the <strong>Easy Fit Hearing</strong></h3>
-                                @if(auth()->user()->last_login)
-                                <p>
-                                    Last Login on
-                                    <strong>{{ auth()->user()->last_login->diffForHumans() }}</strong>
-                                </p>
+                                <h3>Welcome to the <strong>Ranayas</strong></h3>
+                                @if (auth()->user()->last_login)
+                                    <p>
+                                        Last Login on
+                                        <strong>{{ auth()->user()->last_login->diffForHumans() }}</strong>
+                                    </p>
                                 @endif
 
-                                @if(auth()->user()->last_purchase)
-                                <p>
-                                    Your last purchase on
-                                    <strong>{{ auth()->user()->last_purchase->diffForHumans() }}</strong>
-                                </p>
+                                @if (auth()->user()->last_purchase)
+                                    <p>
+                                        Your last purchase on
+                                        <strong>{{ auth()->user()->last_purchase->diffForHumans() }}</strong>
+                                    </p>
                                 @endif
                             </div>
                         </div>

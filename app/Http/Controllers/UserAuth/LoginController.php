@@ -124,7 +124,7 @@ class LoginController extends Controller
 
             $user = $request->session()->get('user');
 
-            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $user['otp'] . ' Easy Fit Hearing Note: this OTP is case sensitive, Do not Share your otp with anyone !');
+            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $user['otp'] . ' Ranayas Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
@@ -253,7 +253,7 @@ class LoginController extends Controller
 
             session(['user' => $user]);
 
-            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Easy Fit Hearing Note: this OTP is case sensitive, Do not Share your otp with anyone !');
+            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Ranayas Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');

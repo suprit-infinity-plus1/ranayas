@@ -15,7 +15,7 @@ Route::
             | routes are loaded by the RouteServiceProvider within a group which
             | contains the "web" middleware group. Now create something great!
             |
-             */
+                */
 
             Route::middleware(['AuthUser'])->group(function () {
 
@@ -91,8 +91,7 @@ Route::
                 Route::post('/wishlist/remove', 'WishlistController@destroy')->name('wishlist.remove');
             });
 
-            Route::prefix('adeasy753')->group(function () {
-Route::prefix('adranayas753')->group(function () {
+            Route::prefix('adranayas753')->group(function () {
 
 
                 // Route::get('/test-view', [StarttestController::class, 'testlist'])->name('test.start.all');

@@ -193,7 +193,7 @@ class OrderController extends Controller
                         'shipment_order_id' => $OrderCreation['order_id'],
                     ]);
 
-                    // SMS::send($order->user->mobile, 'Aura Hearing Care  - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
+                    // SMS::send($order->user->mobile, 'Ranayas  - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
 
                     Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
                         $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
@@ -375,9 +375,9 @@ class OrderController extends Controller
 
                 Delivery::orderCreation($order, $order->user);
 
-                // SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
+                // SMS::send($order->user->mobile, 'Ranayas - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
 
-                // SMS::send('9223324655', 'Aura Hearing Care - New Order Placed with Order No : ' . $order->id);
+                // SMS::send('9223324655', 'Ranayas - New Order Placed with Order No : ' . $order->id);
 
                 Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
                     $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
@@ -450,18 +450,18 @@ class OrderController extends Controller
 
         //             Delivery::orderCreation($order, $order->user);
 
-        //             // SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
+        //             // SMS::send($order->user->mobile, 'Ranayas - Your Order has been placed successfully, Your Order No : ' . $order->id . ' Login for more detail on ' . url('/'));
 
-        //             // SMS::send('9223324655', 'Aura Hearing Care - New Order Placed with Order No : ' . $order->id);
+        //             // SMS::send('9223324655', 'Ranayas - New Order Placed with Order No : ' . $order->id);
 
         //             Mail::send(['html' => 'backend.mails.received'], ['order' => $order], function ($message) use ($order) {
         //                 $message->to($order->user->email)->subject('Your order has been placed successfully ! [order no : ' . $order->id . ']');
-        //                 $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
+        //                 $message->from('order-confirmation@ranayas.com', 'Ranayas');
         //             });
 
         //             Mail::send(['html' => 'backend.mails.admin'], ['order' => $order], function ($message) use ($order) {
         //                 $message->to('order-confirmation@ranayas.com')->subject('You have a new order ! [order id : ' . $order->id . ']');
-        //                 $message->from('order-confirmation@ranayas.com', 'Aura Hearing Care');
+        //                 $message->from('order-confirmation@ranayas.com', 'Ranayas');
         //             });
 
         //             Cart::clear();

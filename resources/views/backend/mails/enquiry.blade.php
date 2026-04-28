@@ -159,14 +159,14 @@
 
     <div class="container">
         <div>
-            <h3>Aura Hearing Care</h3>
+            <h3>Ranayas</h3>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="alert alert-success">
                     <h3>
-                        Hi, You have a new Enquiry from {{ $data->name }} on {{ date('d-M-Y h:i A',
-                        strtotime($data->created_at)) }} !
+                        Hi, You have a new Enquiry from {{ $data->name }} on
+                        {{ date('d-M-Y h:i A', strtotime($data->created_at)) }} !
                     </h3>
                 </div>
                 <table class="table table-bordered table-responsive">
@@ -181,7 +181,7 @@
                             Name :
                         </td>
                         <td>
-                            {{ $data->name}}
+                            {{ $data->name }}
                         </td>
                     </tr>
                     <tr>
@@ -189,7 +189,7 @@
                             Email :
                         </td>
                         <td>
-                            <a href="mailto:{{$data->email}}">{{$data->email}}</a>
+                            <a href="mailto:{{ $data->email }}">{{ $data->email }}</a>
                         </td>
                     </tr>
                     <tr>
@@ -197,25 +197,25 @@
                             Contact No. :
                         </td>
                         <td>
-                            {{$data->mobile}}
+                            {{ $data->mobile }}
                         </td>
                     </tr>
-                    @if($data->subject)
-                    <tr>
-                        <td>
-                            Subject
-                        </td>
-                        <td>
-                            {{$data->subject}}
-                        </td>
-                    </tr>
+                    @if ($data->subject)
+                        <tr>
+                            <td>
+                                Subject
+                            </td>
+                            <td>
+                                {{ $data->subject }}
+                            </td>
+                        </tr>
                     @endif
                     <tr>
                         <td>
                             Message
                         </td>
                         <td>
-                            {{$data->message}}
+                            {{ $data->message }}
                         </td>
                     </tr>
                 </table>

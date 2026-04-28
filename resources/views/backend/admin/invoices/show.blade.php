@@ -215,7 +215,7 @@
                     <tr class="pb-20">
                         <td colspan="2">
                             <div class="text-center">
-                                <p class="company_title text-center"> Aura Hearing Care </p>
+                                <p class="company_title text-center"> Ranayas </p>
                                 <p class="company_address"> G1 sagar chamber saini enclave Vikas mark, New Delhi
                                     110092.</p>
                             </div>

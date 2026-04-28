@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Aura Hearing Care - Shop Credentials</title>
+    <title>Ranayas - Shop Credentials</title>
     <style>
         * {
             font-family: 'Segoe UI';
@@ -163,7 +163,7 @@
 
     <div class="container">
         <div>
-            <h3>Aura Hearing Care</h3>
+            <h3>Ranayas</h3>
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -233,25 +233,25 @@
                             {{ $shop->mobile }}
                         </td>
                     </tr>
-                    @if($shop->account_no)
-                    <tr>
-                        <td>
-                            Account No:
-                        </td>
-                        <td>
-                            {{ $shop->account_no }}
-                        </td>
-                    </tr>
+                    @if ($shop->account_no)
+                        <tr>
+                            <td>
+                                Account No:
+                            </td>
+                            <td>
+                                {{ $shop->account_no }}
+                            </td>
+                        </tr>
                     @endif
-                    @if($shop->ifsc_code)
-                    <tr>
-                        <td>
-                            IFSC Code:
-                        </td>
-                        <td>
-                            {{ $shop->ifsc_code }}
-                        </td>
-                    </tr>
+                    @if ($shop->ifsc_code)
+                        <tr>
+                            <td>
+                                IFSC Code:
+                            </td>
+                            <td>
+                                {{ $shop->ifsc_code }}
+                            </td>
+                        </tr>
                     @endif
                     <tr>
                         <td>

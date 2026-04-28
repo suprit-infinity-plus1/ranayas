@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title') || Aura Hearing Care</title>
+    <title>@yield('title') || Ranayas</title>
 
 
 
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{!! asset('admin/css/app.min.css') !!}">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="{!! asset('admin/css/custom.css') !!}">
-    <link rel="shortcut icon" href="{!! asset('assets/image/logo/favicon.ico') !!}">
+    <link rel="shortcut icon" href="{!! asset('assets/image/logo/favicon-32x32.png') !!}">
     <link rel="stylesheet" href="{!! asset('admin/bundles/select2/dist/css/select2.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('admin/bundles/bootstrap-daterangepicker/daterangepicker.css') !!}">
     <link rel="stylesheet" href="{!! asset('admin/css/style.css') !!}">
@@ -102,7 +102,7 @@
                     <div class="sidebar-brand">
                         <a href="{{ route('admin.dashboard') }}">
                             <img alt="image" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" class="header-logo" />
-                            {{-- <span class="logo-name">Easy Fit Hearing</span> --}}
+                            {{-- <span class="logo-name">Ranayas</span> --}}
                         </a>
                     </div>
                     <ul class="sidebar-menu">
@@ -342,7 +342,7 @@
             <footer class="main-footer bg-dark">
                 <div class="footer-left">
                     Copyright &copy; {{ date('Y') == '2022' ? '2022' : '2022 - ' . date('Y') }}
-                    <div class="bullet"></div> Aura Hearing Care
+                    <div class="bullet"></div> Ranayas
                     {{-- - Designed & Developed By <a href="https://www.sanjaresolutions.com" target="_blank">Sanjar E
                         Solutions</a> --}}
                 </div>

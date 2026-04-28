@@ -1645,7 +1645,7 @@ ul.nav.nav-tabs li.nav-item a.nav-link:hover{
 .tab-product .tab-caption .rating i.c-star,
 .tab-product .tab-caption .rating i.d-star,
 .tab-product .tab-caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .tab-product .tab-caption .rating i:last-child{
     margin-right: 0px;
@@ -1861,7 +1861,7 @@ ul.nav.nav-tabs li.nav-item a.nav-link:hover{
     color: #e2e2e2;
 }
 .testimonials-area .testimonials-main .testimonials-item .testi-desc .rating span.author-review i.rating-color {
-    color: #d25200;
+    color: var(--theme-color);
 }
 .testimonials-area .testimonials-main .swiper-buttons a.swiper-prev-testi {
     left: -120px;
@@ -2169,7 +2169,7 @@ ul.nav.nav-tabs li.nav-item a.nav-link:hover{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;

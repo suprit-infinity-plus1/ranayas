@@ -799,7 +799,7 @@ button.navbar-toggler span.line::after{
     background-color: #c1c1c1;
 }
 .mini-cart ul.cart-item-loop::-webkit-scrollbar-thumb:hover{
-    background-color: #d25200;
+    background-color: var(--theme-color);
 }
 .mini-cart ul.cart-item-loop li.cart-item{
     display: flex;
@@ -1664,7 +1664,7 @@ button.navbar-toggler span.line::after{
 .tab-product .tab-caption .rating i.c-star,
 .tab-product .tab-caption .rating i.d-star,
 .tab-product .tab-caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .tab-product .tab-caption .rating i:last-child{
     margin-right: 0px;
@@ -1751,7 +1751,7 @@ button.navbar-toggler span.line::after{
     margin-bottom: 10px;
 }
 .testimonial-6 .testi-6 .testimonial-content .testimonial-area .testi-name span i{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .testimonial-6 .testi-6 .testimonial-content p{
     color: #999;
@@ -1897,7 +1897,7 @@ button.navbar-toggler span.line::after{
 .caption .rating i.c-star,
 .caption .rating i.d-star,
 .caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .caption .rating i:last-child{
     margin-right: 0px;
@@ -2211,7 +2211,7 @@ button.navbar-toggler span.line::after{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;
@@ -2807,7 +2807,7 @@ a.responsive-collapse span{
     font-size: 18px;
 }
 .pro-page .pro-image .pro-info .rating i.d-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .pro-page .pro-image .pro-info .pro-availabale{
     margin-top: 12px;
@@ -3082,7 +3082,7 @@ a.responsive-collapse span{
     padding-top: 30px;
 }
 .pro-page-content .pro-page-tab .tab-content .tab-pane .customer-reviews span.p-rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
     font-size: 18px;
 }
 .pro-page-content .pro-page-tab .tab-content .tab-pane .customer-reviews p.review-desck{

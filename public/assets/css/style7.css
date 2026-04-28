@@ -1535,7 +1535,7 @@ button.navbar-toggler span.line::after{
 .h-t-pro .caption .rating i.c-star,
 .h-t-pro .caption .rating i.d-star,
 .h-t-pro .caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .h-t-pro .caption .rating i:last-child{
     margin-right: 0px;
@@ -1804,7 +1804,7 @@ button.navbar-toggler span.line::after{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;
@@ -2397,7 +2397,7 @@ a.responsive-collapse span{
     color: #999;
 }
 .pro-page .pro-image .pro-info .rating i.d-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .pro-page .pro-image .pro-info .pro-availabale{
     margin-top: 10px;
@@ -2762,7 +2762,7 @@ ul.contdown_row li.countdown_section:last-child:before{
     margin: 0px;
 }
 .pro-page-content .pro-page-tab .tab-content .tab-pane .customer-reviews span.p-rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
     font-size: 18px;
 }
 .pro-page-content .pro-page-tab .tab-content .tab-pane .customer-reviews p.review-desck{

@@ -444,9 +444,9 @@ class MainController extends Controller
             ]);
 
             Mail::send(['html' => 'backend.mails.question'], ['qna' => $qna, 'product' => $product], function ($message) {
-                $message->from('info@ranayas.com', 'EasyFit Hearing Aids ');
-                $message->to('info@ranayas.com', 'EasyFit Hearing Aids');
-                $message->subject('EasyFit Hearing Aids - Someone ask question');
+                $message->from('info@ranayas.com', 'Ranayas');
+                $message->to('info@ranayas.com', 'Ranayas');
+                $message->subject('Ranayas - Someone ask question');
             });
 
             return redirect(route('product', $product->slug_url))->with('messageSuccess1', 'Your question has been submitted successfully ! we\'ll answer your question soon !');

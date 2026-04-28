@@ -141,8 +141,8 @@
 <body>
     <div class="container">
         <div>
-            <a href="{{ url('/') }}" title="Aura Hearing Care">
-                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Aura Hearing Care" />
+            <a href="{{ url('/') }}" title="Ranayas">
+                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Ranayas" />
             </a>
         </div>
         <div class="row">

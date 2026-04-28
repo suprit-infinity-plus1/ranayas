@@ -16,11 +16,11 @@
 }
 
 .custom-btn {
-    background-color: #d56218;
+    background-color: var(--theme-color);
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 3px;
-    padding: 10px 5px;
+    padding: 10px 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     border: none;
@@ -29,9 +29,10 @@
 }
 
 .popup-modal {
-    background-color: rgba(244, 238, 238, 0.8); 
-    overflow: hidden; 
-  }
+    background-color: rgba(244, 238, 238, 0.8);
+    overflow: hidden;
+}
+
 .popup-modal {
     display: none;
     position: fixed;
@@ -42,7 +43,7 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    width:  550px;
+    width: 550px;
 }
 
 .custom-form-group {
@@ -78,8 +79,8 @@
     border-color: #ffa500;
 }
 
-.custom-input:focus + label,
-.custom-input:placeholder-shown + label {
+.custom-input:focus+label,
+.custom-input:placeholder-shown+label {
     position: absolute;
     transform: translate(-5px, -120%) scale(0.75);
     font-size: 13px;
@@ -89,7 +90,7 @@
 }
 
 .custom-submit-btn {
-    background-color: #d56218;
+    background-color: var(--theme-color);
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -101,7 +102,7 @@
 .close1 {
     float: right;
     cursor: pointer;
-    background: #d56218;
+    background: var(--theme-color);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -124,7 +125,7 @@
         width: 100%;
     }
 
-    .popup-modal{
+    .popup-modal {
         width: 304px;
         height: 629px;
     }
@@ -138,7 +139,7 @@
     width: 100%;
 }
 
-.popup > h3 {
+.popup>h3 {
     text-align: center;
     font-size: 16px;
 }
@@ -186,8 +187,8 @@
     bottom: 36%;
     right: 31px;
     border-radius: 8px;
-    
-    
+
+
 }
 
 .social-icon {
@@ -202,7 +203,7 @@
     margin: 10px 0px;
 }
 
-.social-title  {
+.social-title {
     position: relative;
     left: -65px;
     color: #090909;
@@ -214,35 +215,37 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.social-icon > .social-phone{
+.social-icon>.social-phone {
     position: relative;
 
-    
+
 }
-.social-icon > .social-Whatsaap{
+
+.social-icon>.social-Whatsaap {
     position: relative;
     top: 0;
     color: #fff;
 
-    
+
 }
 
 
-.social-icon:nth-child(1){
+.social-icon:nth-child(1) {
     background-color: #2d41a9;
 }
-.social-icon:nth-child(2){
+
+.social-icon:nth-child(2) {
     background-color: #63c956;
 }
 
 
 
-.home-5{
+.home-5 {
     z-index: 10;
 }
 
-.whatsapp-icon-1{
+.whatsapp-icon-1 {
     font-size: 34px;
     color: #fff;
-    
+
 }

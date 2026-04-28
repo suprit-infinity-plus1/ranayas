@@ -157,7 +157,7 @@ label {
     width: 18px;
 }
 .question-wrapper .radio-buttons input[type="radio"]:checked:after {
-    background-color: #d25200;
+    background-color: var(--theme-color);
 }
 .question-wrapper div:not(:first-child) div {
     margin-top: 0.6rem;
@@ -236,7 +236,7 @@ p {
     width: 100%;
 }
 .progress {
-    background: linear-gradient(to right, #ff8c00 0%, #ff8c00 40%, #d25200 100%);
+    background: linear-gradient(to right, #ff8c00 0%, #ff8c00 40%, var(--theme-color) 100%);
     border-radius: 100px;
     height: 100%;
 }
@@ -260,7 +260,7 @@ p {
 .Number-of-test-part,
 .col .test-parts .nums {
     align-items: center;
-    background: #d25200;
+    background: var(--theme-color);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -287,7 +287,7 @@ p {
     margin-top: 1rem;
 }
 button {
-    background-color: #d25200;
+    background-color: var(--theme-color);
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -335,7 +335,7 @@ button:hover {
         outline: none;
         font-size: 1rem;
         font-weight: 400;
-        background-color: #d25200;
+        background-color: var(--theme-color);
         color: white;
         padding: 1rem 0.6rem;
         border-radius: 5px;
@@ -455,7 +455,7 @@ button:hover {
         outline: none;
         font-size: 0.8rem;
         font-weight: 400;
-        background-color: #d25200;
+        background-color: var(--theme-color);
         color: white;
         padding: 0.6rem 0.5rem;
         border-radius: 5px;

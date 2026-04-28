@@ -96,7 +96,7 @@
                                     <h2 class="heading-secondary mb-4">Contact info</h2>
                                     <div class="contact-info">
                                         <h5 class=" mt-1 mb-1"> Our Location</h5>
-                                        <p><span class="font-weight-bold">Easyfit Devices Pvt. Ltd.</span>
+                                        <p><span class="font-weight-bold">Ranayas Devices Pvt. Ltd.</span>
                                             Shop No No 4-A, Ground Floor,
                                             Prakash Building, R. B. Mehta Marg,
                                             Ghatkopar East, Mumbai - 400 077
