@@ -119,7 +119,7 @@ class CategoryComposer
                 if ($hasChildren) {
                     $html .= "<li class='menu-link parent'>";
                     $html .= "<a href='{$url}' class='link-title'><span class='sp-link-title'>{$name}</span><i class='fa fa-angle-down'></i></a>";
-                    $html .= "<a href='#{$collapseId}' data-bs-toggle='collapse' class='link-title link-title-lg'><span class='sp-link-title'>{$name}</span><i class='fa fa-angle-down'></i></a>";
+                    $html .= "<a href='#{$collapseId}' data-bs-toggle='collapse' class='link-title link-title-lg'><span class='sp-link-title' onclick=\"window.location.href='{$url}'; event.preventDefault(); event.stopPropagation();\">{$name}</span><i class='fa fa-angle-down'></i></a>";
                     $html .= "<ul class='dropdown-submenu sub-menu collapse' id='{$collapseId}'>";
                     $html .= $this->buildCategoryMobile($cat_id, $category, $depth + 1);
                     $html .= '</ul>';
@@ -130,16 +130,25 @@ class CategoryComposer
                 continue;
             }
 
-            if ($hasChildren) {
-                $html .= "<li class='submenu-li'>";
-                $html .= "<a href='{$url}' class='submenu-link has-child'><span class='mm-text'>{$name}</span><i class='fa fa-angle-right'></i></a>";
-                $html .= "<a href='#{$collapseId}' data-bs-toggle='collapse' class='submenu-link link-title link-title-lg'><span class='mm-text'>{$name}</span><i class='fa fa-angle-right'></i></a>";
-                $html .= "<ul class='dropdown-product sub-menu collapse' id='{$collapseId}'>";
-                $html .= $this->buildCategoryMobile($cat_id, $category, $depth + 1);
-                $html .= '</ul>';
-                $html .= '</li>';
-            } else {
-                $html .= "<li class='submenu-li'><a href='{$url}' class='submenu-link'><span class='mm-text'>{$name}</span></a></li>";
+            if ($depth === 1) {
+                if ($hasChildren) {
+                    $html .= "<li class='submenu-li'>";
+                    $html .= "<a href='{$url}' class='submenu-link has-child'><span class='mm-text'>{$name}</span><i class='fa fa-angle-right'></i></a>";
+                    $html .= "<a href='#{$collapseId}' data-bs-toggle='collapse' class='submenu-link link-title link-title-lg'><span class='mm-text' onclick=\"window.location.href='{$url}'; event.preventDefault(); event.stopPropagation();\">{$name}</span><i class='fa fa-angle-right'></i></a>";
+                    $html .= "<ul class='dropdown-product sub-menu collapse' id='{$collapseId}'>";
+                    $html .= $this->buildCategoryMobile($cat_id, $category, $depth + 1);
+                    $html .= '</ul>';
+                    $html .= '</li>';
+                } else {
+                    $html .= "<li class='submenu-li'><a href='{$url}' class='submenu-link'><span class='mm-text'>{$name}</span></a></li>";
+                }
+                continue;
+            }
+
+            if ($depth === 2) {
+                $html .= "<li class='product-li'>";
+                $html .= "<a href='{$url}' class='product-link'>{$name}</a>";
+                $html .= "</li>";
             }
         }
 
