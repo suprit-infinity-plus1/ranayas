@@ -30,10 +30,28 @@
                     <div class="row">
                         <div class="col-lg-5 col-xl-5 col-md-6 col-12 col-xs-12 larg-image">
                             <div class="tab-content large_image">
-
+                                @if($product->colors->count() > 0 && $product->colors[0]->images->count() > 0)
+                                    @foreach($product->colors[0]->images as $key => $image)
+                                        <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}" id="image-{{ $image->id }}">
+                                            <a href="javascript:void(0)" class="long-img">
+                                                <figure class="zoom" onmousemove="zoom(event)" style="background-image: url({{ asset('storage/images/multi-products/' . $image->image_url) }})">
+                                                    <img src="{{ asset('storage/images/multi-products/' . $image->image_url) }}" class="img-fluid" alt="{{ $product->title }}">
+                                                </figure>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                             <ul class="nav nav-tabs pro-page-slider owl-carousel owl-theme thumb_image">
-
+                                @if($product->colors->count() > 0 && $product->colors[0]->images->count() > 0)
+                                    @foreach($product->colors[0]->images as $key => $image)
+                                        <li class="nav-item items">
+                                            <a class="thumb_image_active nav-link {{ $key == 0 ? 'active' : '' }}" data-bs-toggle="tab" href="#image-{{ $image->id }}">
+                                                <img src="{{ asset('storage/images/multi-products/' . $image->image_url) }}" class="img-fluid" alt="{{ $product->title }}">
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                         <div class="col-lg-6 col-xl-6 col-md-6 col-12 col-xs-12 pro-info">

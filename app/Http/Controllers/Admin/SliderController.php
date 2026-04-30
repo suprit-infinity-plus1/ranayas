@@ -68,7 +68,7 @@ class SliderController extends Controller
 
         if ($request->hasFile('image_url')) {
             $request['img'] = uniqid() . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->image_url->storeAs('public/images/sliders', $request->img);
+            $request->image_url->storeAs('images/sliders', $request->img, 'public');
         }
 
         Slider::create([
@@ -163,9 +163,8 @@ class SliderController extends Controller
             $slider = Slider::where('id', $id)->firstOrFail();
 
             if ($request->hasFile('image_url')) {
-                $old_image = "/storage/images/sliders/" . $slider->image_url;
-                Storage::delete($old_image);
-                $request->image_url->storeAs('public/images/sliders', $slider->image_url);
+                Storage::disk('public')->delete('images/sliders/' . $slider->image_url);
+                $request->image_url->storeAs('images/sliders', $slider->image_url, 'public');
             }
 
             $slider->update([
@@ -208,10 +207,7 @@ class SliderController extends Controller
 
             $slider = Slider::where('id', $request->slider_id)->firstOrFail();
 
-            $old_image = public_path("/storage/images/sliders/" . $slider->image_url);
-            if (File::exists($old_image)) {
-                File::delete($old_image);
-            }
+            Storage::disk('public')->delete('images/sliders/' . $slider->image_url);
 
             $slider->delete();
 

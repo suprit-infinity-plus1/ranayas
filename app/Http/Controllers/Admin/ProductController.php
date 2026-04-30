@@ -440,7 +440,7 @@ class ProductController extends Controller
                     File::delete($old_image);
                 }
 
-                $request['img1'] = "back-" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['img1'] = "back-" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $request->image_url1->storeAs('images/products', $request->img1, 'public');
 
