@@ -4,6 +4,10 @@
     --theme-color: #670cb1;
 }
 
+span.p-discount {
+    background-color: #fcca2f !important;
+}
+
 .float {
     width: 70px;
     height: 70px;
@@ -1005,6 +1009,8 @@
     border: 1px solid #e0e0e0;
     padding: 25px;
     position: relative;
+    border-bottom-left-radius: calc(.3rem - 1px);
+    border-bottom-right-radius: calc(.3rem - 1px);
 }
 
 .signUp-minimal .signin-form-wrapper .signUp-text {

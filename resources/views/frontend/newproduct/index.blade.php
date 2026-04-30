@@ -73,8 +73,8 @@
                             <div class="s-box">
                                 <i class="ti-email"></i>
                                 <div class="service-content">
-                                    <span class="text--2">Get update of new offers</span>
-                                    <p class="text--2">24/7 email & call support </p>
+                                    <span class="text--2">Offer updates</span>
+                                    <p class="text--2">24/7 support </p>
                                 </div>
                             </div>
                         </div>

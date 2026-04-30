@@ -1,4 +1,4 @@
-@extends('layouts.master') @section('title','Login') @section('content')
+@extends('layouts.master') @section('title', 'Login') @section('content')
 
 <div class="signUp-page signUp-minimal pt--70">
     <div class="signin-form-wrapper">
@@ -26,7 +26,7 @@
         </form>
         <p class="signUp-text text-center">Don’t have any account? <a href="{{ route('user.register') }}">Sign up</a>
             now. & <a href="{{ route('user.login') }}"> Login</a></p>
-        <p class="or-text"><span>or</span></p>
+        {{-- <p class="or-text"><span>or</span></p> --}}
         <ul class="social-icon-wrapper row">
             {{-- <li class="col-12">
                 <a href="{{ route('user.auth.socialite', 'google') }}" class="gmail"><i class="fa fa-envelope-o"
@@ -43,14 +43,14 @@
 
 @endsection @section('extrajs')
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         $("#login-form").validate({
             rules: {
 
                 mobile: {
                     required: true,
-                    number:true,
+                    number: true,
                     minlength: 10,
                     maxlength: 10,
                 },
@@ -65,7 +65,7 @@
                 },
 
             },
-            submitHandler: function (form) {
+            submitHandler: function(form) {
                 $('.btnSubmit').attr('disabled', 'disabled');
                 $(".btnSubmit").html('<span class="fa fa-spinner fa-spin"></span> Loading...');
                 form.submit();
@@ -73,7 +73,6 @@
         });
 
     });
-
 </script>
 @endsection @section('extracss')
 

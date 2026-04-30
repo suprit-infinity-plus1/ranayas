@@ -759,7 +759,7 @@
                                 <a href="{{ route('user.register') }}">Register</a> now. &
                                 <a href="{{ route('user.login.otp') }}"> Login With Otp</a>
                             </p>
-                            <p class="or-text"><span>or</span></p>
+                            {{-- <p class="or-text"><span>or</span></p> --}}
                             <ul class="social-icon-wrapper row">
                                 {{-- <li class="col-12">
                                     <a href="{{ route('user.auth.socialite', 'google') }}" class="gmail"><i class="fa fa-envelope-o" aria-hidden="true"></i>

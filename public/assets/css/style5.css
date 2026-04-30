@@ -209,8 +209,8 @@ body.hidden {
 
 /* section padding css */
 .section-t-padding {
-    /* padding-top: 80px; */
-    padding-top: 0px;
+    padding-top: 80px;
+    /* padding-top: 0px; */
 }
 
 .section-b-padding {
