@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>CLIENT LOGIN || Aura Hearing Care</title>
+    <title>CLIENT LOGIN || Ranayas</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{!! asset('admin/css/app.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('admin/bundles/bootstrap-social/bootstrap-social.css') !!}">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{!! asset('admin/css/components.css') !!}">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="{!! asset('admin/css/custom.css') !!}">
-    <link rel='shortcut icon' type='image/x-icon' href="{!! asset('admin/img/favicon.ico') !!}" />
+    <link rel='shortcut icon' type='image/x-icon' href="{!! asset('admin/img/favicon-32x32.png') !!}" />
 </head>
 
 <body>

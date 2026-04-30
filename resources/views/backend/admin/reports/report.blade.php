@@ -214,7 +214,7 @@
                     <tr class="pb-20">
                         <td colspan="2">
                             <p class="text-center">
-                            <p class="company_title text-center"> Aura Hearing Care </p>
+                            <p class="company_title text-center"> Ranayas </p>
                             </p>
                         </td>
                     </tr>
@@ -225,20 +225,22 @@
                             </span>
                         </td>
                     </tr>
-                    @if($dates['from_date'])
-                    <tr>
-                        <td colspan="2" class="text-center">
-                            <h1>From Date : {{ $dates['from_date'] }} @if($dates['to_date']) To {{ $dates['to_date'] }}
-                                @endif</h1>
-                        </td>
-                    </tr>
+                    @if ($dates['from_date'])
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <h1>From Date : {{ $dates['from_date'] }} @if ($dates['to_date'])
+                                        To {{ $dates['to_date'] }}
+                                    @endif
+                                </h1>
+                            </td>
+                        </tr>
                     @endif
-                    @if($filter)
-                    <tr>
-                        <td colspan="2" class="text-center">
-                            <h1>Filter : {{ $filter }}</h1>
-                        </td>
-                    </tr>
+                    @if ($filter)
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <h1>Filter : {{ $filter }}</h1>
+                            </td>
+                        </tr>
                     @endif
                 </table>
 
@@ -261,23 +263,23 @@
 
                     @php $total = 0 @endphp
                     @forelse ($orders as $order)
-                    <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->user_name }}</td>
-                        <td>{{ $order->user->email }}</td>
-                        <td>{{ $order->city }}</td>
-                        <td>{{ $order->pincode }}</td>
-                        <td>Rs.{{ $order->total }}</td>
-                        <td class="text-capitalize">{{ $order->status }}</td>
-                        <td>{{ date('d-m-Y' , strtotime($order->created_at)) }}</td>
-                    </tr>
-                    @php $total+=$order->total @endphp
+                        <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->user_name }}</td>
+                            <td>{{ $order->user->email }}</td>
+                            <td>{{ $order->city }}</td>
+                            <td>{{ $order->pincode }}</td>
+                            <td>Rs.{{ $order->total }}</td>
+                            <td class="text-capitalize">{{ $order->status }}</td>
+                            <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
+                        </tr>
+                        @php $total+=$order->total @endphp
                     @empty
-                    <tr>
-                        <td colspan="8" class="text-center">
-                            <h3>No Order(s) Found </h3>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                <h3>No Order(s) Found </h3>
+                            </td>
+                        </tr>
                     @endforelse
                     <tr>
                         <td colspan="8" class="total"> <span>Grand Total : {{ $total }}</span> </td>

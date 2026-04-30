@@ -1,19 +1,19 @@
 <!-- @extends('layouts.master') -->
 <!-- @section('title', 'Home') -->
 <!-- @section('extracss')
-<link rel="stylesheet" href="{!! asset('assets/css/main.13e0cec1.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/css/main.13e0cec1.css') !!}">
 @endsection
 @section('content')
-<div id="eashfit-hearing-test"></div> -->
+    <div id="eashfit-hearing-test"></div> -->
 
 
-<!-- laravel -->
+    <!-- laravel -->
 
-<!-- <div class="divider"> -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 256 256">
-            <path fill="#d25200"
-                d="M237.43 130.55C215.84 176.57 197 198 178 198c-23.83 0-39.2-32.76-55.47-67.45C109.26 102.17 94.17 70 78 70c-9.18 0-25 10.5-48.53 60.55a6 6 0 0 1-10.86-5.1C40.16 79.43 59 58 78 58c23.83 0 39.2 32.76 55.47 67.45C146.74 153.83 161.83 186 178 186c9.18 0 25.05-10.5 48.53-60.55a6 6 0 0 1 10.86 5.1Z" />
-        </svg>
+    <!-- <div class="divider"> -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 256 256">
+        <path fill="var(--theme-color)"
+            d="M237.43 130.55C215.84 176.57 197 198 178 198c-23.83 0-39.2-32.76-55.47-67.45C109.26 102.17 94.17 70 78 70c-9.18 0-25 10.5-48.53 60.55a6 6 0 0 1-10.86-5.1C40.16 79.43 59 58 78 58c23.83 0 39.2 32.76 55.47 67.45C146.74 153.83 161.83 186 178 186c9.18 0 25.05-10.5 48.53-60.55a6 6 0 0 1 10.86 5.1Z" />
+    </svg>
     </div>
 
     <section class="faqs-sec py-5 bg-light">
@@ -82,7 +82,7 @@
                         </label>
                         <div class="acc-content overflow-hidden">
                             <p class="fs-6 py-1 px-2">Vibe isn’t designed to help with tinnitus. Please email <a
-                                    href="mailto:easyfithearing@gmail.com">easyfithearing@gmail.com</a> or contact our
+                                    href="mailto:info@ranayas.com">info@ranayas.com</a> or contact our
                                 customer service team and we’ll refer you to some options for tinnitus help.</p>
                         </div>
                     </li>
@@ -118,12 +118,12 @@
 
     <div class="divider">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 256 256">
-            <path fill="#d25200"
+            <path fill="var(--theme-color)"
                 d="M237.43 130.55C215.84 176.57 197 198 178 198c-23.83 0-39.2-32.76-55.47-67.45C109.26 102.17 94.17 70 78 70c-9.18 0-25 10.5-48.53 60.55a6 6 0 0 1-10.86-5.1C40.16 79.43 59 58 78 58c23.83 0 39.2 32.76 55.47 67.45C146.74 153.83 161.83 186 178 186c9.18 0 25.05-10.5 48.53-60.55a6 6 0 0 1 10.86 5.1Z" />
         </svg>
     </div>
     {{-- <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 256 256">
-            <path fill="#d25200"
+            <path fill="var(--theme-color)"
                 d="M160 214h-.3a5.8 5.8 0 0 1-5.3-3.9L95.5 55.6l-34 74.9A6.1 6.1 0 0 1 56 134H24a6 6 0 0 1 0-12h28.1l38.4-84.5a6 6 0 0 1 11.1.4l59.1 155.2l33.9-67.8a6 6 0 0 1 5.4-3.3h32a6 6 0 0 1 0 12h-28.3l-38.3 76.7a6.2 6.2 0 0 1-5.4 3.3Z" />
         </svg> --}}
     {{-- <figure>
@@ -208,8 +208,9 @@
 
 <!-- @section('extrajs') -->
 
-<!-- <script src="{!! asset('assets/js/main.f6be58e7.js') !!}"></script> -->
-<!-- <script> -->
+    <!-- <script src="{!! asset('assets/js/main.f6be58e7.js') !!}"></script> -->
+    <!-- <script>
+        -- >
         // const questionNoLine = document.querySelector(".question-no-line");
         for (const [index, i] of hearingTest.entries()) {
             // console.log(index);
@@ -265,7 +266,7 @@
                         <form action="" onsubmit="return validateForm()">
                         <div class="questions">
                             <p>${i.question}<span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
-                                <path fill="#d25200"
+                                <path fill="var(--theme-color)"
                                     d="m7.325 19.923l1.24-5.313l-4.123-3.572l5.431-.47L12 5.557l2.127 5.01l5.43.47l-4.122 3.572l1.24 5.313L12 17.102z" />
                                     </svg></span>
                             </p>

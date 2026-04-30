@@ -62,12 +62,14 @@ class LoginController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'mobile' => 'required|digits:10|unique:txn_users,mobile',
-            'email' => 'required|email|max:191|unique:txn_users,email',
-            'password' => 'required',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'mobile' => 'required|digits:10|unique:txn_users,mobile',
+                'email' => 'required|email|max:191|unique:txn_users,email',
+                'password' => 'required',
+            ],
             [
                 'name.required' => 'Please Enter Name',
                 'mobile.required' => 'Please Enter Mobile Number',
@@ -77,7 +79,8 @@ class LoginController extends Controller
                 'password.required' => 'Please Enter Password',
                 'email.unique' => 'Email Already Registered with us',
                 'mobile.unique' => 'Mobile Already Registered with us',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Register Failed', $validator->errors()->first());
@@ -121,7 +124,7 @@ class LoginController extends Controller
 
             $user = $request->session()->get('user');
 
-            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $user['otp'] . ' Easy Fit Hearing Note: this OTP is case sensitive, Do not Share your otp with anyone !');
+            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $user['otp'] . ' Ranayas Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
@@ -139,12 +142,15 @@ class LoginController extends Controller
 
     public function verifyOTP(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'otp' => 'required|max:6',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'otp' => 'required|max:6',
+            ],
             [
                 'otp.required' => 'Please Enter OTP',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Invalid Otp', $validator->errors()->first());
@@ -161,9 +167,10 @@ class LoginController extends Controller
 
         if ($userData['otp'] == $request->otp) {
 
-            $user = TxnUser::updateOrCreate([
-                'email' => $userData['email'],
-            ],
+            $user = TxnUser::updateOrCreate(
+                [
+                    'email' => $userData['email'],
+                ],
                 [
 
                     'name' => $userData['name'],
@@ -175,11 +182,13 @@ class LoginController extends Controller
                     'otp' => null,
                     'last_login' => \Carbon\Carbon::now(),
                     'is_subcribed' => true,
-                ]);
+                ]
+            );
 
-            Subscriber::updateOrCreate([
-                'email' => $userData['email'],
-            ],
+            Subscriber::updateOrCreate(
+                [
+                    'email' => $userData['email'],
+                ],
                 [
                     'email' => $userData['email'],
                     'status' => true,
@@ -210,14 +219,17 @@ class LoginController extends Controller
 
     public function otpLogin(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'mobile' => 'required|digits:10|exists:txn_users,mobile',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'mobile' => 'required|digits:10|exists:txn_users,mobile',
+            ],
             [
                 'mobile.required' => 'Please Enter Mobile Number',
                 'mobile.digits' => 'Please Enter 10 digits Mobile Number',
                 'mobile.exists' => 'Mobile Number does Not exists in our records !',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Otp Login', $validator->errors()->first());
@@ -241,7 +253,7 @@ class LoginController extends Controller
 
             session(['user' => $user]);
 
-            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Easy Fit Hearing Note: this OTP is case sensitive, Do not Share your otp with anyone !');
+            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Ranayas Note: this OTP is case sensitive, Do not Share your otp with anyone !');
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
                 $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');

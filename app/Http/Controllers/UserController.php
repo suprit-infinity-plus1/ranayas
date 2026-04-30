@@ -38,9 +38,11 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $user = TxnUser::where('id', auth('user')->user()->id)->with(['orders' => function ($q) {
-                $q->where('status', '<>', 'nc')->orderBy('id', 'DESC')->get();
-            }])->firstOrFail();
+            $user = TxnUser::where('id', auth('user')->user()->id)->with([
+                'orders' => function ($q) {
+                    $q->where('status', '<>', 'nc')->orderBy('id', 'DESC')->get();
+                }
+            ])->firstOrFail();
 
             return view('frontend.user.index', compact('user'));
 
@@ -138,14 +140,16 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'mobile' => 'required|digits_between:10,12',
-            'city' => 'required|string|max:191',
-            'territory' => 'required|string|max:191',
-            'address' => 'required|string',
-            'pincode' => 'required|digits:6',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'mobile' => 'required|digits_between:10,12',
+                'city' => 'required|string|max:191',
+                'territory' => 'required|string|max:191',
+                'address' => 'required|string',
+                'pincode' => 'required|digits:6',
+            ],
             [
                 'name.required' => 'Please Enter Name',
                 'mobile.required' => 'Please Enter Mobile Number',
@@ -155,7 +159,8 @@ class UserController extends Controller
                 'address.required' => 'Please Enter Address',
                 'pincode.required' => 'Please Enter Pincode',
                 'pincode.digits' => 'Pincode should be of 6 digits',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -191,15 +196,18 @@ class UserController extends Controller
     }
     public function updateChangePassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password' => 'required_with:con_password|max:191',
-            'con_password' => 'required_with:password|max:191|same:password',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'password' => 'required_with:con_password|max:191',
+                'con_password' => 'required_with:password|max:191|same:password',
+            ],
             [
                 'password.required_with' => 'Please Enter New Password to change password',
                 'con_password.required_with' => 'Please Enter Old Password to change password',
                 'con_password.same' => 'Password and confirm password does not match',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -279,25 +287,31 @@ class UserController extends Controller
 
     public function returnOrder(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'reason' => 'required|string|max:191',
-            'image_url' => 'nullable|image|max:1024|mimes:jpeg,png',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'reason' => 'required|string|max:191',
+                'image_url' => 'nullable|image|max:1024|mimes:jpeg,png',
+            ],
             [
                 'reason.required' => 'Please Select Reason',
                 'image_url.image' => 'Please Select Proper Image',
                 'image_url.max' => 'Please Select Image of Maximum size 1MB',
                 'image_url.mimes' => 'Please Select Image of type JPEG & PNG',
-            ]);
+            ]
+        );
 
         if ($request->reason == 'other') {
-            $validator = Validator::make($request->all(), [
-                'other_reason' => 'required|string|max:500',
-            ],
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'other_reason' => 'required|string|max:500',
+                ],
                 [
                     'other_reason.required' => 'Please Write Reason',
                     'other_reason.max' => 'Please Write Reason in 500 characters',
-                ]);
+                ]
+            );
         }
 
         if ($validator->fails()) {
@@ -329,13 +343,13 @@ class UserController extends Controller
                 'description' => 'Applied for Return and Refund against Order ID : ' . $order->id,
             ]);
 
-            SMS::send($order->user->mobile, 'Aura Hearing Care - You have applied for Return and Refund against Order ID : ' . $order->id . ', Stay tuned for approval on ' . route('user.login'));
+            SMS::send($order->user->mobile, 'Ranayas - You have applied for Return and Refund against Order ID : ' . $order->id . ', Stay tuned for approval on ' . route('user.login'));
 
             Mail::send(['html' => 'backend.mails.ticket'], ['ticket' => $ticket], function ($message) use ($ticket) {
-                $message->from('info@easyfithearing.com', 'Aura Hearing Care');
-                $message->to($ticket->email, 'Aura Hearing Care');
-                $message->bcc('info@easyfithearing.com', 'Aura Hearing Care');
-                $message->subject('Aura Hearing Care RE:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
+                $message->from('info@ranayas.com', 'Ranayas');
+                $message->to($ticket->email, 'Ranayas');
+                $message->bcc('info@ranayas.com', 'Ranayas');
+                $message->subject('Ranayas RE:' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
             });
 
             connectify('success', 'Return Order', 'Order Return applied successfully, stay tuned for approval !');
@@ -372,11 +386,11 @@ class UserController extends Controller
                     'status' => 'Cancelled',
                 ]);
 
-                // SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order ID : ' . $order->id . ', has been Cancelled successfully,  Login for more detail on ' . url('/'));
+                // SMS::send($order->user->mobile, 'Ranayas - Your Order ID : ' . $order->id . ', has been Cancelled successfully,  Login for more detail on ' . url('/'));
 
                 Mail::send(['html' => 'backend.mails.order-cancel'], ['order' => $order], function ($message) use ($order) {
-                    $message->to('info@easyfithearing.com')->subject('Order has been Cancelled ! [order id : ' . $order->id . ']');
-                    $message->from('info@easyfithearing.com', 'Aura Hearing Care');
+                    $message->to('info@ranayas.com')->subject('Order has been Cancelled ! [order id : ' . $order->id . ']');
+                    $message->from('info@ranayas.com', 'Ranayas');
                 });
 
                 connectify('success', 'Order Cancel', 'Order Cancelled Successfully !');
@@ -400,12 +414,15 @@ class UserController extends Controller
 
     public function orderHelp(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'description' => 'required|string',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'description' => 'required|string',
+            ],
             [
                 'description.required' => 'Please Enter your query',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -424,10 +441,10 @@ class UserController extends Controller
             ]);
 
             Mail::send(['html' => 'backend.mails.ticket'], ['ticket' => $ticket], function ($message) use ($ticket) {
-                $message->from('info@easyfithearing.com', 'Aura Hearing Care');
-                $message->to($ticket->email, 'Aura Hearing Care');
-                $message->bcc('info@easyfithearing.com', 'Aura Hearing Care');
-                $message->subject('Aura Hearing Care' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
+                $message->from('info@ranayas.com', 'Ranayas');
+                $message->to($ticket->email, 'Ranayas');
+                $message->bcc('info@ranayas.com', 'Ranayas');
+                $message->subject('Ranayas' . $ticket->subject . ' Ticket ID : ' . $ticket->id);
             });
 
             connectify('success', 'Need Help', 'Your query has been sent successfully, our expert will get in touch with you soon, stay tuned !');
@@ -448,16 +465,19 @@ class UserController extends Controller
 
     public function review(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'product_id' => 'required|integer|exists:txn_products,id',
-            'rating' => 'required|integer|max:5|min:1',
-            'comment' => 'required|string',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'product_id' => 'required|integer|exists:txn_products,id',
+                'rating' => 'required|integer|max:5|min:1',
+                'comment' => 'required|string',
+            ],
             [
                 'product_id.required' => 'Please Select Product',
                 'product_id.integer' => 'Invalid data provided',
                 'product_id.exists' => 'Product Not Found !',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -468,10 +488,11 @@ class UserController extends Controller
 
             $user = TxnUser::where('id', auth('user')->user()->id)->firstOrFail();
 
-            TxnReview::updateOrCreate([
-                'user_id' => $user->id,
-                'product_id' => $request->product_id,
-            ],
+            TxnReview::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'product_id' => $request->product_id,
+                ],
                 [
                     'user_id' => $user->id,
                     'name' => $user->name,
@@ -587,14 +608,16 @@ class UserController extends Controller
     public function UpdateAddress(Request $request, $id)
     {
 
-        $validator = Validator::make($request->all(), [
-            'address' => 'required|string|max:1000',
-            'city' => 'required|string|max:191',
-            'territory' => 'required|string|max:191',
-            'landmark' => 'nullable|string|max:191',
-            'pincode' => 'required|digits:6',
-            'type_of_address' => 'required|numeric|min:0|max:1',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'address' => 'required|string|max:1000',
+                'city' => 'required|string|max:191',
+                'territory' => 'required|string|max:191',
+                'landmark' => 'nullable|string|max:191',
+                'pincode' => 'required|digits:6',
+                'type_of_address' => 'required|numeric|min:0|max:1',
+            ],
             [
                 'payment_mode.required' => 'Please Select Any of the Payment Mode !',
                 'address.required' => 'Please Enter Address',
@@ -606,7 +629,8 @@ class UserController extends Controller
                 'type_of_address.numeric' => 'Invalid data provided',
                 'type_of_address.min' => 'Invalid data provided',
                 'type_of_address.max' => 'Invalid data provided',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -671,15 +695,17 @@ class UserController extends Controller
     public function storeAddress(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'address' => 'required|string|max:1000',
-            'city' => 'required|string|max:191',
-            'territory' => 'required|string|max:191',
-            'landmark' => 'nullable|string|max:191',
-            'pincode' => 'required|digits:6',
-            'mobile' => 'required|digits:10',
-            'type_of_address' => 'required|numeric|min:0|max:1',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'address' => 'required|string|max:1000',
+                'city' => 'required|string|max:191',
+                'territory' => 'required|string|max:191',
+                'landmark' => 'nullable|string|max:191',
+                'pincode' => 'required|digits:6',
+                'mobile' => 'required|digits:10',
+                'type_of_address' => 'required|numeric|min:0|max:1',
+            ],
             [
                 'payment_mode.required' => 'Please Select Any of the Payment Mode !',
                 'address.required' => 'Please Enter Address',
@@ -693,7 +719,8 @@ class UserController extends Controller
                 'type_of_address.numeric' => 'Invalid data provided',
                 'type_of_address.min' => 'Invalid data provided',
                 'type_of_address.max' => 'Invalid data provided',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -737,15 +764,17 @@ class UserController extends Controller
     public function fUpdateAddress(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'address' => 'required|string|max:1000',
-            'city' => 'required|string|max:191',
-            'territory' => 'required|string|max:191',
-            'landmark' => 'nullable|string|max:191',
-            'pincode' => 'required|digits:6',
-            'mobile' => 'required|digits:10',
-            'type_of_address' => 'required|numeric|min:0|max:1',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'address' => 'required|string|max:1000',
+                'city' => 'required|string|max:191',
+                'territory' => 'required|string|max:191',
+                'landmark' => 'nullable|string|max:191',
+                'pincode' => 'required|digits:6',
+                'mobile' => 'required|digits:10',
+                'type_of_address' => 'required|numeric|min:0|max:1',
+            ],
             [
                 'payment_mode.required' => 'Please Select Any of the Payment Mode !',
                 'address.required' => 'Please Enter Address',
@@ -759,7 +788,8 @@ class UserController extends Controller
                 'type_of_address.max' => 'Invalid data provided',
                 'mobile.required' => 'Please Enter Mobile Number',
                 'mobile.digits' => 'Mobile number should be of 10 digits',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());

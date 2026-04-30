@@ -1522,7 +1522,7 @@ button.navbar-toggler span.line::after{
 .caption .rating i.c-star,
 .caption .rating i.d-star,
 .caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .caption .rating i:last-child{
     margin-right: 0px;
@@ -1831,7 +1831,7 @@ button.navbar-toggler span.line::after{
 .tab-product .tab-caption .rating i.c-star,
 .tab-product .tab-caption .rating i.d-star,
 .tab-product .tab-caption .rating i.e-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .tab-product .tab-caption .rating i:last-child{
     margin-right: 0px;
@@ -1920,7 +1920,7 @@ button.navbar-toggler span.line::after{
     line-height: 1;
 }
 .testimonial2-bg .home2-testi .testimonial-area .testi-name span{
-    color: #d25200;
+    color: var(--theme-color);
     margin-top: 17px;
     display: flex;
 }
@@ -2118,7 +2118,7 @@ button.navbar-toggler span.line::after{
     color: #999;
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .quick-rating i.c-star{
-    color: #d25200;
+    color: var(--theme-color);
 }
 .quick-view .modal .modal-dialog .modal-content .quick-veiw-area .quick-caption .pro-description p{
     color: #999;
@@ -2810,7 +2810,7 @@ a.scroll:hover span{
     color: #999;
 }
 .pro-page .pro-image .pro-info .rating i.d-star{
-    color: #d25200;
+    color: var(--theme-color);
     margin-right: 2px;
 }
 .pro-page .pro-image .pro-info .pro-availabale{

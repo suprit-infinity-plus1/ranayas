@@ -39,17 +39,20 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:191',
-            'subject' => 'required|string|max:191',
-            'description' => 'nullable|string',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email|max:191',
+                'subject' => 'required|string|max:191',
+                'description' => 'nullable|string',
+            ],
             [
                 'email.required' => 'Please Enter Customer Email ID',
                 'email.email' => 'Please Enter Proper Email ID',
                 'subject.required' => 'Please Enter Subject',
                 'subject.max' => 'Please Enter Subject in 190 Characters',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -122,14 +125,17 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'description' => 'nullable|string',
-            'status' => 'required|integer|max:1',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'description' => 'nullable|string',
+                'status' => 'required|integer|max:1',
+            ],
             [
                 'status.required' => 'Please Select Status',
                 'status.max' => 'Invalid status provided',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());

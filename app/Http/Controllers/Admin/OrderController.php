@@ -140,12 +140,14 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
-            'status' => 'required|string',
-        ],
+        $request->validate(
+            [
+                'status' => 'required|string',
+            ],
             [
                 'status' => 'Please Select Status',
-            ]);
+            ]
+        );
         try {
 
             $order = TxnOrder::where('id', $id)->with('user', 'details')->firstOrFail();
@@ -155,7 +157,7 @@ class OrderController extends Controller
                 'status' => $request->status,
             ]);
 
-            SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order ID : ' . $order->id . ', has been ' . $order->status . ',  Login for more detail on ' . route('user.login'));
+            SMS::send($order->user->mobile, 'Ranayas - Your Order ID : ' . $order->id . ', has been ' . $order->status . ',  Login for more detail on ' . route('user.login'));
 
             if ($request->filled('status') && $request->status == 'delivered') {
 
@@ -183,9 +185,9 @@ class OrderController extends Controller
                 $pdf = PDF::loadView('backend.admin.invoices.download', ['invoice' => $order]);
 
                 Mail::send(['html' => 'backend.admin.invoices.empty'], ['invoice' => $order], function ($message) use ($order, $pdf) {
-                    $message->from('order-confirmation@easyfithearing.com', 'Aura Hearing Care');
+                    $message->from('order-confirmation@ranayas.com', 'Ranayas');
                     $message->to($order->user->email, $order->user->name);
-                    $message->subject('Invoice copy of Order No ' . $order->id . ' From Aura Hearing Care');
+                    $message->subject('Invoice copy of Order No ' . $order->id . ' From Ranayas');
                     $message->attachData($pdf->output(), 'invoice_no_' . $order->id . '.pdf');
                 });
 
@@ -212,12 +214,14 @@ class OrderController extends Controller
     public function returnUpdate(Request $request, $id)
     {
 
-        $request->validate([
-            'return_status' => 'required|string',
-        ],
+        $request->validate(
+            [
+                'return_status' => 'required|string',
+            ],
             [
                 'return_status' => 'Please Select Status',
-            ]);
+            ]
+        );
         try {
 
             $order = TxnOrder::where('id', $id)->with('user')->firstOrFail();
@@ -227,7 +231,7 @@ class OrderController extends Controller
                 'return_status' => $request->return_status,
             ]);
 
-            SMS::send($order->user->mobile, 'Aura Hearing Care - Your Order ID : ' . $order->id . ', for Return and Refund is ' . $order->return_status . ',  Login for more detail on ' . route('user.login'));
+            SMS::send($order->user->mobile, 'Ranayas - Your Order ID : ' . $order->id . ', for Return and Refund is ' . $order->return_status . ',  Login for more detail on ' . route('user.login'));
 
             connectify('success', 'Status Updated', 'Status has been updated for return & refund to ' . $order->return_status . ' successfully !');
 

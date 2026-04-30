@@ -22,13 +22,15 @@ class EnquiryController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'mobile' => 'required|digits_between:8,12',
-            'subject' => 'required|string|max:191',
-            'email' => 'required|email|max:191',
-            'message' => 'required|string',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'mobile' => 'required|digits_between:8,12',
+                'subject' => 'required|string|max:191',
+                'email' => 'required|email|max:191',
+                'message' => 'required|string',
+            ],
             [
                 'name.required' => 'Please Enter Your Name',
                 'mobile.required' => 'Please Enter Your Mobile Number',
@@ -37,7 +39,8 @@ class EnquiryController extends Controller
                 'email.required' => 'Please Enter Email ID',
                 'email.email' => 'Please Enter Proper Email ID',
                 'message.required' => 'Please Enter Message',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
@@ -53,9 +56,9 @@ class EnquiryController extends Controller
         ]);
 
         Mail::send(['html' => 'backend.mails.enquiry'], ['data' => $data], function ($message) {
-            $message->from('contact@easyfithearing.com', 'EasyFit Hearing Aids ');
-            $message->to('contact@easyfithearing.com', 'EasyFit Hearing Aids');
-            $message->subject('New Enquiry From EasyFit Hearing Aids');
+            $message->from('contact@ranayas.com', 'Ranayas');
+            $message->to('contact@ranayas.com', 'Ranayas');
+            $message->subject('New Enquiry From Ranayas');
         });
 
         connectify('success', 'Enquiry Success', 'Thank you for contacting us, we\'ll get back to you soon !');

@@ -33,8 +33,8 @@ class MainController extends Controller
         $categories = TxnCategory::select('name', 'slug_url', 'image_url')->where('status', true)->withCount('products')->orderBy('parent_id')->inRandomOrder()->get();
         // dd($categories);
 
-$products = DB::table('txn_products as p')
-    ->selectRaw("
+        $products = DB::table('txn_products as p')
+            ->selectRaw("
         p.id,
         MAX(p.title) as title,
         MAX(p.slug_url) as slug_url,
@@ -54,13 +54,13 @@ $products = DB::table('txn_products as p')
         FLOOR(AVG(txn_reviews.rating)) as rating,
         COUNT(txn_reviews.id) as total_rating
     ")
-    ->leftJoin("txn_reviews", "txn_reviews.product_id", "p.id")
-    ->leftJoin("map_color_sizes as map", "map.product_id", "p.id")
-    ->leftJoin("mst_colors as c", "c.id", "map.color_id")
-    ->leftJoin("wishlists as w", "w.product_id", "p.id")
-    ->where('p.status', true)
-    ->groupBy('p.id')
-    ->get();
+            ->leftJoin("txn_reviews", "txn_reviews.product_id", "p.id")
+            ->leftJoin("map_color_sizes as map", "map.product_id", "p.id")
+            ->leftJoin("mst_colors as c", "c.id", "map.color_id")
+            ->leftJoin("wishlists as w", "w.product_id", "p.id")
+            ->where('p.status', true)
+            ->groupBy('p.id')
+            ->get();
 
         // $products = DB::table('txn_products as p')
         //     ->selectRaw("p.id,p.title,p.slug_url,map.stock, p.image_url,w.user_id as w_u_id, w.id as w_id, w.product_id as
@@ -176,11 +176,13 @@ $products = DB::table('txn_products as p')
 
         if ($request->source == 'size') {
             $results = $results->where('size_id', $request->size_id);
-        };
+        }
+        ;
 
         if ($request->source == 'color') {
             $results = $results->where('color_id', $request->color_id)->where('size_id', $request->size_id);
-        };
+        }
+        ;
 
         $results = $results->where('status', true)->orderBy('sort_index', 'asc')->get();
 
@@ -442,9 +444,9 @@ $products = DB::table('txn_products as p')
             ]);
 
             Mail::send(['html' => 'backend.mails.question'], ['qna' => $qna, 'product' => $product], function ($message) {
-                $message->from('info@easyfithearing.com', 'EasyFit Hearing Aids ');
-                $message->to('info@easyfithearing.com', 'EasyFit Hearing Aids');
-                $message->subject('EasyFit Hearing Aids - Someone ask question');
+                $message->from('info@ranayas.com', 'Ranayas');
+                $message->to('info@ranayas.com', 'Ranayas');
+                $message->subject('Ranayas - Someone ask question');
             });
 
             return redirect(route('product', $product->slug_url))->with('messageSuccess1', 'Your question has been submitted successfully ! we\'ll answer your question soon !');

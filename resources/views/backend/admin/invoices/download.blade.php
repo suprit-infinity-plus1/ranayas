@@ -223,7 +223,7 @@
                     <tr class="pb-20">
                         <td colspan="2">
                             <div class="text-center">
-                                <p class="company_title text-center"> Aura Hearing Care </p>
+                                <p class="company_title text-center"> Ranayas </p>
                                 <p class="company_address"> G1 sagar chamber saini enclave Vikas mark, New Delhi
                                     110092.</p>
                             </div>
@@ -240,7 +240,7 @@
                     <tr>
                         <td colspan="2">
                             Contact: 9619614785
-                            <span class="invoice_span">Email id : info@easyfithearing.com</span>
+                            <span class="invoice_span">Email id : info@ranayas.com</span>
                         </td>
                     </tr>
                 </table>
@@ -253,21 +253,22 @@
                     <tr>
                         <td colspan="2">
                             Invoice No : {{ $invoice->id }}
-                            <span class="invoice_span">Order Date : {{date('d M Y' , strtotime($invoice->created_at))}}
+                            <span class="invoice_span">Order Date :
+                                {{ date('d M Y', strtotime($invoice->created_at)) }}
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            Name : {{$invoice->user_name}}
-                            <span class="invoice_span">Consumer ID : {{$invoice->user->id}}</span>
+                            Name : {{ $invoice->user_name }}
+                            <span class="invoice_span">Consumer ID : {{ $invoice->user->id }}</span>
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="2">
-                            Contact No. : {{$invoice->user->mobile}}
-                            <span class="invoice_span">Email : {{$invoice->user->email}}</span>
+                            Contact No. : {{ $invoice->user->mobile }}
+                            <span class="invoice_span">Email : {{ $invoice->user->email }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -276,9 +277,9 @@
                         </td>
 
                         <td>
-                            {{$invoice->address}} ,
-                            <br> Pincode : {{$invoice->pincode}} , City : {{$invoice->city}} , Landmark :
-                            {{$invoice->landmark}}
+                            {{ $invoice->address }} ,
+                            <br> Pincode : {{ $invoice->pincode }} , City : {{ $invoice->city }} , Landmark :
+                            {{ $invoice->landmark }}
                         </td>
                     </tr>
                 </table>
@@ -295,39 +296,40 @@
                         <th>AMT (Rs.)</th>
                     </tr>
 
-                    @foreach($invoice->details as $detail)
+                    @foreach ($invoice->details as $detail)
 
-                    @php
-                    $offers = json_decode($detail->offers);
-                    $exp_offers = explode(",", $offers);
-                    @endphp
-                    <tr>
-                        <td style="width: 145px !important">
-                            {{ $detail->product->title }} <br>
-                            {{ $detail->size ? 'Size: ' . $detail->size->title : '' }} <br>
-                            {{ $detail->color ? 'Color: ' . $detail->color->title : '' }} <br>
-                        </td>
-                        <td>{{ $detail->quantity }}</td>
-                        <td>{{ $detail->mrp * $detail->quantity }}</td>
-                    </tr>
-                    @if($offers)
-                    <tr>
-                        <td colspan="3" style="border-bottom: 2px solid #000;font-weight: 600;">
-                            Offer :
-                            @if(!empty($exp_offers))
-                            @foreach($exp_offers as $ofr)
-                            @php
-                            $offer = \App\Model\MapMstOfferProduct::where('id', $ofr)->with('product', 'color',
-                            'size')->first();
-                            @endphp
+                        @php
+                            $offers = json_decode($detail->offers);
+                            $exp_offers = explode(',', $offers);
+                        @endphp
+                        <tr>
+                            <td style="width: 145px !important">
+                                {{ $detail->product->title }} <br>
+                                {{ $detail->size ? 'Size: ' . $detail->size->title : '' }} <br>
+                                {{ $detail->color ? 'Color: ' . $detail->color->title : '' }} <br>
+                            </td>
+                            <td>{{ $detail->quantity }}</td>
+                            <td>{{ $detail->mrp * $detail->quantity }}</td>
+                        </tr>
+                        @if ($offers)
+                            <tr>
+                                <td colspan="3" style="border-bottom: 2px solid #000;font-weight: 600;">
+                                    Offer :
+                                    @if (!empty($exp_offers))
+                                        @foreach ($exp_offers as $ofr)
+                                            @php
+                                                $offer = \App\Model\MapMstOfferProduct::where('id', $ofr)
+                                                    ->with('product', 'color', 'size')
+                                                    ->first();
+                                            @endphp
 
-                            <span class="plus"> {!! $offer->product->title . ' ['. $offer->size->title .'ML]' !!}
-                            </span>
-                            @endforeach
-                            @endif
-                        </td>
-                    </tr>
-                    @endif
+                                            <span class="plus"> {!! $offer->product->title . ' [' . $offer->size->title . 'ML]' !!}
+                                            </span>
+                                        @endforeach
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                     <tr style="border-bottom: 3px solid #000;">
                         <td colspan="3"></td>

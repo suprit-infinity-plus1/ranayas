@@ -640,7 +640,7 @@ idap-pro css
     }
     .left-blog-list-style-5 .blog-start .blog-content .blog-date-comment,
     .right-blog-list-style-5 .blog-start .blog-content .blog-date-comment {
-        background-color: #d25200;
+        background-color: var(--theme-color);
         padding: 8px 10px;
     }
     .left-blog-list-style-5
@@ -3114,7 +3114,7 @@ iphone css
     .all-filter .pro-size a.filter-link[aria-expanded="true"],
     .all-filter .filter-tag a.filter-link[aria-expanded="true"],
     .all-filter .vendor-filter a.filter-link[aria-expanded="true"] {
-        color: #d25200;
+        color: var(--theme-color);
     }
     .all-filter .categories-page-filter a.filter-link[aria-expanded="true"] i,
     .all-filter .price-filter a.filter-link[aria-expanded="true"] i,
@@ -3858,7 +3858,7 @@ iphone css
         margin-left: 0px;
     }
     .full-blog-list-style-5 .blog-start .blog-content .blog-date-comment {
-        background-color: #d25200;
+        background-color: var(--theme-color);
         padding: 8px 10px;
     }
     .full-blog-list-style-5

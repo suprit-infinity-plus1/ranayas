@@ -44,16 +44,18 @@ class ShopController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191',
-            'city' => 'required|string|max:191',
-            'address' => 'required|string|max:191',
-            'mobile' => 'required|digits_between:8,12',
-            'email' => 'required|email|max:191|unique:shops,email',
-            'password' => 'required|string|max:191',
-            'account_no' => 'nullable|string|max:191',
-            'ifsc_code' => 'nullable|string|max:191',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:191',
+                'city' => 'required|string|max:191',
+                'address' => 'required|string|max:191',
+                'mobile' => 'required|digits_between:8,12',
+                'email' => 'required|email|max:191|unique:shops,email',
+                'password' => 'required|string|max:191',
+                'account_no' => 'nullable|string|max:191',
+                'ifsc_code' => 'nullable|string|max:191',
+            ],
             [
                 'name.required' => 'Please Enter Shop Name',
                 'shop.required' => 'Please Enter City',
@@ -64,7 +66,8 @@ class ShopController extends Controller
                 'email.email' => 'Please Enter Proper Email ID',
                 'email.unique' => $request->email . ' is already registered with us !',
                 'password.required' => 'Please Enter Password',
-            ]);
+            ]
+        );
 
         if ($validator->fails()) {
             connectify('error', 'Add Shop', $validator->errors()->first());
@@ -96,12 +99,12 @@ class ShopController extends Controller
         ]);
 
         Mail::send(['html' => 'backend.mails.shop'], ['shop' => $shop, 'password' => $request->password], function ($message) use ($shop) {
-            $message->from('info@easyfithearing.com', 'Easy Fit Hearing');
+            $message->from('info@ranayas.com', 'Ranayas');
             $message->to($shop->email, $shop->name);
-            $message->subject('Easy Fit Hearing - Shop Credentials');
+            $message->subject('Ranayas - Dealer Credentials');
         });
 
-        connectify('success', 'Shop Added', 'Shop has been added successfully !');
+        connectify('success', 'Dealer Added', 'Dealer has been added successfully !');
 
         return redirect(route('admin.shops.all'));
     }
@@ -155,16 +158,17 @@ class ShopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:191',
-            'city' => 'required|string|max:191',
-            'address' => 'required|string|max:191',
-            'mobile' => 'required|digits_between:8,12',
-            'password' => 'required_with:con_password|max:191',
-            'con_password' => 'required_with:password|same:password|max:191',
-            'account_no' => 'nullable|string|max:191',
-            'ifsc_code' => 'nullable|string|max:191',
-        ],
+        $request->validate(
+            [
+                'name' => 'required|string|max:191',
+                'city' => 'required|string|max:191',
+                'address' => 'required|string|max:191',
+                'mobile' => 'required|digits_between:8,12',
+                'password' => 'required_with:con_password|max:191',
+                'con_password' => 'required_with:password|same:password|max:191',
+                'account_no' => 'nullable|string|max:191',
+                'ifsc_code' => 'nullable|string|max:191',
+            ],
             [
                 'name.required' => 'Please Enter Shop Name',
                 'shop.required' => 'Please Enter City',
@@ -174,7 +178,8 @@ class ShopController extends Controller
                 'password.required_with' => 'Please Enter New Password to change password',
                 'con_password.required_with' => 'Please Enter Confirm Password to change password',
                 'con_password.same' => 'Please Enter Confirm Password same as New Password',
-            ]);
+            ]
+        );
 
         try {
 
@@ -273,15 +278,17 @@ class ShopController extends Controller
 
     public function generateCoupon(Request $request, $id)
     {
-        $request->validate([
-            'no_of_coupon' => 'required|numeric|min:1|max:1000',
-        ],
+        $request->validate(
+            [
+                'no_of_coupon' => 'required|numeric|min:1|max:1000',
+            ],
             [
                 'no_of_coupon.required' => 'Please Enter No of coupon to be Generated',
                 'no_of_coupon.numeric' => 'Please Enter Coupon code in Number Only',
                 'no_of_coupon.min' => 'Coupon code should be Minimum 1',
                 'no_of_coupon.max' => 'Coupon code should be Maximum 1000',
-            ]);
+            ]
+        );
         try {
 
             $shop = Shop::where('id', $id)->firstOrFail();

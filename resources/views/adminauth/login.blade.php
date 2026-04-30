@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>ADMINISTRATIVE LOGIN || Aura Hearing Care </title>
+    <title>ADMINISTRATIVE LOGIN || Ranayas </title>
 
     <!-- Favicon -->
 
-    <link rel="apple-touch-icon" sizes="57x57" href="{!! asset('assets/img/logo/favicon/apple-icon-57x57.png') !!}">
+    {{-- <link rel="apple-touch-icon" sizes="57x57" href="{!! asset('assets/img/logo/favicon/apple-icon-57x57.png') !!}">
     <link rel="apple-touch-icon" sizes="60x60" href="{!! asset('assets/img/logo/favicon/apple-icon-60x60.png') !!}">
     <link rel="apple-touch-icon" sizes="72x72" href="{!! asset('assets/img/logo/favicon/apple-icon-72x72.png') !!}">
     <link rel="apple-touch-icon" sizes="76x76" href="{!! asset('assets/img/logo/favicon/apple-icon-76x76.png') !!}">
@@ -17,11 +17,10 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{!! asset('assets/img/logo/favicon/apple-icon-144x144.png') !!}">
     <link rel="apple-touch-icon" sizes="152x152" href="{!! asset('assets/img/logo/favicon/apple-icon-152x152.png') !!}">
     <link rel="apple-touch-icon" sizes="180x180" href="{!! asset('assets/img/logo/favicon/apple-icon-180x180.png') !!}">
-    <link rel="icon" type="image/png" sizes="192x192"
-        href="{!! asset('assets/img/logo/favicon/android-icon-192x192.png') !!}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{!! asset('assets/img/logo/favicon/favicon-32x32.png') !!}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{!! asset('assets/img/logo/favicon/favicon-96x96.png') !!}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('assets/img/logo/favicon/favicon-16x16.png') !!}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{!! asset('assets/img/logo/favicon/android-icon-192x192.png') !!}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{!! asset('assets/img/logo/favicon/favicon-96x96.png') !!}"> --}}
+    <link rel="icon" type="image/png" sizes="32x32" href="{!! asset('assets/image/logo/favicon-32x32.png') !!}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('assets/image/logo/favicon-16x16.png') !!}">
     <link rel="manifest" href="{!! asset('assets/img/logo/favicon/manifest.json') !!}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{!! asset('assets/img/logo/favicon/ms-icon-144x144.png') !!}">
@@ -62,30 +61,30 @@
                                             name="email" value="{{ old('email') }}" placeholder="Your Email Address"
                                             required tabindex="1" autofocus>
                                         @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                     <div class="form-group">
                                         <div class="d-block">
                                             <label for="password" class="control-label">Password</label>
                                             <!-- @if (Route::has('password.request'))
-                                            <div class="float-right">
+<div class="float-right">
                                                 <a href="{{ route('password.request') }}" class="text-small"
                                                     id="password">
                                                     Forgot Password?
                                                 </a>
                                             </div>
-                                            @endif -->
+@endif -->
                                         </div>
                                         <input id="password" type="password"
                                             class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                             name="password" placeholder="Password" tabindex="2" required>
                                         @if ($errors->has('password'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                     <div class="form-group">
@@ -109,7 +108,8 @@
                             </div>
                         </div>
                         <div class="mt-5 text-muted text-center">
-                            Designed & Developed By <a href="https://www.sanjaresolutions.com" target="_blank">Sanjar E
+                            Designed & Developed By <a href="https://www.sanjaresolutions.com" target="_blank">Sanjar
+                                E
                                 Solutions</a>
                         </div>
                     </div>
@@ -128,9 +128,9 @@
     <script src="{!! asset('admin/js/jquery.validate.min.js') !!}"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
-            jQuery.validator.addMethod("validate_email", function (value, element) {
+            jQuery.validator.addMethod("validate_email", function(value, element) {
 
                 if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value)) {
                     return true;
@@ -162,7 +162,7 @@
                         required: "Please Enter Password"
                     },
                 },
-                submitHandler: function (form) {
+                submitHandler: function(form) {
                     $('.btnSubmit').attr('disabled', 'disabled');
                     $(".btnSubmit").html('<span class="fa fa-spinner fa-spin"></span> Loading...');
                     form.submit();
@@ -170,7 +170,6 @@
             });
 
         });
-
     </script>
 </body>
 

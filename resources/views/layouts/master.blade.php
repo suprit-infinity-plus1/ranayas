@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="EasyFit Hearing Aids" />
-    <link rel="shortcut icon" href="{!! asset('assets/image/logo/icon.png') !!}">
+    <meta name="description" content="Ranayas" />
+    <link rel="shortcut icon" href="{!! asset('assets/image/logo/favicon-32x32.png') !!}">
     <!-- Title -->
-    <title>@yield('title') || EasyFit Hearing Aids</title>
+    <title>@yield('title') || Ranayas</title>
     <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/bootstrap.min.css') !!}">
     <!-- simple-line icon -->
     <link rel=" stylesheet" type="text/css" href="{!! asset('assets/css/simple-line-icons.css') !!}">
@@ -84,16 +84,16 @@
 
                 <div class="popup-body">
 
-                    <div class="img-popup mb-5">
-                        <img width="100%" src="{!! asset('assets/image/logo/logoo.png') !!}" alt="img">
-                    </div>
+                    {{-- <div class="img-popup mb-5">
+                        <img width="300px" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="img">
+                    </div> --}}
                     <form id="modal-form-ctc" name="modal_contact_form" class="contact-form" action="javascript:void(0)"
                         method="post">
                         <div class="popup mb-5">
                             <h5 class="modal-title text-center mb-3">
                                 Connect Us
                             </h5>
-                            <h3>Listen with Easy Fit Hearing</h3>
+                            <h3>Listen with Ranayas</h3>
                         </div>
                         <div class="custom-form-group">
                             <input type="text" id="form_name" name="form_name" class="custom-input" required />
@@ -177,7 +177,7 @@
                                 <!-- logo start -->
                                 <div class="header-element logo">
                                     <a href="{{ route('index') }}">
-                                        <img src="{!! asset('assets/image/logo/logoo.png') !!}" alt="logo" class="img-fluid">
+                                        <img src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="logo" class="img-fluid">
                                     </a>
                                 </div>
                                 <!-- logo end -->
@@ -510,7 +510,7 @@
 
     <!-- footer start -->
     <section class="footer5">
-        <div class="section-tb-padding footer-bg" style="background-image: url({!! asset('assets/image/footer-6.jpg') !!});">
+        <div class="section-tb-padding footer-bg">
             <div class="container container_WidthMas1">
                 <div class="row">
                     <div class="col">
@@ -534,7 +534,7 @@
                                 <ul class="footer-ul">
                                     <li class="footer-li footer-logo">
                                         <a href="{{ route('index') }}">
-                                            <img class="img-fluid" src="{!! asset('assets/image/logo/logoo.png') !!}" alt="">
+                                            <img class="img-fluid" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="">
                                         </a>
                                     </li>
                                     <li class="footer-li footer-contact">
@@ -553,8 +553,8 @@
                                                 <i class="ion-ios-email"></i>
                                             </li>
                                             <li class="footer-info">
-                                                <a href="mailto: info@easyfithearingcom">
-                                                    info@easyfithearing.com</a>
+                                                <a href="mailto: info@ranayas.com">
+                                                    info@ranayas.com</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -564,7 +564,7 @@
                                                 <i class="ion-ios-location"></i>
                                             </li>
                                             <li class="footer-info">
-                                                <span> Easyfit Devices Pvt. Ltd.
+                                                <span> Ranayas
                                                 </span>
                                                 <span>
                                                     Shop No No 4-A, Ground Floor, <br>
@@ -675,7 +675,7 @@
                 <div class="col">
                     <ul class="f-bottom">
                         <li class="f-c f-copyright">
-                            <p>Copyright <i class="fa fa-copyright"></i> 2024 EasyFit Hearing Aids Pvt Ltd.</p>
+                            <p>Copyright <i class="fa fa-copyright"></i> 2024 Ranayas.</p>
                         </li>
                         <li class="f-c">
                             <ul class="f-bottom">
@@ -695,10 +695,10 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="f-c f-payment">
+                        {{-- <li class="f-c f-payment">
                             <a href="javascript:void(0)"><img src="{!! asset('assets/image/payment.png') !!}" class="img-fluid"
                                     alt="payment image"></a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>

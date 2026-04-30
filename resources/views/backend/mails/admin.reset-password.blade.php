@@ -171,15 +171,15 @@
     <hr>
     <div class="container">
         <div>
-            <a href="{{ url('/') }}" title="Aura Hearing Care">
-                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Aura Hearing Care" />
+            <a href="{{ url('/') }}" title="Ranayas">
+                <img src="{{ url('/') }}/assets/img/logo/logo.png" alt="Ranayas" />
             </a>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <hr>
                 <div class="heading">
-                    <h2>Hello! Aura Hearing Care Team</h2>
+                    <h2>Hello! Ranayas Team</h2>
                     <p>
                         You are receiving this email because we received a password reset request for your account.
                     </p>
@@ -187,20 +187,21 @@
 
 
                     <div class="text-center mb-40">
-                        <a href="{{url(config('app.url').route('password.reset', $token, false))}}" class="btn"
+                        <a href="{{ url(config('app.url') . route('password.reset', $token, false)) }}" class="btn"
                             title="Reset Password">Reset Password</a>
                     </div>
 
                     <p>If you did not request a password reset, no further action is required.</p>
                     <h3>Regards,</h3>
-                    <h3>Aura Hearing Care</h3>
+                    <h3>Ranayas</h3>
                 </div>
                 <hr>
                 <p>
                     If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into
-                    your web browser : <br> <a href="{{url(config('app.url').route('password.reset', $token, false))}}"
-                        style="word-break: break-all;color: #3869d4;">{{url(config('app.url').route('password.reset',
-                        $token, false))}}</a></p>
+                    your web browser : <br> <a
+                        href="{{ url(config('app.url') . route('password.reset', $token, false)) }}"
+                        style="word-break: break-all;color: #3869d4;">{{ url(config('app.url') . route('password.reset', $token, false)) }}</a>
+                </p>
             </div>
         </div>
     </div>

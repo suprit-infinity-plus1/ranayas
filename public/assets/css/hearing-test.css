@@ -20,7 +20,7 @@
 .hearing-test-wrapper {
     /* position: absolute; */
     text-align: center;
-    background: linear-gradient(0.25turn, transparent, transparent, #d25200);
+    background: linear-gradient(0.25turn, transparent, transparent, var(--theme-color));
     /* background-color: #d2510072; */
     padding: 5% 5% 0% 65%;
     width: 100%;
@@ -45,7 +45,7 @@
 .hearing-test-wrapper .btns a {
     font-size: 1.3rem;
     font-weight: 400;
-    background-color: #d25200;
+    background-color: var(--theme-color);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -59,7 +59,7 @@
     font-size: 1rem;
     text-align: center;
     font-weight: 400;
-    background-color: #d25200;
+    background-color: var(--theme-color);
     color: white;
     padding: 0.6rem 0.8rem;
     border-radius: 5px;
@@ -93,7 +93,7 @@
     outline: none;
     font-size: 1.3rem;
     font-weight: 400;
-    background-color: #d25200;
+    background-color: var(--theme-color);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -131,7 +131,7 @@
 
 .about-us-wrapper h3,
 .about-us-wrapper a {
-    background-color: #d25200;
+    background-color: var(--theme-color);
     width: fit-content;
 }
 
@@ -154,7 +154,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #d25200;
+    background-color: var(--theme-color);
     position: absolute;
     top: 50%;
     left: -7px;
@@ -191,7 +191,7 @@
 }
 
 .col .test-parts .nums {
-    background: #d25200;
+    background: var(--theme-color);
     padding: 3px;
     width: fit-content;
     border-radius: 50%;
@@ -281,11 +281,11 @@
     justify-content: center;
     z-index: 1;
     /* height: 5px;
-    background-color: #d25200; */
+    background-color: var(--theme-color); */
 }
 
 .question-no-line li span {
-    background-color: #d25200;
+    background-color: var(--theme-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -315,7 +315,7 @@
 }
 
 .header-wrapper .nums {
-    background: #d25200;
+    background: var(--theme-color);
     padding: 3px;
     width: fit-content;
     border-radius: 50%;
@@ -404,7 +404,7 @@
     top: -2px;
     left: -1px;
     position: relative;
-    background-color: #d25200;
+    background-color: var(--theme-color);
     content: "";
     display: inline-block;
     visibility: visible;
@@ -424,7 +424,7 @@
     outline: none;
     font-size: 1rem;
     font-weight: 400;
-    background-color: #d25200;
+    background-color: var(--theme-color);
     color: white;
     padding: 0.5rem 1rem;
     margin-top: 2rem;
@@ -588,7 +588,7 @@
 }
 
 .why-choose-us header span {
-    background-color: #d25200;
+    background-color: var(--theme-color);
 }
 
 .why-choose-us .container h2 {
@@ -750,7 +750,7 @@
     width: 100%;
     margin: 0 auto;
     height: 3px;
-    background-color: #d25200;
+    background-color: var(--theme-color);
 }
 
 .divider svg {
@@ -884,7 +884,7 @@
 
 @media only screen and (max-width: 768px) {
     .hearing-test-wrapper {
-        background: linear-gradient(0.25turn, transparent, #d25200);
+        background: linear-gradient(0.25turn, transparent, var(--theme-color));
         padding: 10% 5% 0% 30%;
     }
 

@@ -155,20 +155,20 @@ class ProductController extends Controller
         );
 
         // dd($request->image_url);
-        
+
         if ($request->hasFile('image_url')) {
             $request['img'] = "front_" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->image_url->storeAs('public/images/products', $request->img);
+            $request->image_url->storeAs('images/products', $request->img, 'public');
         }
-        
+
         if ($request->hasFile('image_url1')) {
             $request['img1'] = "back_" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->image_url1->storeAs('public/images/products', $request->img1);
+            $request->image_url1->storeAs('images/products', $request->img1, 'public');
         }
-        
+
         // dd($request->image_url);
         // dd("hello");
-          if ($validator->fails()) {
+        if ($validator->fails()) {
             connectify('error', 'Add Product', $validator->errors()->first());
             return redirect(route('admin.products.create'))->withInput();
         }
@@ -222,7 +222,7 @@ class ProductController extends Controller
 
             foreach ($request->image_urls as $images) {
                 $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
-                $images->storeAs('public/images/multi-products', $request->image);
+                $images->storeAs('images/multi-products', $request->image, 'public');
 
                 TxnImage::create([
                     'product_id' => $product->id,
@@ -423,9 +423,9 @@ class ProductController extends Controller
 
                 $request['img'] = "front-" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $request->image_url->storeAs('public/images/products', $request->img);
+                $request->image_url->storeAs('images/products', $request->img, 'public');
 
-                $storagePath  = $request->img;
+                $storagePath = $request->img;
                 // dd($storagePath);
                 $product->update([
                     'image_url' => $storagePath,
@@ -442,9 +442,9 @@ class ProductController extends Controller
 
                 $request['img1'] = "back-" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
 
-                $request->image_url1->storeAs('public/images/products', $request->img1);
+                $request->image_url1->storeAs('images/products', $request->img1, 'public');
 
-                $storagePath  = $request->img1;
+                $storagePath = $request->img1;
                 $product->update([
                     'image_url1' => $storagePath,
                 ]);
@@ -569,8 +569,8 @@ class ProductController extends Controller
                 foreach ($request->image_urls as $images) {
 
                     $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $images->storeAs('public/images/multi-products', $request->image);
-                    $storagePath  = $request->image;
+                    $images->storeAs('images/multi-products', $request->image, 'public');
+                    $storagePath = $request->image;
                     TxnImage::create([
                         'product_id' => $product->id,
                         'image_url' => $storagePath,
@@ -730,8 +730,8 @@ class ProductController extends Controller
 
                 foreach ($request->image_urls as $images) {
                     $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $images->storeAs('public/images/multi-products', $request->image);
-                    $storagePath  = $request->image;
+                    $images->storeAs('images/multi-products', $request->image, 'public');
+                    $storagePath = $request->image;
 
                     TxnImage::create([
                         'product_id' => $product->id,
