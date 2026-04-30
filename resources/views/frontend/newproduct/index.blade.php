@@ -275,7 +275,7 @@
     <!-- About Us Section start -->
     <section class="about-us-sec overflow-hidden position-relative w-100">
         <figure>
-            <img src="{{ asset('assets/image/about-us-section.jpg') }}" alt="hearing test background image">
+            <img src="{{ asset('assets/image/about-us-section11.png') }}" alt="hearing test background image">
         </figure>
 
         <div class="about-us-wrapper position-absolute py-4 px-4">
@@ -524,8 +524,8 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                                                                                                                            width: 100% !important;
-                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                width: 100% !important;
+                                                                                                                                                                                                                                                            } */
     </style>
 @endsection
 
