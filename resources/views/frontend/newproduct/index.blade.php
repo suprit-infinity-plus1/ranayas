@@ -86,7 +86,7 @@
     <!-- service end -->
 
     <!-- category image strat -->
-    <section class="home5-category section-b-padding">
+    <section class="home5-category section-t-padding section-b-padding ">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -190,9 +190,12 @@
                                             </div>
                                             <div class="pro-icn">
                                                 @if (auth('user')->check())
-                                                    @if (auth('user')->user()->id == $product->w_u_id && $product->w_product_id == $product->id)
+                                                    @php
+                                                        $wishlistItem = auth('user')->user()->wishlists->where('product_id', $product->id)->first();
+                                                    @endphp
+                                                    @if ($wishlistItem)
                                                         <a href="javascript:void(0)" class="w-c-q-icn wishlist-remove"
-                                                            data-w-id="{{ $product->w_id }}"
+                                                            data-w-id="{{ $wishlistItem->id }}"
                                                             title="Remove from Wishlist"><i class="fa fa-heart"></i></a>
                                                     @else
                                                         <a href="javascript:void(0)" class="w-c-q-icn wishlist"
@@ -516,8 +519,8 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                                width: 100% !important;
-                                                                                                                                                            } */
+                                                                                                                                                                                    width: 100% !important;
+                                                                                                                                                                                } */
     </style>
 @endsection
 

@@ -142,11 +142,12 @@
                                         <span class="p-discount"> {{ $getOffer }}% off</span>
                                     </div>
                                     <div class="pro-icn">
-                                        @if(auth('user')->check())
-                                        @if(auth('user')->user()->id == $product->w_u_id && $product->w_product_id
-                                        ==$product->id)
+                                        @php
+                                            $wishlistItem = auth('user')->user()->wishlists->where('product_id', $product->id)->first();
+                                        @endphp
+                                        @if ($wishlistItem)
                                         <a href="javascript:void(0)" class="w-c-q-icn wishlist-remove"
-                                            data-w-id="{{ $product->w_id }}" title="Remove from Wishlist"><i
+                                            data-w-id="{{ $wishlistItem->id }}" title="Remove from Wishlist"><i
                                                 class="fa fa-heart"></i></a>
                                         @else
                                         <a href="javascript:void(0)" class="w-c-q-icn wishlist"

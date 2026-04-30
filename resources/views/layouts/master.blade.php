@@ -198,7 +198,7 @@
                                 <!-- logo start -->
                                 <div class="header-element logo">
                                     <a href="{{ route('index') }}">
-                                        <img src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="logo" class="img-fluid">
+                                        <img src="{!! asset('assets/image/logo/ranayas-logo2.jpg') !!}" alt="logo" class="img-fluid">
                                     </a>
                                 </div>
                                 <!-- logo end -->
@@ -334,11 +334,11 @@
                                             </div>
                                         </li>
                                         <li class="side-wrap wishlist-wrap">
-                                            <a href="javascript:void(0)" class="header-wishlist">
+                                            <a href="{{ route('user.wishlists') }}" class="header-wishlist">
                                                 <span class="wishlist-icon"><i class="icon-heart"></i></span>
                                                 <span class="wishlist-counter">
-                                                    @if (auth()->check())
-                                                        {{ count(auth()->user()->wishlists) }}
+                                                    @if (auth('user')->check())
+                                                        {{ count(auth('user')->user()->wishlists) }}
                                                     @else
                                                         0
                                                     @endif
@@ -588,10 +588,8 @@
                                                 <span> Ranayas
                                                 </span>
                                                 <span>
-                                                    Shop No No 4-A, Ground Floor, <br>
-                                                    Prakash Building, R. B. Mehta Marg,
+                                                    kandivali west, Mumbai, India, Maharashtra
                                                 </span>
-                                                <span style="margin-top:0px">Ghatkopar East, Mumbai - 400 077</span>
                                             </li>
                                         </ul>
                                     </li>
@@ -696,7 +694,7 @@
                 <div class="col">
                     <ul class="f-bottom">
                         <li class="f-c f-copyright">
-                            <p>Copyright <i class="fa fa-copyright"></i> 2024 Ranayas.</p>
+                            <p>Copyright <i class="fa fa-copyright"></i> 2026 ranayas.com - All Rights Reserved.</p>
                         </li>
                         <li class="f-c">
                             <ul class="f-bottom">

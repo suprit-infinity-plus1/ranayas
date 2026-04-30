@@ -1220,25 +1220,6 @@ button.navbar-toggler span.line::after {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    margin-top: 93px;
-}
-
-@media (max-width: 991px) {
-    .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-        margin-top: 122px;
-    }
-}
-
-@media (max-width: 525px) {
-    .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-        margin-top: 127px;
-    }
-}
-
-@media (max-width: 400px) {
-    .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-        margin-top: 100px;
-    }
 }
 
 .home-slider-5 .home-slider-main-5 .home5-slider .img-back .h-s-content {
@@ -2695,7 +2676,6 @@ footer css
     border-radius: 3px;
     font-weight: 400;
     border: none;
-    border-radius: 25px;
 }
 
 .news-5 form a {
