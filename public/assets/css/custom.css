@@ -8,16 +8,41 @@ span.p-discount {
     background-color: #fcca2f !important;
 }
 
-.btn-close {
+.btn-close,
+.modal-header .close,
+.search-model .close,
+.close,
+.close1,
+.close-btn,
+.close-box {
     background-color: var(--theme-color) !important;
     opacity: 1 !important;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") !important;
+    color: #fff !important;
+    background-image: none !important; /* Fix for double icons */
     background-size: 10px !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
-    /* border-radius: 50% !important; */
+    border-radius: 5px !important;
     padding: 10px !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: none !important;
+    transition: all 0.3s ease;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Only .btn-close (Bootstrap 5) needs the background SVG */
+.btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") !important;
+}
+
+.btn-close:hover,
+.modal-header .close:hover,
+.search-model .close:hover,
+.close1:hover {
+    background-color: #000 !important;
+    color: #fff !important;
 }
 
 .float {

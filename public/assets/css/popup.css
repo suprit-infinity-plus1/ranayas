@@ -107,7 +107,16 @@
     border: none;
     border-radius: 5px;
     display: block;
-    width: 20px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.close1:hover {
+    background-color: #000;
+    color: #fff;
 }
 
 /* Modal main  */

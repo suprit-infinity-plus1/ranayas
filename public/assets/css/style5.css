@@ -1216,7 +1216,7 @@ button.navbar-toggler span.line::after {
 
 .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
     /* width: 1586px; */
-    height: 470px;
+    height: 670px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1225,7 +1225,8 @@ button.navbar-toggler span.line::after {
 .home-slider-5 .home-slider-main-5 .home5-slider .img-back .h-s-content {
     position: absolute;
     bottom: 50%;
-    left: 20%;
+    right: 10%;
+    /* left: 20%; */
     transform: translateY(50%);
     width: 35%;
 }
