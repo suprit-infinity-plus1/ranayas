@@ -115,7 +115,7 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="contact-info mb-sm--35">
                                         <h5>Contact Us</h5>
-                                        <a href="tel:+919911998998">(+91) 991 199 8998</a>
+                                        <a href="tel:+919820760951">(+91) 982 076 0951</a>
                                     </div>
                                 </div>
                             </div>

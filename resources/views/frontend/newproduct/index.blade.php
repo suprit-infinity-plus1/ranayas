@@ -3,7 +3,8 @@
 @section('extracss')
     <style>
         .service-box i {
-            color: #e36542;
+            /* color: #e36542; */
+            color: #fcca2f;
         }
     </style>
 @endsection
@@ -515,8 +516,8 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                        width: 100% !important;
-                                                                                                                                                    } */
+                                                                                                                                                                width: 100% !important;
+                                                                                                                                                            } */
     </style>
 @endsection
 

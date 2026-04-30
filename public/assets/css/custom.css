@@ -6596,3 +6596,13 @@ img.mobile {
 .pro-page-product0 {
     max-width: 100%;
 }
+
+/* Wishlist remove icon color */
+.wishlist-remove i.fa-heart {
+    color: #fff !important;
+    transition: color 0.3s ease;
+}
+
+.wishlist-remove:hover i.fa-heart {
+    color: var(--theme-color) !important;
+}
