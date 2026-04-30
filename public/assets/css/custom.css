@@ -230,22 +230,24 @@
 
 /* Category menu fixes for desktop and mobile nested collapsible items */
 @media (min-width: 1200px) {
-    .megamenu-content .mainwrap ul.main-menu li.submenu-li > a.submenu-link.link-title.link-title-lg {
+    .megamenu-content .mainwrap ul.main-menu li.submenu-li>a.submenu-link.link-title.link-title-lg {
         display: none;
     }
 }
 
 @media (max-width: 1199px) {
-    .megamenu-content .mainwrap ul.main-menu li.submenu-li > a.submenu-link.has-child {
+    .megamenu-content .mainwrap ul.main-menu li.submenu-li>a.submenu-link.has-child {
         display: none;
     }
-    .megamenu-content .mainwrap ul.main-menu li.submenu-li > a.submenu-link.link-title.link-title-lg {
+
+    .megamenu-content .mainwrap ul.main-menu li.submenu-li>a.submenu-link.link-title.link-title-lg {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 10px 15px 10px 25px;
     }
-    .megamenu-content .mainwrap ul.main-menu li.submenu-li > a.submenu-link.link-title.link-title-lg i {
+
+    .megamenu-content .mainwrap ul.main-menu li.submenu-li>a.submenu-link.link-title.link-title-lg i {
         margin-left: 0;
     }
 }
