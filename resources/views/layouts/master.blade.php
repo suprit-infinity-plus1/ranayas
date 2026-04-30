@@ -244,7 +244,7 @@
                                                     </li>
                                                     </ul>
                                                     </li> --}}
-                                                        {!! $dynamicCategory !!}
+                                                        {!! $dynamiccategoryDesktop !!}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -396,7 +396,7 @@
                             </ul>
                             </li>
                             --}}
-                                {!! $dynamicCategory !!}
+                                {!! $dynamiccategoryMobile !!}
                             </ul>
                         </div>
                     </div>
