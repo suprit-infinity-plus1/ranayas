@@ -1,3 +1,9 @@
+:root {
+    /* --theme-color: #d56218; */
+    /* --theme-color: #7524b7; */
+    --theme-color: #670cb1;
+}
+
 .modal-1010 {
     z-index: 1000;
     background-color: #000000;
@@ -16,7 +22,7 @@
 }
 
 .custom-btn {
-    background-color: var(--theme-color);
+    background-color: var(--theme-color) !important;
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -90,7 +96,8 @@
 }
 
 .custom-submit-btn {
-    background-color: var(--theme-color);
+    /* background-color: var(--theme-color); */
+    background-color: #670cb1 !important;
     color: #fff;
     padding: 10px 20px;
     border: none;

@@ -23,7 +23,7 @@
     <!-- Breadcrumb area End -->
 
     <!-- Main Content Wrapper Start -->
-    <div class="container">
+    <div class="container section-b-padding">
         <div class="row mt-5">
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 <p class="main-p"><b>Ranaya’s Store</b> was started with an aim of providing quality household products at
