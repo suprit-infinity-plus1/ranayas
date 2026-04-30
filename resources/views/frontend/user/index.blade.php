@@ -93,14 +93,14 @@
                                 @if (auth()->user()->last_login)
                                     <p>
                                         Last Login on
-                                        <strong>{{ auth()->user()->last_login->diffForHumans() }}</strong>
+                                        <strong>{{ \Carbon\Carbon::parse(auth()->user()->last_login)->diffForHumans() }}</strong>
                                     </p>
                                 @endif
 
                                 @if (auth()->user()->last_purchase)
                                     <p>
                                         Your last purchase on
-                                        <strong>{{ auth()->user()->last_purchase->diffForHumans() }}</strong>
+                                        <strong>{{ \Carbon\Carbon::parse(auth()->user()->last_purchase)->diffForHumans() }}</strong>
                                     </p>
                                 @endif
                             </div>

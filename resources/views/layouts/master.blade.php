@@ -135,7 +135,7 @@
         <div class="social-icon">
             <!-- <p class="social-title">Phone</p> -->
             <div class="social-phone">
-                <a href="tel:+91 7700989593">
+                <a href="tel:+91 9820760951">
                     <svg data-bbox="17.052 7.009 15.938 16.944" width="20" height="30"
                         viewBox="17.052 7.009 15.938 16.944" xmlns="http://www.w3.org/2000/svg">
                         <g fill="#fff">
@@ -152,7 +152,7 @@
             <!-- <p class="social-title">Whatsapp</p> -->
             <div class="social-Whatsaap whatsapp-icon-1">
                 <a
-                    href="https://api.whatsapp.com/send?phone=7700989593&amp;text=Hi%2C%20There%21%0A%0AI%20am%20interested%20in%20exploring%20your%20digital%20offerings%2E">
+                    href="https://wa.me/9820760951?text=Hi%2C%20There%21%0A%0AI%20am%20interested%20in%20exploring%20your%20digital%20offerings%2E">
                     <i class="fa fa-whatsapp whatsapp-icon text-white" aria-hidden="true">
 
                     </i>
@@ -543,7 +543,7 @@
                                                 <i class="ion-ios-telephone"></i>
                                             </li>
                                             <li class="footer-info">
-                                                <a href="tel:+91 7700989593"> +91 7700989593</a>
+                                                <a href="tel:+91 9820760951"> +91 9820760951</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -655,7 +655,7 @@
                                     </div>
 
                                     <!-- <div class="f-link elf-F_Link">
-                                   <a href="https://wa.me/">    <img src="{!! asset('assets/image/elf.png') !!}" alt="">
+                                   <a href="https://wa.me/9820760951">    <img src="{!! asset('assets/image/elf.png') !!}" alt="">
                                    </a>
                                     </div> -->
 
@@ -680,13 +680,13 @@
                         <li class="f-c">
                             <ul class="f-bottom">
                                 <li class="f-social">
-                                    <a href="https://www.whatsapp.com/" class="f-icn-link"><i
+                                    <a href="https://wa.me/9820760951" class="f-icn-link"><i
                                             class="fa fa-whatsapp"></i></a>
-                                    <a href="https://www.facebook.com/" class="f-icn-link"><i
+                                    <a href="https://www.facebook.com/ranayas2016" class="f-icn-link"><i
                                             class="fa fa-facebook-f"></i></a>
                                     <a href="https://twitter.com/" class="f-icn-link"><i
                                             class="fa fa-twitter"></i></a>
-                                    <a href="https://www.instagram.com/" class="f-icn-link"><i
+                                    <a href="https://www.instagram.com/ranayas2016/" class="f-icn-link"><i
                                             class="fa fa-instagram"></i></a>
                                     <a href="https://www.pinterest.com/" class="f-icn-link"><i
                                             class="fa fa-pinterest-p"></i></a>

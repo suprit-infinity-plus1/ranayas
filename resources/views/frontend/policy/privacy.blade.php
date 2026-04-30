@@ -233,7 +233,7 @@
                                 <p class="color--light-3">New Delhi – 110092,</p><br />
                                 <p class="color--light-3">Email: <a href="mailto:info@ranayas.com">info@ranayas.com</a>
                                 </p>
-                                <p class="color--light-3">Ph: <a href="tel:+918810693435">+91 881 069 3435</a></p>
+                                <p class="color--light-3">Ph: <a href="tel:+919820760951">+91 982 076 0951</a></p>
                                 <p class="color--light-3">Timing : 10:30 AM TO 6:30 PM | MON TO FRI</p>
                             </address>
                         </div>

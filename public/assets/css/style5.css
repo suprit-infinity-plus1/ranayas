@@ -1549,7 +1549,8 @@ button.navbar-toggler span.line::after {
 }
 
 .home5-service .service .service-box:nth-child(odd) {
-    background-color: #202045e8;
+    /* background-color: #202045e8; */
+    background-color: #7423b6;
     color: #ccc;
 }
 
@@ -1559,7 +1560,8 @@ button.navbar-toggler span.line::after {
 
 .home5-service .service .service-box .ti-email,
 .home5-service .service .service-box .ti-money {
-    color: #202045e8;
+    /* color: #202045e8; */
+    color: #7423b6;
 }
 
 .home5-service .service .service-box .service-content span,
@@ -1568,7 +1570,8 @@ button.navbar-toggler span.line::after {
 }
 
 .home5-service .service .service-box:nth-child(even) {
-    background-color: rgba(221, 100, 25, 0.7);
+    /* background-color: rgba(221, 100, 25, 0.7); */
+    background-color: rgb(252 202 47);
     color: #ccc;
 }
 
@@ -1585,7 +1588,8 @@ button.navbar-toggler span.line::after {
 }
 
 .home5-service .service .service-box .s-box:hover i {
-    color: var(--theme-color);
+    /* color: var(--theme-color); */
+    /* color: #fcca2f; */
     transform: rotateY(180deg);
     -webkit-transition: all 0.3s ease-in-out 0s;
     -o-transition: all 0.3s ease-in-out 0s;
@@ -1625,7 +1629,8 @@ button.navbar-toggler span.line::after {
     transition: all 0.3s linear;
     margin: auto;
     display: block;
-    box-shadow: 0px 1px 2px 0px rgb(255 102 0 / 90%);
+    /* box-shadow: 0px 1px 2px 0px rgb(255 102 0 / 90%); */
+    box-shadow: 0px 1px 2px 0px rgb(252 202 47);
     border-radius: 10px;
 }
 
@@ -1640,9 +1645,12 @@ button.navbar-toggler span.line::after {
 
 .home5-cate-image .cate-image:hover {
     /* box-shadow: 0px 8px 34px 0px rgba(0, 0, 0, 0.06); */
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
         rgba(210, 82, 0, 1) 0px 7px 13px -3px,
-        rgba(210, 82, 0, 1) 0px -3px 0px inset;
+        rgba(210, 82, 0, 1) 0px -3px 0px inset; */
+    /* --------------- new --------- */
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgb(252 202 47) 0px 7px 13px -3px, rgb(252 202 47) 0px -3px 0px inset;
+    ;
     /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
         rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
         rgba(0, 0, 0, 0.2) 0px -3px 0px inset; */
@@ -2687,6 +2695,7 @@ footer css
     border-radius: 3px;
     font-weight: 400;
     border: none;
+    border-radius: 25px;
 }
 
 .news-5 form a {
