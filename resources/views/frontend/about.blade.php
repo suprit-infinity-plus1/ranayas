@@ -23,7 +23,7 @@
     <!-- Breadcrumb area End -->
 
     <!-- Main Content Wrapper Start -->
-    <div class="container">
+    <div class="container section-b-padding">
         <div class="row mt-5">
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 <p class="main-p"><b>Ranaya’s Store</b> was started with an aim of providing quality household products at
@@ -49,7 +49,8 @@
 
             </div>
             <div class="lg-ml-2 col-lg-3 col-md-3 text-center mb-5  col-sm-12 col-xs-12">
-                <img src="assets/image/about-img.png" alt="Contact us  Ranayas" class="img-fluid">
+                {{-- <img src="assets/image/about-img.png" alt="Contact us  Ranayas" class="img-fluid"> --}}
+                <img src="assets/image/logo/ranayas-logo.png" alt="Contact us  Ranayas" class="img-fluid">
             </div>
         </div>
     </div>
