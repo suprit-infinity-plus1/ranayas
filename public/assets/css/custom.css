@@ -1,6 +1,7 @@
 :root {
     /* --theme-color: #d56218; */
-    --theme-color: #7524b7;
+    /* --theme-color: #7524b7; */
+    --theme-color: #670cb1;
 }
 
 .float {
@@ -5328,7 +5329,6 @@ img.lazy {
 
 .header-main-area {
     background: #fff;
-    opacity: 0.9;
 }
 
 /* other page filter css */
@@ -6628,5 +6628,42 @@ img.mobile {
 }
 
 .wishlist-remove:hover i.fa-heart {
+    color: var(--theme-color) !important;
+}
+
+/* Fix header overlapping banner */
+.top-5 {
+    position: relative !important;
+}
+
+/* Header Theme Color Override */
+.header-main-area {
+    background-color: var(--theme-color) !important;
+}
+
+.header-main-area .link-title span.sp-link-title,
+.header-main-area .link-title i,
+.header-main-area .acc-title,
+.header-main-area .account-login a,
+.header-main-area .user-icon i,
+.header-main-area .search-rap i,
+.header-main-area .navbar-toggler .line {
+    color: #ffffff !important;
+}
+
+.header-main-area .navbar-toggler .line,
+.header-main-area .navbar-toggler .line::before,
+.header-main-area .navbar-toggler .line::after {
+    background-color: #ffffff !important;
+}
+
+.header-main-area .wishlist-icon i,
+.header-main-area .cart-icon i {
+    color: #fcca2f !important;
+}
+
+.header-main-area .wishlist-counter,
+.header-main-area .bigcounter {
+    background-color: #fcca2f !important;
     color: var(--theme-color) !important;
 }

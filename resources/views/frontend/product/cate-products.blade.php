@@ -118,10 +118,12 @@
                                             </div>
                                             <span class="product-trending">Trending</span>
                                             @if(auth('user')->check())
-                                            @if(auth('user')->user()->id == $product->w_u_id && $product->w_product_id
-                                            == $product->id)
+                                            @php
+                                                $wishlistItem = auth('user')->user()->wishlists->where('product_id', $product->id)->first();
+                                            @endphp
+                                            @if ($wishlistItem)
                                             <span class="product-badge fav wishlist-remove"
-                                                data-w-id="{{ $product->w_id }}"><i class="fa fa-heart colorfull-heart"
+                                                data-w-id="{{ $wishlistItem->id }}"><i class="fa fa-heart colorfull-heart"
                                                     aria-hidden="true" title="Remove from Wishlist"></i></span>
                                             @else
                                             <span class="product-badge fav wishlist" data-p-id="{{ $product->id }}"
