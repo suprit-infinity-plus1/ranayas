@@ -32,7 +32,28 @@
     <link rel=" stylesheet" type="text/css" href="{!! asset('assets/css/hearing-test.css') !!}">
     <link rel=" stylesheet" type="text/css" href="{!! asset('assets/css/responsive.css') !!}">
     <link rel=" stylesheet" type="text/css" href="{!! asset('assets/css/popup.css') !!}">
-    <link rel="stylesheet" type="text/css" href="{!! asset('vendor/mckenziearts/laravel-notify/css/notify.css') !!}">
+    @notifyCss
+    <style>
+        #laravel-notify,
+        #laravel-notify .notify,
+        #laravel-notify .notify.fixed,
+        .notify-alert,
+        .drake-alert,
+        .smiley-alert,
+        .connectify-alert {
+            position: fixed !important;
+            z-index: 99999 !important;
+            top: 20px !important;
+            right: 20px !important;
+            left: auto !important;
+        }
+
+        #laravel-notify .notify {
+            inset: 0 auto auto 0 !important;
+            width: auto !important;
+            min-width: 420px !important;
+        }
+    </style>
     <style>
         .f-logo ul.footer-ul li.footer-li {
             width: 100% !important;
@@ -808,36 +829,43 @@
     <script src="{!! asset('assets/js/custom.js') !!}"></script>
     <script src="{!! asset('assets/js/main.js') !!}"></script>
     @yield('extrajs')
+    
+    <!-- AlpineJS for laravel-notify -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     @include('notify::components.notify')
-    <script type="text/javascript" src="{!! asset('vendor/mckenziearts/laravel-notify/js/notify.js') !!}"></script>
+    @notifyJs
     <script>
         toast = document.querySelector(".toast");
         (closeIcon = document.querySelector(".close")),
         (progress = document.querySelector(".progress"));
 
-        let timer1, timer2;
+        if (toast && closeIcon && progress) {
+            let timer1, timer2;
 
-        timer1 = setTimeout(() => {
-            toast.classList.remove("active");
-        }, 5000); //1s = 1000 milliseconds
+            timer1 = setTimeout(() => {
+                toast.classList.remove("active");
+            }, 5000); //1s = 1000 milliseconds
 
-        timer2 = setTimeout(() => {
-            progress.classList.remove("active");
-        }, 5300);
-
-        closeIcon.addEventListener("click", () => {
-            toast.classList.remove("active");
-            setTimeout(() => {
+            timer2 = setTimeout(() => {
                 progress.classList.remove("active");
-            }, 300);
-            clearTimeout(timer1);
-            clearTimeout(timer2);
-        });
-        if (sessionStorage.getItem("test_question") != null) {
-            console.warn('i m here', sessionStorage.getItem("test_question"));
-            toast.classList.add("active");
-            toast.classList.remove("d-none");
-            progress.classList.add("active");
+            }, 5300);
+
+            closeIcon.addEventListener("click", () => {
+                toast.classList.remove("active");
+                setTimeout(() => {
+                    progress.classList.remove("active");
+                }, 300);
+                clearTimeout(timer1);
+                clearTimeout(timer2);
+            });
+            
+            if (sessionStorage.getItem("test_question") != null) {
+                console.warn('i m here', sessionStorage.getItem("test_question"));
+                toast.classList.add("active");
+                toast.classList.remove("d-none");
+                progress.classList.add("active");
+            }
         }
 
         sessionStorage.removeItem("test_question");
