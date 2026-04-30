@@ -49,7 +49,7 @@
 
             </div>
             <div class="lg-ml-2 col-lg-3 col-md-3 text-center mb-5  col-sm-12 col-xs-12">
-                <img src="assets/image/about-img.png" alt="Contact us  Ranayas" class="img-fluid">
+                <img src="assets/image/about-us-page.png" alt="Contact us  Ranayas" class="img-fluid">
             </div>
         </div>
     </div>
