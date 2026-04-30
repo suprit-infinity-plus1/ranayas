@@ -26,29 +26,27 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                <p class="main-p"> Ranayas was started with an aim of providing best service at a reasonable cost.
-                </p>
-                <p>With our hard work and dedication we are proud to say that, today in Mumbai, we are industry leader in
-                    the area of fitting “<b>Digital Aid</b> Instruments”.
-                    Our strength is generated from our commitment for our customers, our industry and ourselves. We give
-                    maximum consideration to the quality of our service and value in providing complete assistance to our
-                    customers. We provide one stop solution for all people who have hearing problems across all ages.</p>
-                <p>Our hearing aids are available in two variants- Digital
-                    and analogue, which are acquired from all international brands like Sonic, Siemens, ReSound, Phonak,
-                    Starkey, Unitron and more. We have storng network with pre-verified dealers and distributors from all
-                    over India, which ensure easy distribution of hearing aid equipments in interiors of the state.
-                </p>
-                <p>The hearing aid equipments provided are easy to wear, comfortable and designed to fit any ear size.
-                    Numerous patients from Mumbai and beyond have received effective treatment from Ranayas Hearing. Our
-                    treatment,
-                    training and counseling is effective and reasonably priced.</p>
-                <p>We are not an exclusive dispenser of one particular brand, our centre is authorized <b><a
-                            href="{{ route('contact') }}">hearing care centre</a></b> for Siemens, ReSound, Phonak, Starkey,
-                    Sonic, Unitron and octicon therefore you are rest assured that you will be prescribed a hearing aid
-                    which suits your hearing requirements rather than what is available with us. We intend to provide the
-                    right product range to our customers precisely as per their requirements and demands. Customer
-                    satisfaction and providing benefits to the society is our ultimate goal.
-                </p>
+                <p class="main-p"><b>Ranaya’s Store</b> was started with an aim of providing quality household products at
+                    reasonable prices.</p>
+
+                <p>With our dedication and commitment, we are proud to serve customers across India with a wide range of
+                    daily-use items. Our product line includes kitchen essentials, storage solutions, cleaning supplies, and
+                    home utility products designed to make everyday life easier and more organized.</p>
+
+                <p>Our strength comes from understanding <b>customer needs</b> and offering practical solutions for every
+                    home. From chopping boards and storage baskets to dustbin bags, toilet paper rolls, and aluminium foil,
+                    each product is carefully selected to ensure durability and affordability.</p>
+
+                <p>We maintain a strong network of trusted suppliers and distributors, ensuring that all our products meet
+                    quality standards and are readily available. Our system helps us provide <b>quick and reliable
+                        delivery</b> to our customers.</p>
+
+                <p>All our products are designed for convenience and long-lasting performance. <b>Ranaya’s Store</b> aims to
+                    be your one-stop destination for essential home products.</p>
+
+                <p>We are committed to offering a diverse product range, ensuring you always get the best option based on
+                    your needs. <b>Customer satisfaction</b> remains our top priority.</p>
+
             </div>
             <div class="lg-ml-2 col-lg-3 col-md-3 text-center mb-5  col-sm-12 col-xs-12">
                 <img src="assets/image/about-img.png" alt="Contact us  Ranayas" class="img-fluid">

@@ -191,7 +191,10 @@
                                             <div class="pro-icn">
                                                 @if (auth('user')->check())
                                                     @php
-                                                        $wishlistItem = auth('user')->user()->wishlists->where('product_id', $product->id)->first();
+                                                        $wishlistItem = auth('user')
+                                                            ->user()
+                                                            ->wishlists->where('product_id', $product->id)
+                                                            ->first();
                                                     @endphp
                                                     @if ($wishlistItem)
                                                         <a href="javascript:void(0)" class="w-c-q-icn wishlist-remove"
@@ -276,21 +279,22 @@
         </figure>
 
         <div class="about-us-wrapper position-absolute py-4 px-4">
-            <h3 class="text-uppercase fs-5 text-light">&nbsp;&nbsp;how it works&nbsp;&nbsp;</h3>
+            <h3 class="text-uppercase fs-5 text-light">&nbsp;&nbsp;Shopping made easy&nbsp;&nbsp;</h3>
             <ul class="my-4">
                 <li class="mt-3">
-                    <h2 class="fs-5 fw-semibold">Personal consultation</h2>
-                    <p class="text-secondary lh-base">FREE hearing screening and consultation with hearing healthcare
-                        professional.</p>
+                    <h2 class="fs-5 fw-semibold">Wide product range</h2>
+                    <p class="text-secondary lh-base">Explore a variety of household essentials including kitchen tools,
+                        storage items, and cleaning supplies.</p>
                 </li>
                 <li class="pt-3">
-                    <h2 class="fs-5 fw-semibold">Hearing aid trial and fitting</h2>
-                    <p class="text-secondary lh-base">Hearing aid fitting, FREE listening experience at different
-                        situations, acclimatization.</p>
+                    <h2 class="fs-5 fw-semibold">Quality and affordability</h2>
+                    <p class="text-secondary lh-base">Carefully selected products that balance durability and
+                        cost-effectiveness for everyday use.</p>
                 </li>
                 <li class="pt-3">
-                    <h2 class="fs-5 fw-semibold">Enjoy better hearing</h2>
-                    <p class="text-secondary lh-base">connect to the world and get quality of life back.</p>
+                    <h2 class="fs-5 fw-semibold">Convenient shopping</h2>
+                    <p class="text-secondary lh-base">Easy ordering and reliable delivery to ensure a smooth and
+                        hassle-free experience.</p>
                 </li>
             </ul>
             <a href="#" class="text-uppercase fs-6 fw-bold text-light py-1 px-2">contact us</a>
@@ -316,9 +320,9 @@
                             d="M468.53 236.03H486v39.94h-17.47zm-34.426 51.634h17.47v-63.328h-17.47zm-33.848 32.756h17.47V191.58h-17.47zm-32.177 25.276h17.47V167.483h-17.47v178.17zm-34.448-43.521h17.47v-92.35h-17.47zm-34.994 69.879h17.47v-236.06h-17.525v236.06zM264.2 405.9h17.47V106.1H264.2zm-33.848-46.284h17.47V152.383h-17.47v207.234zm-35.016-58.85h17.47v-87.35h-17.47zm-33.847-20.823h17.47V231.98h-17.47v48.042zm-33.848 25.66h17.47v-99.24h-17.47v99.272zm-33.302 48.04h17.47V152.678H94.34v201zm-33.847-30.702h17.47V187.333h-17.47v135.642zM26 287.664h17.47v-63.328H26z" />
                     </svg>
                 </div>
-                <h2 class="fs-5 lh-base">Prescription-grade sound quality</h2>
-                <p class="description lh-base text-secondary fs-6 pt-1">German engineering gives you clear, natural sound
-                    optimized for voices</p>
+                <h2 class="fs-5 lh-base">High-quality household products</h2>
+                <p class="description lh-base text-secondary fs-6 pt-1">Durable and reliable items designed for everyday
+                    use in your home.</p>
             </li>
             <li class="text-center py-4 px-3">
                 <div class="svg d-flex justify-content-center align-items-center py-4">
@@ -329,9 +333,9 @@
                             d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 0 0 227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 0 1-112 112" />
                     </svg>
                 </div>
-                <h2 class="fs-5 lh-base">Virtually invisible</h2>
-                <p class="description lh-base text-secondary fs-6 pt-1">Friends won't know you're wearing it, but you'll
-                    want to show them anyway</p>
+                <h2 class="fs-5 lh-base">Affordable pricing</h2>
+                <p class="description lh-base text-secondary fs-6 pt-1">Get the best value for money without compromising
+                    on quality.</p>
             </li>
             <li class="text-center py-4 px-3">
                 <div class="svg d-flex justify-content-center align-items-center py-4">
@@ -344,9 +348,9 @@
                         </g>
                     </svg>
                 </div>
-                <h2 class="fs-5 lh-base">Registered medical device</h2>
-                <p class="description lh-base text-secondary fs-6 pt-1">So you know it meets safety and performance
-                    requirements</p>
+                <h2 class="fs-5 lh-base">Wide product selection</h2>
+                <p class="description lh-base text-secondary fs-6 pt-1">A variety of essentials to meet all your kitchen,
+                    storage, and cleaning needs.</p>
             </li>
             <li class="text-center py-4 px-3">
                 <div class="svg d-flex justify-content-center align-items-center py-4">
@@ -355,9 +359,9 @@
                             d="M11 1H5a1 1 0 0 0-1 1v6a.5.5 0 0 1-1 0V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1m1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a.5.5 0 0 0-1 0v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2a.5.5 0 0 0-1 0zM1.713 7.954a.5.5 0 1 0-.419-.908c-.347.16-.654.348-.882.57C.184 7.842 0 8.139 0 8.5c0 .546.408.94.823 1.201c.44.278 1.043.51 1.745.696C3.978 10.773 5.898 11 8 11q.148 0 .294-.002l-1.148 1.148a.5.5 0 0 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708l1.145 1.144L8 10c-2.04 0-3.87-.221-5.174-.569c-.656-.175-1.151-.374-1.47-.575C1.012 8.639 1 8.506 1 8.5c0-.003 0-.059.112-.17c.115-.112.31-.242.6-.376Zm12.993-.908a.5.5 0 0 0-.419.908c.292.134.486.264.6.377c.113.11.113.166.113.169s0 .065-.13.187c-.132.122-.352.26-.677.4c-.645.28-1.596.523-2.763.687a.5.5 0 0 0 .14.99c1.212-.17 2.26-.43 3.02-.758c.38-.164.713-.357.96-.587c.246-.229.45-.537.45-.919c0-.362-.184-.66-.412-.883s-.535-.411-.882-.571M7.5 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
                     </svg>
                 </div>
-                <h2 class="fs-5 lh-base">Easily controlled with your phone</h2>
-                <p class="description lh-base text-secondary fs-6 pt-1">You can adjust the volume, bass and treble on Vibe
-                    app, whenever you want</p>
+                <h2 class="fs-5 lh-base">Easy to use products</h2>
+                <p class="description lh-base text-secondary fs-6 pt-1">Designed for convenience and comfort in daily
+                    routines.</p>
             </li>
             <li class="text-center py-4 px-3">
                 <div class="svg d-flex justify-content-center align-items-center py-4">
@@ -377,9 +381,9 @@
                         <path fill="var(--theme-color)" d="M0 0h48v48H0z" mask="url(#ipTHeadphoneSound0)" />
                     </svg>
                 </div>
-                <h2 class="fs-5 lh-base">Personalized to your hearing</h2>
-                <p class="description lh-base text-secondary fs-6 pt-1">Create your own hearing profile suitable to your
-                    needs</p>
+                <h2 class="fs-5 lh-base">Smart and practical solutions</h2>
+                <p class="description lh-base text-secondary fs-6 pt-1">Products that simplify your daily tasks and improve
+                    efficiency.</p>
             </li>
             <li class="text-center py-4 px-3">
                 <div class="svg d-flex justify-content-center align-items-center py-4">
@@ -392,8 +396,9 @@
                         </g>
                     </svg>
                 </div>
-                <h2 class="fs-5 lh-base">1-year warranty</h2>
-                <p class="description lh-base text-secondary fs-6 pt-1">We offer 1-year warranty on the hearing aid</p>
+                <h2 class="fs-5 lh-base">Customer-focused service</h2>
+                <p class="description lh-base text-secondary fs-6 pt-1">We prioritize your needs with dependable support
+                    and service.</p>
             </li>
         </ul>
     </section>
@@ -447,15 +452,15 @@
             <img src="{{ asset('assets/image/hearing-test.jpg') }}" alt="hearing test background image">
     </figure> --}}
         <div class="hearing-test-wrapper">
-            <h2>How do I choose a <br> hearing aid?</h2>
-            <p>Need help with finding the best hearing aid for you? We have the solution! Choose one of our useful tools and
-                get the answer you need.</p>
+            <h2>How do I choose the <br> right home products?</h2>
+            <p>Need help finding the best items for your home? We’ve got you covered! Explore our collection and choose
+                products that fit your daily needs and lifestyle.</p>
 
             <div class="btns">
-                <a href="#">Online hearing test</a>
-                <a href="#">Hearingaid advice test</a>
-                {{-- <a href="{{ route('test.index') }}">Online hearing test</a>
-            <a href="{{ route('test.index') }}">Hearingaid advice test</a> --}}
+                <a href="#">Browse products</a>
+                <a href="#">Get buying advice</a>
+                {{-- <a href="#">Browse products</a>
+    <a href="#">Get buying advice</a> --}}
             </div>
         </div>
     </section>
@@ -519,8 +524,8 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                                                    width: 100% !important;
-                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                            width: 100% !important;
+                                                                                                                                                                                                                                                        } */
     </style>
 @endsection
 
