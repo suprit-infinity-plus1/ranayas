@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class MainController extends Controller
 {
@@ -503,5 +506,72 @@ class MainController extends Controller
     public function testStart()
     {
         return view('frontend.hearingtest.start');
+    }
+
+    public function sendMail(Request $request)
+    {
+        $validated = $request->validate([
+            'form_name' => 'required|string|max:50',
+            'form_email' => 'required|email|max:100',
+            'form_phone' => 'nullable|max:20',
+            'form_subject' => 'nullable|string|max:100',
+            'form_message' => 'required|max:1000',
+            'website' => 'nullable',
+        ]);
+
+        if (!empty($request->website)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Bot detected',
+            ], 422);
+        }
+
+
+
+        $name = $request->form_name ?? '-';
+        $email = $request->form_email ?? '-';
+        $phone = $request->form_phone ?? '-';
+        $subject = $request->form_subject ?? 'Ranayas Enquiry';
+        $message = $request->form_message ?? '-';
+
+        $html = view('frontend.email', compact(
+            'name',
+            'email',
+            'phone',
+            'subject',
+            'message'
+        ))->render();
+
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = env('MAIL_HOST');
+            $mail->SMTPAuth = true;
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
+            $mail->Port = env('MAIL_PORT');
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->SMTPAutoTLS = true;
+            $mail->SMTPDebug = 0;
+            $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            // $mail->addAddress('info@mokshtubes.com');
+            $mail->addAddress('siddiquimahfooz327@gmail.com');
+            $mail->addBCC('supritdagade77@gmail.com');
+            $mail->isHTML(true);
+            $mail->Subject = "You Received {$subject}";
+            $mail->Body = $html;
+            $mail->AltBody = strip_tags($html);
+            $mail->send();
+
+            return redirect()->route('index')
+                ->with('status', 'success')
+                ->with('msg', 'Your message has been sent successfully!');
+
+        } catch (\Exception $e) {
+            return redirect()->route('index')
+                ->with('status', 'error')
+                ->with('msg', 'Email sending failed.');
+        }
     }
 }

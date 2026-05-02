@@ -108,8 +108,10 @@
                     {{-- <div class="img-popup mb-5">
                         <img width="300px" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="img">
                     </div> --}}
-                    <form id="modal-form-ctc" name="modal_contact_form" class="contact-form" action="javascript:void(0)"
+                    <form id="modal-form-ctc" name="modal_contact_form" class="contact-form" action="{{ url('sendmail') }}"
                         method="post">
+                        @csrf
+                        <input type="text" name="website" style="display:none !important;" tabindex="-1" autocomplete="off">
                         <div class="popup mb-5">
                             <h5 class="modal-title text-center mb-3">
                                 Connect Us
@@ -125,7 +127,7 @@
                             <label for="form_email" class="custom-label">Email Address:</label>
                         </div>
                         <div class="custom-form-group">
-                            <input type="tel" id="form_number" name="form_number" class="custom-input"
+                            <input type="tel" id="form_number" name="form_phone" class="custom-input"
                                 required />
                             <label for="form_number" class="custom-label">Contact Number:</label>
                         </div>

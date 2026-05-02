@@ -43,6 +43,7 @@ Route::
         
                 Route::GET('/contact', 'EnquiryController@create')->name('contact');
                 Route::POST('/contact', 'EnquiryController@store');
+                Route::POST('/sendmail', 'MainController@sendMail')->name('sendmail');
 
                 // Bulk Orders
         
