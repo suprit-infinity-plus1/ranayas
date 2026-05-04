@@ -316,8 +316,8 @@
                                             <div class="input-group">
                                                 <input type="text" placeholder="Enter pincode"
                                                     class="pincode-code form-control form__input form__input--2"
-                                                    value="{{ Session::get('pincode') }}" name="pincode" id="pincode"
-                                                    required>
+                                                    value="{{ Session::get('pincode') }}" name="pincode_add"
+                                                    id="pincode_add" required>
                                                 <div class="input-group-append">
                                                     <button class="btn check-availibility pincode_button"
                                                         type="submit"><i class="fa fa-search"
@@ -442,7 +442,8 @@
 
                                         <div class="form-row">
                                             <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-block btn-secondary btnSubmit">SAVE
+                                                <button type="submit"
+                                                    class="btn btn-block btn-secondary btnSubmit text-black">SAVE
                                                     DELIVERY
                                                     ADDRESS</button>
                                             </div>
@@ -841,23 +842,34 @@
                 chkPindode(pincode);
             });
 
-            $('.pincode_button').click(function() {
-                var val = $('#pincode').val();
+            // Sync pincode input with hidden field for Add Address form
+            $(document).on('keyup change', '.pincode-code', function() {
+                var val = $(this).val();
+                if ($(this).attr('id') == 'pincode_add' || $(this).closest('.new-delivery-address')
+                    .length || $(this).closest('.modal').length) {
+                    $('#txtPincode').val(val);
+                }
+            });
+
+            $('.pincode_button').click(function(e) {
+                e.preventDefault();
+                var container = $(this).closest('.checkout-form');
+                var input = container.find('.pincode-code');
+                var val = input.val();
+
                 if (val == '') {
-                    $('#pincode').focus();
-                    $('.pincode_success').css('display', 'none');
-                    $('.pincode_error').css('display', 'block');
-                    $('.pincode_error').html('Please Enter Pincode');
-                    $('.pincode_button').html('<i class="fa fa-search" aria-hidden="true"></i>');
-                    $('.pincode_button').removeAttr('disabled', 'disabled');
+                    input.focus();
+                    container.find('.pincode_success').css('display', 'none');
+                    container.find('.pincode_error').css('display', 'block');
+                    container.find('.pincode_error').html('Please Enter Pincode');
+                    $(this).html('<i class="fa fa-search" aria-hidden="true"></i>');
+                    $(this).removeAttr('disabled');
                 } else if (val.length == 6) {
-
-                    chkPindode(val);
-
+                    chkPindode(val, container);
                 } else {
-                    $('.pincode_success').css('display', 'none');
-                    $('.pincode_error').css('display', 'block');
-                    $('.pincode_error').html('Pincode should be of 6 digits');
+                    container.find('.pincode_success').css('display', 'none');
+                    container.find('.pincode_error').css('display', 'block');
+                    container.find('.pincode_error').html('Pincode should be of 6 digits');
                 }
             });
 
@@ -986,7 +998,7 @@
                                     '<a href="javascript:void(0)" data-obj-id=' +
                                     address_id +
                                     'class="card-link float-right editAddress"> <i class="fa fa-pencil text-primary"></i> Edit</a>'
-                                    );
+                                );
                                 $('.editAddress').removeAttr('disabled');
 
                             }
@@ -1033,81 +1045,76 @@
 
             $("#formAddAddress").validate({
                 rules: {
-
                     name: {
                         required: true
                     },
-
                     email: {
                         required: true,
                         email: true
                     },
-
                     mobile: {
                         required: true,
                         number: true,
                         minlength: 10,
                         maxlength: 10
                     },
-
                     country: {
                         required: true,
                     },
-
                     address: {
                         required: true,
                     },
-
                     city: {
                         required: true,
                     },
-
                     territory: {
                         required: true,
                     },
-
                     type_of_address: {
                         required: true
+                    },
+                    pincode: {
+                        required: true,
+                        digits: true,
+                        minlength: 6,
+                        maxlength: 6
                     }
                 },
                 messages: {
-
                     name: {
                         required: "Please Enter Name"
                     },
-
                     email: {
                         required: "Please Enter Email",
                         email: "Please Enter Proper Email ID"
                     },
-
                     mobile: {
                         required: "Please Enter Mobile Number",
                         number: "Please Enter Proper Mobile Number",
                         minlength: "Mobile Number should be of 10 digits",
                         maxlength: "Mobile Number should be of 10 digits",
                     },
-
                     country: {
                         required: "Please Select Country"
                     },
-
                     address: {
                         required: "Please Enter Address"
                     },
-
                     city: {
                         required: "Please Enter City"
                     },
-
                     territory: {
                         required: "Please Enter Territory"
                     },
-
                     type_of_address: {
                         required: "Please Select Address Type"
                     },
-
+                    pincode: {
+                        required: "Please Enter Pincode",
+                        digits: "Please Enter Proper Pincode",
+                        minlength: "Pincode should be of 6 digits",
+                        maxlength: "Pincode should be of 6 digits",
+                    },
                 },
                 submitHandler: function(form) {
                     $('.btnSubmit').attr('disabled', 'disabled');
@@ -1179,8 +1186,8 @@
                     pincode: {
                         required: "Please Enter Pincode",
                         number: "Please Enter Proper Pincode",
-                        minlength: "Pincode should be of 10 digits",
-                        maxlength: "Pincode should be of 10 digits",
+                        minlength: "Pincode should be of 6 digits",
+                        maxlength: "Pincode should be of 6 digits",
                     },
 
                     address: {
@@ -1331,7 +1338,7 @@
                                 $('#discount_span').html("{{ Cart::getTotal() * 0.1 }}");
                                 $('.order-total-ammount').html(
                                     "{{ Cart::getTotal() < 1000 ? Cart::getTotal() - Cart::getTotal() * 0.1 + 60 : Cart::getTotal() - Cart::getTotal() * 0.1 }}"
-                                    );
+                                );
                             } else {
                                 $('.promo_success').hide();
                                 $('.promo_error').show();
@@ -1350,20 +1357,21 @@
 
         });
 
-        function chkPindode(val) {
+        function chkPindode(val, container) {
+            container = container || $('.checkout-form').first();
             if (val == '') {
-                $('#pincode').focus();
-                $('.pincode_error').html('Please Enter Pincode');
-                $('.pincode_button').html('<i class="fa fa-search" aria-hidden="true"></i>');
-                $('.pincode_button').removeAttr('disabled', 'disabled');
+                container.find('.pincode-code').focus();
+                container.find('.pincode_error').html('Please Enter Pincode');
+                container.find('.pincode_button').html('<i class="fa fa-search" aria-hidden="true"></i>');
+                container.find('.pincode_button').removeAttr('disabled');
             } else if (val.length == 6) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('input[name="_token"]').val()
                     }
                 });
-                $('.pincode_button').html('<span class="fa fa-spinner fa-spin"></span>');
-                $('.pincode_button').attr('disabled', 'disabled');
+                container.find('.pincode_button').html('<span class="fa fa-spinner fa-spin"></span>');
+                container.find('.pincode_button').attr('disabled', 'disabled');
                 $('.add_address').hide();
                 $.ajax({
                     url: "{{ route('verify.pincode') }}",
@@ -1373,32 +1381,34 @@
                     },
                     success: function(result) {
                         if (result.error) {
-                            $('.pincode_error').html(result.error);
-                            $('.pincode_success').css('display', 'none');
-                            $('.pincode_error').css('display', 'block');
-                            $('.pincode_button').html('<i class="fa fa-search" aria-hidden="true"></i>');
-                            $('.pincode_button').removeAttr('disabled');
+                            container.find('.pincode_error').html(result.error);
+                            container.find('.pincode_success').css('display', 'none');
+                            container.find('.pincode_error').css('display', 'block');
+                            container.find('.pincode_button').html(
+                                '<i class="fa fa-search" aria-hidden="true"></i>');
+                            container.find('.pincode_button').removeAttr('disabled');
                             $('.order_place').attr('disabled', 'disabled');
                             $('.order_place').addClass('disabled');
-                            $('.estimated_date').hide();
+                            container.find('.estimated_date').hide();
                         } else {
-                            $('.pincode_success').html(result.success);
-                            $('.pincode_error').css('display', 'none');
-                            $('.pincode_success').css('display', 'block');
-                            $('.pincode_button').html('<i class="fa fa-search" aria-hidden="true"></i>');
-                            $('.pincode_button').removeAttr('disabled');
+                            container.find('.pincode_success').html(result.success);
+                            container.find('.pincode_error').css('display', 'none');
+                            container.find('.pincode_success').css('display', 'block');
+                            container.find('.pincode_button').html(
+                                '<i class="fa fa-search" aria-hidden="true"></i>');
+                            container.find('.pincode_button').removeAttr('disabled');
                             $('.order_place').removeAttr('disabled');
                             $('.order_place').removeClass('disabled');
                             $('.add_address').show();
                             $('#txtPincode').val(val);
-                            $('.estimated_date').html('Estimated Delivery: ' + result.estimated_date);
-                            $('.estimated_date').show();
+                            container.find('.estimated_date').html('Estimated Delivery: ' + result
+                                .estimated_date);
+                            container.find('.estimated_date').show();
                         }
                     }
                 });
             } else {
-
-                $('.pincode_error').html('Pincode should be of 6 digits');
+                container.find('.pincode_error').html('Pincode should be of 6 digits');
             }
         }
     </script>

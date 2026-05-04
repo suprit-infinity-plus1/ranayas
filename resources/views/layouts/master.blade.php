@@ -108,10 +108,11 @@
                     {{-- <div class="img-popup mb-5">
                         <img width="300px" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" alt="img">
                     </div> --}}
-                    <form id="modal-form-ctc" name="modal_contact_form" class="contact-form" action="{{ url('sendmail') }}"
-                        method="post">
+                    <form id="modal-form-ctc" name="modal_contact_form" class="contact-form"
+                        action="{{ url('sendmail') }}" method="post">
                         @csrf
-                        <input type="text" name="website" style="display:none !important;" tabindex="-1" autocomplete="off">
+                        <input type="text" name="website" style="display:none !important;" tabindex="-1"
+                            autocomplete="off">
                         <div class="popup mb-5">
                             <h5 class="modal-title text-center mb-3">
                                 Connect Us
@@ -829,10 +830,10 @@
     <script src="{!! asset('assets/js/custom.js') !!}"></script>
     <script src="{!! asset('assets/js/main.js') !!}"></script>
     @yield('extrajs')
-    
+
     <!-- AlpineJS for laravel-notify -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
+
     @include('notify::components.notify')
     @notifyJs
     <script>
@@ -859,7 +860,7 @@
                 clearTimeout(timer1);
                 clearTimeout(timer2);
             });
-            
+
             if (sessionStorage.getItem("test_question") != null) {
                 console.warn('i m here', sessionStorage.getItem("test_question"));
                 toast.classList.add("active");

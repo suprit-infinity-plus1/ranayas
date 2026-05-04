@@ -42,6 +42,53 @@
             width: auto !important;
             min-width: 420px !important;
         }
+
+        /* Smooth Logo Transition & Fix Resize Issue */
+        .main-sidebar .sidebar-brand,
+        .main-sidebar .sidebar-brand-sm {
+            height: 70px;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 250px; /* Matches expanded sidebar width */
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            z-index: 10;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-sidebar .sidebar-brand-sm {
+            width: 65px; /* Matches collapsed sidebar width */
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .main-sidebar .sidebar-brand img {
+            width: 200px; /* Fixed width prevents horizontal squeezing */
+            height: auto;
+        }
+
+        .main-sidebar .sidebar-brand-sm img {
+            width: 40px; /* Fixed width for mini logo */
+            height: auto;
+        }
+
+        /* Ensure menu starts below absolute positioned logos */
+        .main-sidebar .sidebar-menu {
+            margin-top: 70px;
+        }
+
+        .sidebar-mini .main-sidebar .sidebar-brand:not(.sidebar-brand-sm) {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .sidebar-mini .main-sidebar .sidebar-brand.sidebar-brand-sm {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
     </style>
     @yield('extracss')
 </head>
@@ -101,8 +148,13 @@
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
                         <a href="{{ route('admin.dashboard') }}">
-                            <img alt="image" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" class="header-logo" />
+                            <img alt="image" src="{!! asset('assets/image/logo/ranayas-logo.png') !!}" />
                             {{-- <span class="logo-name">Ranayas</span> --}}
+                        </a>
+                    </div>
+                    <div class="sidebar-brand sidebar-brand-sm">
+                        <a href="{{ route('admin.dashboard') }}">
+                            <img alt="image" src="{!! asset('assets/image/logo/ranayas-logo-sidebar-small.jpg') !!}" />
                         </a>
                     </div>
                     <ul class="sidebar-menu">
@@ -129,7 +181,8 @@
                                 <li><a class="nav-link" href="{{ route('admin.colors.all') }}">Colors</a></li>
                                 <li><a class="nav-link" href="{{ route('admin.materials.all') }}">Materials</a></li>
                                 <li><a class="nav-link" href="{{ route('admin.units.all') }}">Units</a></li>
-                                <li><a class="nav-link" href="{{ route('admin.conditions.all') }}">Conditions</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.conditions.all') }}">Conditions</a>
+                                </li>
                                 <li><a class="nav-link" href="{{ route('admin.gsts.all') }}">GST</a></li>
                                 <li><a class="nav-link" href="{{ route('admin.sizes.all') }}">Sizes</a></li>
                                 <li><a class="nav-link" href="{{ route('admin.warranties.all') }}">Warranties</a>
