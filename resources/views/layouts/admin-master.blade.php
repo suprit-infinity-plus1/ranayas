@@ -51,7 +51,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 250px; /* Matches expanded sidebar width */
+            width: 250px;
+            /* Matches expanded sidebar width */
             transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
             z-index: 10;
             display: flex !important;
@@ -60,18 +61,21 @@
         }
 
         .main-sidebar .sidebar-brand-sm {
-            width: 65px; /* Matches collapsed sidebar width */
+            width: 65px;
+            /* Matches collapsed sidebar width */
             opacity: 0;
             visibility: hidden;
         }
 
         .main-sidebar .sidebar-brand img {
-            width: 200px; /* Fixed width prevents horizontal squeezing */
+            width: 200px;
+            /* Fixed width prevents horizontal squeezing */
             height: auto;
         }
 
         .main-sidebar .sidebar-brand-sm img {
-            width: 40px; /* Fixed width for mini logo */
+            width: 40px;
+            /* Fixed width for mini logo */
             height: auto;
         }
 
@@ -394,7 +398,7 @@
             </div>
             <footer class="main-footer bg-dark">
                 <div class="footer-left">
-                    Copyright &copy; {{ date('Y') == '2022' ? '2022' : '2022 - ' . date('Y') }}
+                    Copyright &copy; {{ date('Y') }}
                     <div class="bullet"></div> Ranayas
                     {{-- - Designed & Developed By <a href="https://www.sanjaresolutions.com" target="_blank">Sanjar E
                         Solutions</a> --}}
