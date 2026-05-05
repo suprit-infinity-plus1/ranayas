@@ -133,7 +133,7 @@
                                             data-stock="{{ $item->stock }}" data-map-id="{{ $item->map_id }}"
                                             data-product-id="{{ $product->id }}" data-title="{{ $item->color_name }}"
                                             data-starting-price="{{ $item->starting_price }}"
-                                            data-unit="{{ $product->unit->unit }}"
+                                            {{-- data-unit="{{ $product->unit->unit }}" --}}
                                             style="border: 2px solid {{ $item->color_code }};background: {{ $item->color_code }}">
                                             <div
                                                 style="background: {{ $item->color_code }};height: calc(100%);border-radius:5px">
@@ -155,8 +155,8 @@
                                     @foreach ($product->sizes as $item)
                                     <div class="swatch-wrapper">
                                         <a class="product-size-swatch-btn variation-btn size_btn" data-toggle="tooltip"
-                                            data-placement="top" title="{{ $item->title . ' '.
-                                                $product->unit->unit }}" data-size-id="{{ $item->size_id }}">
+                                            data-placement="top" title="{{ $item->title }}{{-- . ' '.
+                                                $product->unit->unit --}}" data-size-id="{{ $item->size_id }}">
                                             <span class="product-size-swatch-label">{{ $item->title }} </span>
                                         </a>
                                     </div>

@@ -56,7 +56,7 @@ class HomeOfferSliderController extends Controller
 
         if ($request->hasFile('image_url')) {
             $request['img'] = uniqid() . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
-            $request->image_url->storeAs('public/images/home-offer-sliders', $request->img);
+            $request->image_url->storeAs('images/home-offer-sliders', $request->img, 'public');
         }
 
         HomeOfferSlider::create([
@@ -124,9 +124,9 @@ class HomeOfferSliderController extends Controller
             ]);
 
         if ($request->hasFile('image_url')) {
-            $old_image = "/storage/images/home-offer-sliders/" . $homeOfferSlider->image_url;
-            Storage::delete($old_image);
-            $request->image_url->storeAs('public/images/home-offer-sliders', $homeOfferSlider->image_url);
+            $old_image = "images/home-offer-sliders/" . $homeOfferSlider->image_url;
+            Storage::disk('public')->delete($old_image);
+            $request->image_url->storeAs('images/home-offer-sliders', $homeOfferSlider->image_url, 'public');
 
         }
 

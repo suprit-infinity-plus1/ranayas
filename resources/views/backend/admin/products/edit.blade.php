@@ -334,7 +334,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4 d-none">
+{{-- <div class="col-md-4 d-none">
                         <div class="form-group">
                             <label for="weight_id">Unit </label>
                             <select name="weight_id" id="weight_id" class="form-control">
@@ -346,7 +346,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-md-4">
                         <div class="form-group">

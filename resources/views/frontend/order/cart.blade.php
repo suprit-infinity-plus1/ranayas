@@ -72,7 +72,7 @@
                                                 </h4>
                                                 <span class="cart-pro-price">
                                                     <span class="size"> Volume:</span>
-                                                    {{ $item->attributes->size_name . ' ' . $item->attributes->unit }}
+                                                    {{ $item->attributes->size_name }}{{-- . ' ' . $item->attributes->unit --}}
                                                 </span>
                                                 <span class="cart-pro-price">
                                                     <span class="size"> Color:</span>

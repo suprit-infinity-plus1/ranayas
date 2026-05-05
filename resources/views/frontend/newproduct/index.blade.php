@@ -524,17 +524,17 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                                                                                                                                    width: 100% !important;
-                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                        width: 100% !important;
+                                                                                                                                                                                                                                                                    } */
     </style>
 @endsection
 
 @section('extrajs')
     <script>
-        setTimeout(function() {
-            modal.style.display = 'block';
-            $("#modal_background").removeClass('d-none');
-        }, 8000);
+        // setTimeout(function() {
+        //     modal.style.display = 'block';
+        //     $("#modal_background").removeClass('d-none');
+        // }, 8000);
         console.log('i m here');
         const start = document.querySelector(".hearing-test-page-wrapper");
         const startTest = document.querySelector(".hearing-test-page .start-test");

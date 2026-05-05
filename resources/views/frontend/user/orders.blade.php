@@ -251,10 +251,10 @@
                                                                     </p>
                                                                     <p>
                                                                         {{ $detail->size ? 'Volume: ' .
-                                                                        $detail->size->title : '' }}
+                                                                        $detail->size->title : '' }}{{--
                                                                         {{ $detail->product->unit ?
                                                                         $detail->product->unit->unit :
-                                                                        'GM' }} <br>
+                                                                        'GM' }} --}} <br>
                                                                         {{ $detail->color ? 'Color: ' .
                                                                         $detail->color->title :'' }}
                                                                     </p>

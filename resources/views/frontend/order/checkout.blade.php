@@ -185,7 +185,7 @@
                                                                         </a>
                                                                         <span class="check-code-blod">
                                                                             Volume:
-                                                                            <span>{{ $item->attributes->size_name . ' ' . $item->attributes->unit }}</span>
+                                                                            <span>{{ $item->attributes->size_name }}{{-- . ' ' . $item->attributes->unit --}}</span>
                                                                         </span>
                                                                         <span class="check-code-blod">
                                                                             Color:
@@ -814,6 +814,34 @@
 
         .order_place {
             width: 100%;
+            background-color: transparent !important;
+            color: var(--theme-color) !important;
+            border: 2px solid var(--theme-color) !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            padding: 12px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .order_place:hover {
+            background-color: var(--theme-color) !important;
+            color: #fff !important;
+        }
+
+        .btnSubmit {
+            background-color: transparent !important;
+            color: var(--theme-color) !important;
+            border: 2px solid var(--theme-color) !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            padding: 10px 30px !important;
+            transition: all 0.3s ease !important;
+            border-radius: 4px !important;
+        }
+
+        .btnSubmit:hover {
+            background-color: var(--theme-color) !important;
+            color: #fff !important;
         }
     </style>
 @endsection

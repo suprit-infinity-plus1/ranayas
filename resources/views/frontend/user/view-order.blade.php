@@ -242,9 +242,9 @@
                                                 <p class="title"><a href="/product/{{ $detail->product->slug_url }}">{{
                                                         $detail->product->title }}</a></p>
                                                 <p>
-                                                    {{ $detail->size ? 'Volume: ' . $detail->size->title : '' }} {{
+                                                    {{ $detail->size ? 'Volume: ' . $detail->size->title : '' }}{{-- {{
                                                     $detail->product->unit ? $detail->product->unit->unit :
-                                                    'GM' }}
+                                                    'GM' }} --}}
                                                     <br>
                                                     {{ $detail->color ? 'Color: ' . $detail->color->title :'' }}
                                                 </p>
@@ -259,7 +259,7 @@
                                                     $offer = \App\Model\MapMstOfferProduct::offer($ofr);
                                                     @endphp
 
-                                                    + {{ $offer->product->title }} [{{ $offer->size->title }} ML] <br />
+                                                    + {{ $offer->product->title }} [{{ $offer->size->title }}{{-- ML --}}] <br />
                                                     @endforeach
                                                     @endif
                                                 </p>

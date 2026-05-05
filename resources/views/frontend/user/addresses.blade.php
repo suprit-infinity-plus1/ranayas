@@ -371,13 +371,13 @@
         }
     }
 
-    label {
-        padding: 10px;
-        display: block;
-    }
-
     .mb--5 {
         margin-bottom: 5px !important;
+    }
+    
+    .order-history label {
+        padding: 10px;
+        display: block;
     }
 
     .delivery-address-height {
@@ -388,12 +388,24 @@
         font-size: 16px;
     }
 
-    .btn-style1 {
-        width: 100%;
-    }
-
     .pt-65 {
         padding-top: 65px;
+    }
+
+    .btnSubmit {
+        background-color: transparent !important;
+        color: var(--theme-color) !important;
+        border: 2px solid var(--theme-color) !important;
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        padding: 10px 30px !important;
+        transition: all 0.3s ease !important;
+        border-radius: 4px !important;
+    }
+
+    .btnSubmit:hover {
+        background-color: var(--theme-color) !important;
+        color: #fff !important;
     }
 </style>
 @endsection
