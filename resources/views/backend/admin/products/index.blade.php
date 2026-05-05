@@ -101,11 +101,10 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>
-                                <a href="{!! $product->image_url !!}"
+                                <a href="{!! asset('storage/images/products/' . $product->image_url) !!}"
                                     target="_blank">
-                                    <img data-src="{!! $product->image_url !!}"
-                                        alt="{{ $product->title }}" class="img img-responsive img-circle lazy"
-                                        width="40" height="40" loading="lazy">
+                                    <img src="{!! asset('storage/images/products/' . $product->image_url) !!}"
+                                        alt="{{ $product->title }}" class="img img-responsive img-circle" width="40" height="40" loading="lazy">
                                 </a>
                             </td>
                             <td>{{ Str::limit($product->title, 30) }}</td>

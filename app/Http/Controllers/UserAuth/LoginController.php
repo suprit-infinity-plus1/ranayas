@@ -101,7 +101,7 @@ class LoginController extends Controller
         ];
         session(['user' => $user]);
 
-        SMS::send($user['mobile'], 'Dear Customer, ' . $rand_otp . ' is OTP for Login/Register with Kanwarji Sweets. Please enter this OTP on the website. Thanks', 1507164983201751332);
+        SMS::send($user['mobile'], 'Dear Customer, ' . $rand_otp . ' is OTP for Login/Register with Ranayas. Please enter this OTP on the website. Thanks', 1507164983201751332);
         // dd('i m here');
 
         Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
