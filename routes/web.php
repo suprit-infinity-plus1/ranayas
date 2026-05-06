@@ -348,7 +348,7 @@ Route::
                         Route::GET('/', 'Admin\HomeOfferSliderController@index')->name('admin.home-offer-sliders.all');
                         Route::POST('/', 'Admin\HomeOfferSliderController@store');
                         Route::GET('/edit/{slider}', 'Admin\HomeOfferSliderController@edit')->name('admin.home-offer-sliders.edit');
-                        Route::POST('/edit/{slider}', 'Admin\HomeOfferSliderController@update');
+                        Route::POST('/edit/{slider}', 'Admin\HomeOfferSliderController@update')->name('admin.home-offer-sliders.update');
                         Route::POST('/delete', 'Admin\HomeOfferSliderController@destroy')->name('admin.home-offer-sliders.delete');
                     });
 

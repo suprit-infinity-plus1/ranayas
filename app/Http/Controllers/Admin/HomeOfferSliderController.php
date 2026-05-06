@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Model\HomeOfferSlider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class HomeOfferSliderController extends Controller
@@ -40,19 +42,28 @@ class HomeOfferSliderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'image_url'   => 'required|image|mimes:jpg,jpeg,png|max:1024',
-            'sort_index'  => 'required|integer',
-            'title'       => 'nullable|string|max:191',
-            'url'         => 'nullable|url|max:191',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'image_url'   => 'required|image|mimes:jpg,jpeg,png,webp|max:1024',
+                'sort_index'  => 'required|integer',
+                'title'       => 'nullable|string|max:191',
+                'url'         => 'nullable|url|max:191',
+            ],
             [
                 'image_url.max'       => 'Please Choose image of Maximum 1MB Size..',
                 'image_url.required'  => 'Please Choose Atleast One Image',
                 'image_url.image'     => 'Please Choose Only Image',
+                'image_url.mimes'     => 'Please Choose Only image of type JPG,JPEG,PNG,WEBP..',
                 'sort_index.required' => 'Please Enter Slider Position',
                 'url.url'             => 'Please Enter Proper Url',
-            ]);
+            ]
+        );
+
+        if ($validator->fails()) {
+            connectify('error', 'Add Home Offer Slider', $validator->errors()->first());
+            return redirect(route('admin.home-offer-sliders.all'))->withInput();
+        }
 
         if ($request->hasFile('image_url')) {
             $request['img'] = uniqid() . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -67,7 +78,9 @@ class HomeOfferSliderController extends Controller
             'url'         => $request->url,
         ]);
 
-        return redirect(route('admin.home-offer-sliders.all'))->with('messageSuccess', 'New Slider has been added successfully !');
+        connectify('success', 'Home Offer Slider Added', 'New Slider has been added successfully !');
+
+        return redirect(route('admin.home-offer-sliders.all'));
     }
 
     /**
@@ -94,10 +107,9 @@ class HomeOfferSliderController extends Controller
             return view('backend.admin.home-offer-sliders.edit', compact('homeOfferSlider'));
 
         } catch (\Exception $ex) {
-            return redirect(route('admin.home-offer-sliders.all'))->with('messageDanger', 'Whoops, Slider Not Found !');
+            connectify('error', 'Edit Home Offer Slider', 'Whoops, Slider Not Found !');
+            return redirect(route('admin.home-offer-sliders.all'));
         }
-
-        return redirect(route('admin.home-offer-sliders.all'))->with('messageDanger', 'Error , ' . $ex->getMessage());
     }
 
     /**
@@ -107,21 +119,31 @@ class HomeOfferSliderController extends Controller
      * @param  \App\Model\HomeOfferSlider  $homeOfferSlider
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HomeOfferSlider $homeOfferSlider)
+    public function update(Request $request, $slider)
     {
-        $request->validate([
-            'image_url'   => 'nullable|image|mimes:jpg,jpeg,png|max:1024',
-            'sort_index'  => 'required|integer',
-            'title'       => 'nullable|string|max:191',
-            'url'         => 'nullable|url|max:191',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'image_url'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+                'sort_index'  => 'required|integer',
+                'title'       => 'nullable|string|max:191',
+                'url'         => 'nullable|url|max:191',
+            ],
             [
                 'image_url.image'     => 'Please Choose Only image..',
-                'image_url.mimes'     => 'Please Choose Only image of type JPG,JPEG,PNG..',
+                'image_url.mimes'     => 'Please Choose Only image of type JPG,JPEG,PNG,WEBP..',
                 'image_url.max'       => 'Please Choose Only image of Maximum 1MB Size..',
                 'sort_index.required' => 'Please Enter Sort Index',
                 'url.url'             => 'Please Enter Proper Url',
-            ]);
+            ]
+        );
+
+        if ($validator->fails()) {
+            connectify('error', 'Update Home Offer Slider', $validator->errors()->first());
+            return redirect(route('admin.home-offer-sliders.edit', $slider))->withInput();
+        }
+
+        $homeOfferSlider = HomeOfferSlider::findOrFail($slider);
 
         if ($request->hasFile('image_url')) {
             $old_image = "images/home-offer-sliders/" . $homeOfferSlider->image_url;
@@ -137,7 +159,9 @@ class HomeOfferSliderController extends Controller
             'url'         => $request->url,
         ]);
 
-        return redirect(route('admin.home-offer-sliders.edit', $homeOfferSlider->id))->with('messageSuccess', 'Slider has been updated successfully !');
+        connectify('success', 'Home Offer Slider Updated', 'Slider has been updated successfully !');
+
+        return redirect(route('admin.home-offer-sliders.all'));
     }
 
     /**
@@ -181,7 +205,7 @@ class HomeOfferSliderController extends Controller
                 return redirect(route('admin.home-offer-sliders.all'));
             }
 
-            Log::error(['Delete Home Offer Slider' => $ex->getMessage()]);
+            Log::error('Delete Home Offer Slider: ' . $ex->getMessage());
 
             connectify('error', 'Home Offer Slider Delete', 'Whoops, Something Went Wrong from our end !');
 
