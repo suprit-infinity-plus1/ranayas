@@ -68,7 +68,7 @@ class SliderController extends Controller
         }
 
         if ($request->hasFile('image_url')) {
-            $request['img'] = uniqid().'.'.pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
+            $request['img'] = uniqid() . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
             $request->image_url->storeAs('images/sliders', $request->img, 'public');
         }
 
@@ -164,7 +164,7 @@ class SliderController extends Controller
             $slider = Slider::where('id', $id)->firstOrFail();
 
             if ($request->hasFile('image_url')) {
-                Storage::disk('public')->delete('images/sliders/'.$slider->image_url);
+                Storage::disk('public')->delete('images/sliders/' . $slider->image_url);
                 $request->image_url->storeAs('images/sliders', $slider->image_url, 'public');
             }
 
@@ -208,7 +208,7 @@ class SliderController extends Controller
 
             $slider = Slider::where('id', $request->slider_id)->firstOrFail();
 
-            Storage::disk('public')->delete('images/sliders/'.$slider->image_url);
+            Storage::disk('public')->delete('images/sliders/' . $slider->image_url);
 
             $slider->delete();
 

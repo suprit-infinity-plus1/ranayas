@@ -45,18 +45,18 @@ class HomeOfferSliderController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'image_url'   => 'required|image|mimes:jpg,jpeg,png,webp|max:1024',
-                'sort_index'  => 'required|integer',
-                'title'       => 'nullable|string|max:191',
-                'url'         => 'nullable|url|max:191',
+                'image_url' => 'required|image|mimes:jpg,jpeg,png,webp|max:1024',
+                'sort_index' => 'required|integer',
+                'title' => 'nullable|string|max:191',
+                'url' => 'nullable|url|max:191',
             ],
             [
-                'image_url.max'       => 'Please Choose image of Maximum 1MB Size..',
-                'image_url.required'  => 'Please Choose Atleast One Image',
-                'image_url.image'     => 'Please Choose Only Image',
-                'image_url.mimes'     => 'Please Choose Only image of type JPG,JPEG,PNG,WEBP..',
+                'image_url.max' => 'Please Choose image of Maximum 1MB Size..',
+                'image_url.required' => 'Please Choose Atleast One Image',
+                'image_url.image' => 'Please Choose Only Image',
+                'image_url.mimes' => 'Please Choose Only image of type JPG,JPEG,PNG,WEBP..',
                 'sort_index.required' => 'Please Enter Slider Position',
-                'url.url'             => 'Please Enter Proper Url',
+                'url.url' => 'Please Enter Proper Url',
             ]
         );
 
@@ -71,11 +71,11 @@ class HomeOfferSliderController extends Controller
         }
 
         HomeOfferSlider::create([
-            'image_url'   => $request->img,
-            'sort_index'  => $request->sort_index,
-            'status'      => true,
-            'title'       => $request->title,
-            'url'         => $request->url,
+            'image_url' => $request->img,
+            'sort_index' => $request->sort_index,
+            'status' => true,
+            'title' => $request->title,
+            'url' => $request->url,
         ]);
 
         connectify('success', 'Home Offer Slider Added', 'New Slider has been added successfully !');
@@ -124,17 +124,17 @@ class HomeOfferSliderController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'image_url'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
-                'sort_index'  => 'required|integer',
-                'title'       => 'nullable|string|max:191',
-                'url'         => 'nullable|url|max:191',
+                'image_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+                'sort_index' => 'required|integer',
+                'title' => 'nullable|string|max:191',
+                'url' => 'nullable|url|max:191',
             ],
             [
-                'image_url.image'     => 'Please Choose Only image..',
-                'image_url.mimes'     => 'Please Choose Only image of type JPG,JPEG,PNG,WEBP..',
-                'image_url.max'       => 'Please Choose Only image of Maximum 1MB Size..',
+                'image_url.image' => 'Please Choose Only image..',
+                'image_url.mimes' => 'Please Choose Only image of type JPG,JPEG,PNG,WEBP..',
+                'image_url.max' => 'Please Choose Only image of Maximum 1MB Size..',
                 'sort_index.required' => 'Please Enter Sort Index',
-                'url.url'             => 'Please Enter Proper Url',
+                'url.url' => 'Please Enter Proper Url',
             ]
         );
 
@@ -153,10 +153,10 @@ class HomeOfferSliderController extends Controller
         }
 
         $homeOfferSlider->update([
-            'status'      => $request->status,
-            'sort_index'  => $request->sort_index,
-            'title'       => $request->title,
-            'url'         => $request->url,
+            'status' => $request->status,
+            'sort_index' => $request->sort_index,
+            'title' => $request->title,
+            'url' => $request->url,
         ]);
 
         connectify('success', 'Home Offer Slider Updated', 'Slider has been updated successfully !');

@@ -18,7 +18,8 @@ span.p-discount {
     background-color: var(--theme-color) !important;
     opacity: 1 !important;
     color: #fff !important;
-    background-image: none !important; /* Fix for double icons */
+    background-image: none !important;
+    /* Fix for double icons */
     background-size: 10px !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
@@ -2497,6 +2498,8 @@ span.p-discount {
 
 .homeOffer a img {
     border-radius: 3px;
+    width: 100%;
+    height: auto;
 }
 
 /* .homeOffer:hover {

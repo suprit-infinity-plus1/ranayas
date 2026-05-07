@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="info-content">
                                     <h5>Our Location</h5>
-                                    <p class="mb-0 text-muted">Kandivali West, Mumbai, India, Maharashtra</p>
+                                    <p class="mb-0 text-muted">Kandivali West, Mumbai, Maharashtra, India</p>
                                 </div>
                             </div>
 
@@ -132,6 +132,16 @@
                                 <div class="info-content">
                                     <h5>Contact Us</h5>
                                     <a href="tel:+919820760951" class="text-muted">(+91) 982 076 0951</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-info-item d-flex mb-4">
+                                <div class="icon-box me-3">
+                                    <i class="ion-ios-clock-outline"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>Business Hours</h5>
+                                    <p class="mb-0 text-muted">Monday to Friday<br>10:30 AM to 6:30 PM</p>
                                 </div>
                             </div>
 

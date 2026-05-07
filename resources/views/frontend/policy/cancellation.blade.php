@@ -30,12 +30,37 @@
                 <div class="row ptb--40 ptb-md--30 ptb-sm--20">
                     <div class="col-lg-12 col-md-12">
                         <div class="about-text">
-                            <h2 class="heading-secondary mb-4">Cancellation Policy</h2>
+                            <h2 class="heading-secondary mb-4"><strong>Cancellation Policy</strong></h2>
+
+                            <h4 class="mt-4 mb-2"><strong>Before Shipment</strong></h4>
+                            <p class="text-secondary lh-base">Orders cancelled before shipment are eligible for a full
+                                refund. Refunds are processed within <strong>48–72 business hours</strong>.</p>
+
+                            <h4 class="mt-4 mb-2"><strong>After Shipment</strong></h4>
+                            <p class="text-secondary lh-base">If the order has already been shipped:</p>
                             <ul class="theme-list-item mb-4">
-                                <li><i class="fa fa-check" aria-hidden="true"></i> Orders can be cancelled before dispatch only</li>
-                                <li><i class="fa fa-check" aria-hidden="true"></i> Once shipped, orders cannot be cancelled</li>
-                                <li><i class="fa fa-check" aria-hidden="true"></i> Refunds for cancelled orders will be processed within 5–7 business days</li>
+                                <li><i class="fa fa-check" aria-hidden="true"></i> You may refuse delivery or request
+                                    cancellation by email.</li>
+                                <li><i class="fa fa-check" aria-hidden="true"></i> Refunds will be processed after the
+                                    product is returned and inspected.</li>
+                                <li><i class="fa fa-check" aria-hidden="true"></i> Shipping and return handling charges may
+                                    be deducted.</li>
                             </ul>
+
+                            <h4 class="mt-4 mb-2"><strong>Loyalty Points & Discount Coupons</strong></h4>
+                            <ul class="theme-list-item mb-4">
+                                <li><i class="fa fa-check" aria-hidden="true"></i> Discount coupons are treated as
+                                    single-use and may not be restored after cancellation.</li>
+                                <li><i class="fa fa-check" aria-hidden="true"></i> Loyalty points used for cancelled orders
+                                    may be credited back to the customer account.</li>
+                            </ul>
+
+                            <h4 class="mt-4 mb-2"><strong>Refund Support</strong></h4>
+                            <p class="text-secondary lh-base">If you have not received your refund within the expected
+                                timeline, please contact us at:</p>
+                            <address>
+                                <p class="color--light-3">Email: <a href="mailto:info@ranayas.com">info@ranayas.com</a></p>
+                            </address>
 
                         </div>
                     </div>
