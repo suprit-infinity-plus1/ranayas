@@ -98,23 +98,21 @@
     {{-- Feature End --}}
 
     @if (count($homeOfferSliders))
-        <section class="offer-section">
-            <div class="container">
-                <div class="airi-element-carousel nav-vertical-center nav-style-1 homeOffer"
-                    data-slick-options='{
-            "slidesToShow" : 1,
-            "arrows": true,
-            "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "fa fa-angle-double-left" },
-            "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "fa fa-angle-double-right" }
-        }'>
-                    @foreach ($homeOfferSliders as $homeOfferSlider)
-                        <a href="{{ $homeOfferSlider->url }}" class="item">
-                            <img src="{!! asset('storage/images/home-offer-sliders') . '/' . $homeOfferSlider->image_url !!}" alt="offer">
-                        </a>
-                    @endforeach
-                </div>
+        <div class="homepage-slider offer-slider-section" id="homepage-slider-2">
+            <div class="airi-element-carousel nav-vertical-center nav-style-1 homeOffer"
+                data-slick-options='{
+                "slidesToShow" : 1,
+                "arrows": true,
+                "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "fa fa-angle-double-left" },
+                "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "fa fa-angle-double-right" }
+            }'>
+                @foreach ($homeOfferSliders as $homeOfferSlider)
+                    <div class="item" onclick="window.location.href='{{ $homeOfferSlider->url }}'" style="cursor: pointer;">
+                        <img src="{!! asset('storage/images/home-offer-sliders') . '/' . $homeOfferSlider->image_url !!}" alt="offer" class="offer-img w-100">
+                    </div>
+                @endforeach
             </div>
-        </section>
+        </div>
     @endif
 
     @foreach ($section_products as $key => $section)
@@ -322,25 +320,39 @@
         .collection-banner-main {
             background-color: #000000;
         }
+
+        .offer-slider-section {
+            margin-bottom: 30px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .offer-slider-section .offer-img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 767px) {
+            .offer-slider-section .offer-img {
+                height: 250px;
+            }
+        }
     </style>
 @endsection
 @section('extrajs')
     <script>
         $(document).ready(function() {
-
-
             $('.add-cart').click(function() {
                 var val = $(this).attr('data-obj-id');
                 var stock = $(this).attr('data-obj-stock');
 
                 if (stock > 0) {
-
                     $('#prod_id').val(val);
                     $('#cartForm').submit();
                     $(this).html(
                         '<i class="fa fa-spinner fa-pulse fa-fw"></i><span class="sr-only">Loading...</span>'
                     );
-
                 } else {
                     swal({
                         title: "Out of Stock !",
@@ -350,12 +362,6 @@
                     });
                 }
             });
-            // $(".out-of-stock").prev().addClass("active");
         });
     </script>
-@endsection }
-});
-// $(".out-of-stock").prev().addClass("active");
-});
-</script>
 @endsection

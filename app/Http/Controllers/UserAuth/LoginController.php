@@ -7,6 +7,7 @@ use App\Model\SMS;
 use App\Model\Subscriber;
 use App\Model\TxnUser;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('guard:user')->except('logout');
@@ -44,6 +44,7 @@ class LoginController extends Controller
 
         if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => true], $request->remeber)) {
             connectify('success', 'Logged in', 'You are successfully Logged In');
+
             return redirect()->intended(url()->previous());
         }
 
@@ -56,6 +57,7 @@ class LoginController extends Controller
     {
         Auth::guard('user')->logout();
         connectify('success', 'Logged Out', 'You have logged out successfully !');
+
         return back();
     }
 
@@ -84,6 +86,7 @@ class LoginController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Register Failed', $validator->errors()->first());
+
             return back()->withInput();
         }
 
@@ -101,11 +104,15 @@ class LoginController extends Controller
         ];
         session(['user' => $user]);
 
-        SMS::send($user['mobile'], 'Dear Customer, ' . $rand_otp . ' is OTP for Login/Register with Ranayas. Please enter this OTP on the website. Thanks', 1507164983201751332);
+        SMS::send(
+            $user['mobile'],
+            $user['otp'].' is your verification code for Standalone Stream',
+            1507164000218506867
+        );
         // dd('i m here');
 
         Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-            $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
+            $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
             $message->from(config('mail.from.address'), config('mail.from.name'));
         });
 
@@ -115,6 +122,7 @@ class LoginController extends Controller
     public function otp(Request $request)
     {
         $user = $request->session()->get('user');
+
         return view('frontend.user.otp', compact('user'));
     }
 
@@ -124,13 +132,18 @@ class LoginController extends Controller
 
             $user = $request->session()->get('user');
 
-            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $user['otp'] . ' Ranayas Note: this OTP is case sensitive, Do not Share your otp with anyone !');
+            SMS::send(
+                $user['mobile'],
+                $user['otp'].' is your verification code for Standalone Stream',
+                1507164000218506867
+            );
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
+                $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
                 $message->from(config('mail.from.address'), config('mail.from.name'));
             });
             connectify('success', 'Resend Otp', 'Otp has been resend on registed mobile and email');
+
             return redirect()->route('user.otp');
         }
 
@@ -154,14 +167,16 @@ class LoginController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Invalid Otp', $validator->errors()->first());
+
             return back()->withInput();
         }
 
         $userData = $request->session()->get('user');
 
         // Safeguard against expired sessions
-        if (!$userData) {
+        if (! $userData) {
             connectify('error', 'Session Expired', 'Your session has expired. Please try registering again.');
+
             return redirect()->route('user.register');
         }
 
@@ -180,7 +195,7 @@ class LoginController extends Controller
                     'status' => true,
                     'is_verified' => true,
                     'otp' => null,
-                    'last_login' => \Carbon\Carbon::now(),
+                    'last_login' => Carbon::now(),
                     'is_subcribed' => true,
                 ]
             );
@@ -204,10 +219,12 @@ class LoginController extends Controller
 
             // Fallback to dashboard if original URL is missing
             $redirectUrl = $userData['url'] ?? route('user.dashboard');
+
             return redirect($redirectUrl);
 
         } else {
             connectify('error', 'Error', 'The Entered Otp is Invalid !');
+
             return back();
         }
     }
@@ -233,6 +250,7 @@ class LoginController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Otp Login', $validator->errors()->first());
+
             return back()->withInput();
         }
 
@@ -253,10 +271,14 @@ class LoginController extends Controller
 
             session(['user' => $user]);
 
-            SMS::send($user['mobile'], 'One Time Password (OTP) for Reset Password : ' . $rand_otp . ' Ranayas Note: this OTP is case sensitive, Do not Share your otp with anyone !');
+            SMS::send(
+                $user['mobile'],
+                $user['otp'].' is your verification code for Standalone Stream',
+                1507164000218506867
+            );
 
             Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user['email'])->subject(config('app.name') . ', One Time Password(OTP)');
+                $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
                 $message->from(config('mail.from.address'), config('mail.from.name'));
             });
 
@@ -265,7 +287,7 @@ class LoginController extends Controller
             return redirect()->route('user.otp');
 
         } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error', 'Email id not found, try again later !');
 
