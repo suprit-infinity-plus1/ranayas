@@ -69,7 +69,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
         // Subscriber
 
-        Route::POST('/subscriber', 'MainController@subscribers')->name('subscribe');
+        // Route::POST('/subscriber', 'MainController@subscribers')->name('subscribe');
         Route::GET('/unsubscriber/{email}', 'Admin\SubscriberController@unsubscribe')->name('unsubscribe');
 
         // Cart & Checkout

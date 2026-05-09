@@ -538,7 +538,7 @@
             <div class="container container_WidthMas1">
                 <div class="row">
                     <div class="col">
-                        <div class="news-5">
+                        {{-- <div class="news-5">
                             <style>
                                 .news-content h2 {
                                     padding-top: 25px;
@@ -552,7 +552,7 @@
                                 <a href="javascript:void(0)" class="btn btn-style1"><i
                                         class="ion-paper-airplane"></i></a>
                             </form>
-                        </div>
+                        </div> --}}
                         <div class="home5-footer">
                             <div class="f-logo">
                                 <ul class="footer-ul">
