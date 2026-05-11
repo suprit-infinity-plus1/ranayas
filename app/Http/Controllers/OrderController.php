@@ -103,7 +103,7 @@ class OrderController extends Controller
 
                 $gst = TxnMasterGst::where('id', $size->product->gst_id)->first();
 
-                $gst_value = 1 + ($gst->gst_value / 100);
+                $gst_value = $gst ? 1 + ($gst->gst_value / 100) : 1;
 
                 // $before_gst_price = round($size->mrp / $gst_value);
 

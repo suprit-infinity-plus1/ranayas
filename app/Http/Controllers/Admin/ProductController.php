@@ -93,7 +93,7 @@ class ProductController extends Controller
                 'weight_id' => 'nullable|integer|exists:txn_weights,id',
                 'condition_id' => 'nullable|integer|exists:txn_conditions,id',
                 'warranty_id' => 'nullable|integer|exists:master_warranties,id',
-                'gst_id' => 'required|integer|exists:txn_master_gsts,id',
+                'gst_id' => 'nullable|integer|exists:txn_master_gsts,id',
                 'breadth' => 'nullable|string|max:191',
                 'height' => 'nullable|string|max:191',
                 'weight' => 'nullable|string|max:191',
@@ -125,7 +125,6 @@ class ProductController extends Controller
                 'weight_id.exists' => 'Unit Not Exists',
                 'condition_id.required' => 'Please Select Condition',
                 'condition_id.exists' => 'Condition Not Exists',
-                'gst_id.required' => 'Please Select GST',
                 'gst_id.exists' => 'GST Not Exists',
                 'warranty_id.required' => 'Please Select Warranty',
                 'warranty_id.exists' => 'Warranty Not Exists',
@@ -237,7 +236,7 @@ class ProductController extends Controller
 
             $gst = TxnMasterGst::where('id', $request->gst_id)->first();
 
-            $gst_value = 1 + ($gst->gst_value / 100);
+            $gst_value = $gst ? 1 + ($gst->gst_value / 100) : 1;
 
             $before_gst_price = round($request->mrp / $gst_value);
 
@@ -367,7 +366,7 @@ class ProductController extends Controller
                 'weight_id' => 'nullable|integer|exists:txn_weights,id',
                 'condition_id' => 'nullable|integer|exists:txn_conditions,id',
                 'category_id' => 'required|integer|exists:txn_categories,id',
-                'gst_id' => 'required|integer|exists:txn_master_gsts,id',
+                'gst_id' => 'nullable|integer|exists:txn_master_gsts,id',
                 'length' => 'nullable|string|max:191',
                 'breadth' => 'nullable|string|max:191',
                 'height' => 'nullable|string|max:191',
@@ -399,7 +398,6 @@ class ProductController extends Controller
                 'is_cod.min' => 'Invalid data provided in cod availability',
                 'review_status.required' => 'Please Select Review Status',
                 'review_status.min' => 'Invalid data provided in Review Status',
-                'gst_id.required' => 'Please Select GST',
                 'gst_id.exists' => 'GST Not Exists',
             ]
         );
@@ -746,7 +744,7 @@ class ProductController extends Controller
 
                 $gst = TxnMasterGst::where('id', $product->gst_id)->first();
 
-                $gst_value = 1 + ($gst->gst_value / 100);
+                $gst_value = $gst ? 1 + ($gst->gst_value / 100) : 1;
 
                 $before_gst_price = round($request->mrp / $gst_value);
 
@@ -1045,7 +1043,7 @@ class ProductController extends Controller
             $mapColorSize = MapColorSize::where('id', $request->map_id)->with('product')->firstOrFail();
             $gst = TxnMasterGst::where('id', $mapColorSize->product->gst_id)->first();
 
-            $gst_value = 1 + ($gst->gst_value / 100);
+            $gst_value = $gst ? 1 + ($gst->gst_value / 100) : 1;
 
             $before_gst_price = round($request->mrp / $gst_value);
 

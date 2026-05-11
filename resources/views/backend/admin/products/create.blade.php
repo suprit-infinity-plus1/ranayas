@@ -115,8 +115,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gst_id">Gst <span class="text-danger">*</span></label>
-                                    <select name="gst_id" id="gst_id" class="form-control select2" required>
+                                    <label for="gst_id">Gst </label>
+                                    <select name="gst_id" id="gst_id" class="form-control select2">
                                         <option value="">--Select Gst--</option>
                                         @foreach ($gsts as $gst)
                                             <option value="{{ $gst->id }}"
@@ -195,11 +195,11 @@
                                 </div>
                             </div>
 
-{{-- <div class="col-md-4 d-none">
+<div class="col-md-4">
                                 <div class="form-group">
                                     <label for="weight_id">Unit </label>
                                     <select name="weight_id" id="weight_id" class="form-control select2">
-                                        <option value="1">--Select Unit--</option>
+                                        <option value="">--Select Unit--</option>
                                         @foreach ($units as $unit)
                                             <option value="{{ $unit->id }}"
                                                 {{ old('weight_id') == $unit->id ? 'selected' : '' }}>
@@ -209,7 +209,7 @@
                                     <label id="" class="error" for="weight_id"></label>
 
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -476,10 +476,6 @@
                         required: true
                     },
 
-                    gst_id: {
-                        required: true
-                    },
-
                     image_url: {
                         required: true
                     },
@@ -556,10 +552,6 @@
 
                     image_url1: {
                         required: "Please Upload Back Image"
-                    },
-
-                    gst_id: {
-                        required: "Please Select GST"
                     },
 
                     color_id: {

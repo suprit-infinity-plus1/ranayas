@@ -274,8 +274,8 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="gst_id">Gst <span class="text-danger">*</span></label>
-                            <select name="gst_id" id="gst_id" class="form-control select2" required>
+                            <label for="gst_id">Gst </label>
+                            <select name="gst_id" id="gst_id" class="form-control select2">
                                 <option value="">--Select Gst--</option>
                                 @foreach($gsts as $gst)
                                 <option value="{{ $gst->id }}" {{ $product->gst_id == $gst->id ? 'selected' : '' }}>
@@ -334,7 +334,7 @@
                         </div>
                     </div>
 
-{{-- <div class="col-md-4 d-none">
+<div class="col-md-4">
                         <div class="form-group">
                             <label for="weight_id">Unit </label>
                             <select name="weight_id" id="weight_id" class="form-control">
@@ -346,7 +346,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -864,10 +864,6 @@
                     required: true
                 },
 
-                gst_id: {
-                    required: true
-                },
-
                 is_cod: {
                     required: true
                 },
@@ -902,10 +898,6 @@
                 },
                 material_id: {
                     required: "Please Select Material"
-                },
-
-                gst_id: {
-                    required: "Please Select Gst"
                 },
 
                 is_cod: {
