@@ -42,6 +42,7 @@ class OrderController extends Controller
 
     public function checkout(Request $request, LogisticService $logistic)
     {
+        Log::info('Checkout request data: ' . json_encode($request->all()));
 
         $validator = Validator::make(
             $request->all(),

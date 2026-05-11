@@ -142,22 +142,23 @@
                                         <span class="p-discount"> {{ $getOffer }}% off</span>
                                     </div>
                                     <div class="pro-icn">
-                                        @php
-                                            $wishlistItem = auth('user')->user()->wishlists->where('product_id', $product->id)->first();
-                                        @endphp
-                                        @if ($wishlistItem)
-                                        <a href="javascript:void(0)" class="w-c-q-icn wishlist-remove"
-                                            data-w-id="{{ $wishlistItem->id }}" title="Remove from Wishlist"><i
-                                                class="fa fa-heart"></i></a>
+                                        @if(auth('user')->check())
+                                            @php
+                                                $wishlistItem = auth('user')->user()->wishlists->where('product_id', $product->id)->first();
+                                            @endphp
+                                            @if ($wishlistItem)
+                                            <a href="javascript:void(0)" class="w-c-q-icn wishlist-remove"
+                                                data-w-id="{{ $wishlistItem->id }}" title="Remove from Wishlist"><i
+                                                    class="fa fa-heart"></i></a>
+                                            @else
+                                            <a href="javascript:void(0)" class="w-c-q-icn wishlist"
+                                                data-p-id="{{ $product->id }}" data-c-id="{{ $product->c_id }}"
+                                                data-s-id="{{ $product->s_id }}" title="Add to Wishlist"><i
+                                                    class="fa fa-heart-o"></i></a>
+                                            @endif
                                         @else
-                                        <a href="javascript:void(0)" class="w-c-q-icn wishlist"
-                                            data-p-id="{{ $product->id }}" data-c-id="{{ $product->c_id }}"
-                                            data-s-id="{{ $product->s_id }}" title="Add to Wishlist"><i
-                                                class="fa fa-heart-o"></i></a>
-                                        @endif
-                                        @else
-                                        <a href="javascript:void(0)" class="w-c-q-icn wishlist-login"
-                                            title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
+                                            <a href="javascript:void(0)" class="w-c-q-icn wishlist-login"
+                                                title="Add to Wishlist"><i class="fa fa-heart-o"></i></a>
                                         @endif
                                         <a href="javascript:void(0)"
                                             onclick="addToCart('{{ $product->id }}', '{{ $product->stock }}', '{{ $product->c_id }}', '{{ $product->s_id }}')"

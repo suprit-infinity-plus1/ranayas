@@ -118,9 +118,9 @@
                             </div>
                             <div class="pro-price">
                                 @if (count($product->colors) > 0)
-                                    <span class="new-price"><i class="fa fa-inr"></i> {{ $product->colors[0]->mrp }}</span>
+                                    <span class="new-price main-new-price"><i class="fa fa-inr"></i> {{ $product->colors[0]->mrp }}</span>
                                     @if ($product->colors[0]->mrp < $product->colors[0]->starting_price)
-                                        <span class="old-price">
+                                        <span class="old-price main-old-price">
                                             <del>
                                                 <i class="fa fa-inr"></i> {{ $product->colors[0]->starting_price }}
                                             </del>
@@ -139,7 +139,7 @@
                                     @endphp
                                     @if ($getOffer > 0)
                                         <div class="Pro-lable mt-2">
-                                            <span class="p-discount"> {{ $getOffer }}% off</span>
+                                            <span class="p-discount main-p-discount"> {{ $getOffer }}% off</span>
                                         </div>
                                     @endif
                                 @else
@@ -755,9 +755,9 @@
                         var starting_price = data.starting_price;
                         var getDiff = starting_price - mrp;
                         getOffer = Math.round((getDiff / starting_price) * 100, 0);
-                        $('.p-discount').html(getOffer + "% off");
-                        $('.new-price').html('<i class="fa fa-inr"></i> ' + mrp);
-                        $('.old-price').html('<del><i class="fa fa-inr"></i> ' + starting_price + '</del>');
+                        $('.main-p-discount').html(getOffer + "% off");
+                        $('.main-new-price').html('<i class="fa fa-inr"></i> ' + mrp);
+                        $('.main-old-price').html('<del><i class="fa fa-inr"></i> ' + starting_price + '</del>');
                         $('#cart_prod_id').val(param.product_id);
                         $('#cart_qty').val($('#qty').val());
                         $('#cart_color_id').val(data.color_id);
