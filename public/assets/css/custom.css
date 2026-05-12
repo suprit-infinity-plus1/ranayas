@@ -6713,3 +6713,66 @@ img.mobile {
     background-color: #fcca2f !important;
     color: var(--theme-color) !important;
 }
+
+/* Product Specifications */
+.product-specification-list {
+    margin-top: 15px;
+}
+.spec-item {
+    padding: 2px 0;
+}
+.spec-label {
+    min-width: 110px;
+    font-weight: 600;
+}
+.spec-value {
+    color: #555;
+}
+/* Pill Shaped Headers */
+.pill-header-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding-top: 50px;
+}
+
+.pill-header {
+    display: inline-block;
+    padding: 10px 45px;
+    border: 1px solid #000;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000;
+    letter-spacing: 1px;
+    background: #fff;
+}
+
+@media (max-width: 767px) {
+    .product-specification-list {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .description-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.policy-icon-box {
+    width: 20px;
+    height: 20px;
+    background-color: var(--theme-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.policy-icon-box i {
+    color: #fff;
+    font-size: 11px;
+}

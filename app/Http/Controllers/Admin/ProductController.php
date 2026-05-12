@@ -508,6 +508,20 @@ class ProductController extends Controller
                 );
             }
 
+            if (array_key_exists('field_name', $request->all())) {
+                if ($request->field_name && !in_array(null, $request->field_name, true)) {
+                    foreach ($request->field_name as $index => $name) {
+                        if ($name && $request->field_value[$index]) {
+                            TxnCustomField::create([
+                                'field_name' => $name,
+                                'field_value' => $request->field_value[$index],
+                                'product_id' => $product->id,
+                            ]);
+                        }
+                    }
+                }
+            }
+
             connectify('success', 'Product Updated', 'Product has been Updated successfully !');
 
             return redirect(route('admin.products.edit', $product->slug_url));

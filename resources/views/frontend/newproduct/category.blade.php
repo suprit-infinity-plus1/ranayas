@@ -105,9 +105,9 @@
                                 @forelse ($products as $product)
                                     @php
                                         $colors = explode(',', $product->color_codes);
-                                        $getDiff = $product->starting_price - $product->mrp;
-                                        if ($getDiff > 0) {
-                                            $getOffer = round(($getDiff / $product->starting_price) * 100, 0);
+                                        $getDiff = $product->mrp - $product->starting_price;
+                                        if ($getDiff > 0 && $product->mrp > 0) {
+                                            $getOffer = round(($getDiff / $product->mrp) * 100, 0);
                                         } else {
                                             $getOffer = 0;
                                         }
@@ -187,12 +187,11 @@
                                                         </div>
                                                     @endif
                                                     <div class="pro-price pull-left">
-                                                        {{-- {{ dd($product) }} --}}
                                                         <span class="new-price"><i class="fa fa-inr"></i>
-                                                            {{ $product->mrp }}</span>
-                                                        @if ($product->mrp < $product->starting_price)
+                                                            {{ $product->starting_price }}</span>
+                                                        @if ($product->starting_price < $product->mrp)
                                                             <span class="old-price"><del><i class="fa fa-inr"></i>
-                                                                    {{ $product->starting_price }}</del></span>
+                                                                    {{ $product->mrp }}</del></span>
                                                         @endif
                                                     </div>
                                                 </div>

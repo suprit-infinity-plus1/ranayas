@@ -181,7 +181,7 @@
         </ol>
     </nav>
 
-    <div class="card">
+    <div class="card" ng-app="products">
         <div class="card-header bg-dark text-white-all">
             <h4>Update Product</h4>
         </div>
@@ -445,21 +445,6 @@
                                     {{ $product->within_days == true ? 'checked' : '' }} value="1">
                                 <label class="custom-control-label" for="within_days">Within 7 Days</label>
                             </div>
-                            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" id="wrong_products" value="1"
-                                    name="wrong_products" {{ $product->wrong_products == true ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="wrong_products">Wrong Products</label>
-                            </div>
-                            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" id="faulty_products" value="1"
-                                    name="faulty_products" {{ $product->faulty_products == true ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="faulty_products">Faulty Products</label>
-                            </div>
-                            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" id="quality_issue" value="1"
-                                    name="quality_issue" {{ $product->quality_issue == true ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="quality_issue">Quality Issue</label>
-                            </div>
                         </div>
                     </div>
 
@@ -485,6 +470,44 @@
                                     keywords)</label>
                             <textarea name="keywords" id="keywords" rows="8" class="form-control"
                                 required>{{ $keywords }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" ng-controller="productsCtrl">
+                        <label>Add More Custom Fields </label>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <td colspan="2">
+                                        <a href="javascript:void(0)" title="Remove Field"
+                                            class="btn-danger btn btn-sm pull-left" ng-click="removefield()">
+                                            <i class="fas fa-minus"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" title="Add More Field"
+                                            class="btn-success btn btn-sm pull-right" ng-click="addfield()">
+                                            <i class="fa fa-plus fa-fw text-white"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Sr.</th>
+                                    <th>Field Name</th>
+                                    <th>Field Value</th>
+                                </tr>
+                                <tr class="table-row-sizes" ng-repeat="size in sizes track by $index">
+                                    <td ng-bind="$index + 1"></td>
+                                    <td>
+                                        <input type="text" name="field_name[(=:$index:=)]"
+                                            ng-value="field_name[$index]" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="field_value[(=:$index:=)]"
+                                            ng-value="field_value[$index]" class="form-control">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
@@ -766,6 +789,7 @@
 @endsection
 
 @section('extrajs')
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
 <script>
     $(document).ready(function () {
 
@@ -1027,6 +1051,42 @@
             }
         });
 
+    });
+
+    var app = angular.module('products', []);
+
+    app.controller('productsCtrl', function($scope) {
+        $scope.field_name = {!! json_encode(old('field_name')) !!} || [];
+        $scope.field_value = {!! json_encode(old('field_value')) !!} || [];
+
+        function findLongest() {
+            var nameLen = Object.keys($scope.field_name).length;
+            var valLen = Object.keys($scope.field_value).length;
+            return Math.max(nameLen, valLen, 0);
+        }
+
+        var initialCount = findLongest();
+        $scope.sizes = new Array(initialCount === 0 ? 1 : initialCount);
+
+        $scope.addfield = function() {
+            if ($scope.sizes.length < 10) {
+                $scope.sizes.push("");
+            } else {
+                window.alert("Maximum 10 Fields can be added !");
+            }
+        }
+        $scope.removefield = function() {
+            if ($scope.sizes.length > 1) {
+                $scope.sizes.pop();
+            } else {
+                window.alert("Minimum 1 Field is required !");
+            }
+        }
+    });
+
+    app.config(function($interpolateProvider) {
+        $interpolateProvider.startSymbol('(=:');
+        $interpolateProvider.endSymbol(':=)');
     });
 
 </script>

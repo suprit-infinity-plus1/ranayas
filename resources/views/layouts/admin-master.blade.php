@@ -192,6 +192,7 @@
                                 <li><a class="nav-link" href="{{ route('admin.warranties.all') }}">Warranties</a>
                                 </li>
                                 <li><a class="nav-link" href="{{ route('admin.sections.all') }}">Sections</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.offers.all') }}">Offers</a></li>
                             </ul>
                         </li>
 
@@ -262,16 +263,6 @@
                                     data-feather="users"></i><span>Subscribers</span></a>
                         </li>
 
-                        {{-- <li class="dropdown">
-                            <a href="{{ route('admin.shops.all') }}" class="nav-link"><i data-feather="home"></i><span>Shops</span></a>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="{{ route('admin.offers.all') }}" class="nav-link">
-                                <i data-feather="gift"></i>
-                                <span>Offers</span>
-                            </a>
-                        </li> --}}
 
                         <li class="dropdown">
                             <a href="{{ route('admin.tickets.all') }}" class="nav-link">

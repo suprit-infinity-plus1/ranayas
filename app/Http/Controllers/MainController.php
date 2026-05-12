@@ -138,7 +138,7 @@ class MainController extends Controller
 
         try {
 
-            $product = TxnProduct::where('status', true)->where('slug_url', $slug)->with(['images', 'condition', 'sizes', 'unit', 'colors', 'colors.images', 'wishlist', 'category', 'warranty', 'reviews'])->firstOrFail();
+            $product = TxnProduct::where('status', true)->where('slug_url', $slug)->with(['images', 'condition', 'sizes', 'unit', 'colors', 'colors.images', 'wishlist', 'category', 'warranty', 'reviews', 'brand', 'material', 'custom_fields'])->firstOrFail();
             // dd($product);
 
             $related_products = DB::table('txn_products as p')
