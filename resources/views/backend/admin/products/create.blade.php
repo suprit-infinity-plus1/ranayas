@@ -325,31 +325,22 @@
                                 </div>
                             </div>
 
+
+
                             <div class="col-md-8 mb-3">
                                 <label>Return Policy </label> <br>
                                 <div class="form-check form-check-inline">
                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                         <input type="checkbox" class="custom-control-input" id="within_days"
-                                            name="within_days" {{ old('within_days') ? 'selected' : '' }} value="1">
+                                            name="within_days" {{ old('within_days') ? 'checked' : '' }} value="1">
                                         <label class="custom-control-label" for="within_days">Within 7 Days</label>
                                     </div>
+
                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" id="wrong_products"
-                                            value="1" name="wrong_products"
-                                            {{ old('wrong_products') ? 'selected' : '' }}>
-                                        <label class="custom-control-label" for="wrong_products">Wrong Products</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" id="faulty_products"
-                                            value="1" name="faulty_products"
-                                            {{ old('faulty_products') ? 'selected' : '' }}>
-                                        <label class="custom-control-label" for="faulty_products">Faulty Products</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" id="quality_issue"
-                                            value="1" name="quality_issue"
-                                            {{ old('quality_issue') ? 'selected' : '' }}>
-                                        <label class="custom-control-label" for="quality_issue">Quality Issue</label>
+                                        <input type="checkbox" class="custom-control-input" id="non_returnable"
+                                            value="1" name="non_returnable"
+                                            {{ old('non_returnable') ? 'checked' : '' }}>
+                                        <label class="custom-control-label text-danger fw-bold" for="non_returnable">Non Returnable</label>
                                     </div>
                                 </div>
                             </div>

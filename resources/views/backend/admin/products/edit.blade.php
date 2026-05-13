@@ -437,6 +437,7 @@
                         </div>
                     </div>
 
+
                     <div class="col-md-8 mb-3">
                         <label>Return Policy </label> <br>
                         <div class="form-check form-check-inline">
@@ -444,6 +445,12 @@
                                 <input type="checkbox" class="custom-control-input" id="within_days" name="within_days"
                                     {{ $product->within_days == true ? 'checked' : '' }} value="1">
                                 <label class="custom-control-label" for="within_days">Within 7 Days</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="non_returnable" name="non_returnable"
+                                    {{ $product->non_returnable == true ? 'checked' : '' }} value="1">
+                                <label class="custom-control-label text-danger fw-bold" for="non_returnable">Non Returnable</label>
                             </div>
                         </div>
                     </div>

@@ -118,7 +118,8 @@
                             </div>
                             <div class="pro-price">
                                 @if (count($product->colors) > 0)
-                                    <span class="new-price main-new-price"><i class="fa fa-inr"></i> {{ $product->colors[0]->starting_price }}</span>
+                                    <span class="new-price main-new-price"><i class="fa fa-inr"></i>
+                                        {{ $product->colors[0]->starting_price }}</span>
                                     @if ($product->colors[0]->starting_price < $product->colors[0]->mrp)
                                         <span class="old-price main-old-price">
                                             <del>
@@ -129,10 +130,7 @@
                                     @php
                                         $getDiff = $product->colors[0]->mrp - $product->colors[0]->starting_price;
                                         if ($getDiff > 0) {
-                                            $getOffer = round(
-                                                ($getDiff / $product->colors[0]->mrp) * 100,
-                                                0,
-                                            );
+                                            $getOffer = round(($getDiff / $product->colors[0]->mrp) * 100, 0);
                                         } else {
                                             $getOffer = 0;
                                         }
@@ -155,9 +153,8 @@
                                             {{-- @if (!empty($product->unit)) --}}
                                             <li>
                                                 <a href="javascript:void(0)"
-                                                    class="size_btn {{ $key == 0 ? 'active' : '' }}"
-                                                    data-toggle="tooltip" data-placement="top"
-                                                    title="{{ $item->title }}{{-- . ' ' . $product->unit->unit --}}"
+                                                    class="size_btn {{ $key == 0 ? 'active' : '' }}" data-toggle="tooltip"
+                                                    data-placement="top" title="{{ $item->title }}{{-- . ' ' . $product->unit->unit --}}"
                                                     data-size-id="{{ $item->size_id }}"
                                                     data-prod-id="{{ $product->id }}">
                                                     {{ $item->title }}
@@ -187,12 +184,14 @@
                                 {!! $product->sizecart !!}
                             </div>
 
-                            @if($product->offer)
+                            @if ($product->offer)
                                 <div class="product-offer-notice mb-3">
-                                    <div class="offer-box p-2" style="background-color: #fff9e6; border: 1px dashed #fcca2f; border-radius: 5px;">
+                                    <div class="offer-box p-2"
+                                        style="background-color: #fff9e6; border: 1px dashed #fcca2f; border-radius: 5px;">
                                         <p class="mb-0" style="font-size: 14px; color: #856404;">
                                             <i class="fa fa-gift me-1"></i>
-                                            <strong>Offer:</strong> Get {{ $product->offer->offered_quantity }} Free Product On Purchase Of {{ $product->offer->purchase_quantity }}
+                                            <strong>Offer:</strong> Get {{ $product->offer->offered_quantity }} Free
+                                            Product On Purchase Of {{ $product->offer->purchase_quantity }}
                                         </p>
                                     </div>
                                 </div>
@@ -242,16 +241,20 @@
                                 </a>
                                 {{-- <a href="javascript:void(0)" class="btn btn-style1">Buy now</a> --}}
 
-                                @if($product->within_days)
+                                @if ($product->non_returnable)
+                                    <div class="return-policy-notice mt-3">
+                                        <span class="text-danger fw-bold" style="font-size: 14px;">Non Returnable</span>
+                                    </div>
+                                @elseif($product->within_days)
                                     <div class="return-policy-notice mt-3">
                                         <div class="d-flex align-items-center">
-                                            <div class="policy-icon-box">
-                                                <i class="fa fa-check"></i>
-                                            </div>
-                                            <span class="text-muted fw-bold" style="font-size: 14px;">Return within 7 days</span>
+
+                                            <span class="text-muted fw-bold" style="font-size: 14px;">Return within 7
+                                                days</span>
                                         </div>
                                     </div>
                                 @endif
+
                             </div>
                             {{-- <div class="share">
                             <span class="share-lable">Share:</span>
@@ -283,218 +286,222 @@
             <div class="row">
                 <div class="col">
 
-                        <style>
-                            .pro-features h4,
-                            .tech-spec h4,
-                            .pack-detl h4,
-                            .certification h4 {
-                                text-transform: capitalize;
+                    <style>
+                        .pro-features h4,
+                        .tech-spec h4,
+                        .pack-detl h4,
+                        .certification h4 {
+                            text-transform: capitalize;
+                        }
+
+                        /* .specification{
+                                                                                                                        display: flex;
+                                                                                                                    } */
+                    </style>
+
+                    <style>
+                        th {
+                            font-size: 20px;
+                            text-transform: capitalize;
+                            border: 1px solid black;
+                            padding: 10px;
+                        }
+
+                        td {
+                            padding: 10px;
+                            border: 1px solid black;
+                        }
+
+                        @media screen and (max-width: 1199px) {
+                            table {
+                                margin-bottom: 60px;
                             }
+                        }
 
-                            /* .specification{
-                                                                                                                    display: flex;
-                                                                                                                } */
-                        </style>
-
-                        <style>
-                            th {
-                                font-size: 20px;
-                                text-transform: capitalize;
-                                border: 1px solid black;
-                                padding: 10px;
-                            }
-
-                            td {
-                                padding: 10px;
-                                border: 1px solid black;
-                            }
-
-                            @media screen and (max-width: 1199px) {
-                                table {
-                                    margin-bottom: 60px;
-                                }
-                            }
-
-                            @media screen and (max-width: 768px) {
-                                .specification-table {
-                                    display: none;
-                                }
-                            }
-                        </style>
-
-
-
-                        <style>
-                            .specification {
+                        @media screen and (max-width: 768px) {
+                            .specification-table {
                                 display: none;
+                            }
+                        }
+                    </style>
+
+
+
+                    <style>
+                        .specification {
+                            display: none;
+                            border: 1px solid #d6d6d6;
+                        }
+
+                        .specification h3 {
+                            padding: 20px 25px;
+                            border-bottom: 1px solid #d6d6d6;
+                        }
+
+                        .pro-features,
+                        .read-more-btn,
+                        .tech-spec,
+                        .pack-detl,
+                        .certification {
+                            border-bottom: 1px solid #d6d6d6;
+                        }
+
+                        .pro-features h4,
+                        .tech-spec h4,
+                        .pack-detl h4,
+                        .certification h4 {
+                            padding: 20px 25px;
+                            border-bottom: 1px solid #d6d6d6;
+                        }
+
+                        .pro-features ul,
+                        .tech-spec ul,
+                        .pack-detl ul,
+                        .certification ul {
+                            padding: 20px 25px;
+                        }
+
+                        .pro-features li,
+                        .tech-spec li,
+                        .pack-detl li,
+                        .certification li {
+                            line-height: 25px;
+                        }
+
+                        /* .read-more-btn{
+                                                                                                                        position: relative;
+                                                                                                                        font-size:18px;
+                                                                                                                        cursor: pointer;
+                                                                                                                    } */
+                        /* .read-more-btn:before{
+                                                                                                                        position: absolute;
+                                                                                                                        content:"";
+                                                                                                                        width: 100%;
+                                                                                                                        height: 30px;
+                                                                                                                        background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
+                                                                                                                        left: 0;
+                                                                                                                        top: -30px;
+                                                                                                                    } */
+                        /* .tech-spec, .pack-detl, .certification{
+                                                                                                                        display: none;
+                                                                                                                    } */
+                        @media screen and (max-width: 768px) {
+                            .specification {
+                                display: block;
                                 border: 1px solid #d6d6d6;
                             }
+                        }
+                    </style>
 
-                            .specification h3 {
-                                padding: 20px 25px;
-                                border-bottom: 1px solid #d6d6d6;
-                            }
+                    <!-- Specifications Section -->
+                    <div class="product-specification-section mb-5">
+                        <div class="pill-header-wrapper">
+                            <div class="pill-header">Product Specification</div>
+                        </div>
+                        <div class="specification-content">
+                            <ul class="row product-specification-list list-unstyled">
+                                @php
+                                    $specs = [
+                                        'UPC' => $product->upc,
+                                        'Condition' => $product->condition ? $product->condition->condition : null,
+                                        'Brand' => $product->brand ? $product->brand->brand_name : null,
+                                        'Material' => $product->material ? $product->material->material_name : null,
+                                        'Warranty' => $product->warranty ? $product->warranty->title : null,
+                                        'Weight' => $product->weight
+                                            ? $product->weight . ' ' . ($product->unit ? $product->unit->unit : '')
+                                            : null,
+                                        'Length' => $product->length ?: null,
+                                        'Breadth' => $product->breadth ?: null,
+                                        'Height' => $product->height ?: null,
+                                        'Width' => $product->width ?: null,
+                                    ];
+                                @endphp
 
-                            .pro-features,
-                            .read-more-btn,
-                            .tech-spec,
-                            .pack-detl,
-                            .certification {
-                                border-bottom: 1px solid #d6d6d6;
-                            }
-
-                            .pro-features h4,
-                            .tech-spec h4,
-                            .pack-detl h4,
-                            .certification h4 {
-                                padding: 20px 25px;
-                                border-bottom: 1px solid #d6d6d6;
-                            }
-
-                            .pro-features ul,
-                            .tech-spec ul,
-                            .pack-detl ul,
-                            .certification ul {
-                                padding: 20px 25px;
-                            }
-
-                            .pro-features li,
-                            .tech-spec li,
-                            .pack-detl li,
-                            .certification li {
-                                line-height: 25px;
-                            }
-
-                            /* .read-more-btn{
-                                                                                                                    position: relative;
-                                                                                                                    font-size:18px;
-                                                                                                                    cursor: pointer;
-                                                                                                                } */
-                            /* .read-more-btn:before{
-                                                                                                                    position: absolute;
-                                                                                                                    content:"";
-                                                                                                                    width: 100%;
-                                                                                                                    height: 30px;
-                                                                                                                    background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
-                                                                                                                    left: 0;
-                                                                                                                    top: -30px;
-                                                                                                                } */
-                            /* .tech-spec, .pack-detl, .certification{
-                                                                                                                    display: none;
-                                                                                                                } */
-                            @media screen and (max-width: 768px) {
-                                .specification {
-                                    display: block;
-                                    border: 1px solid #d6d6d6;
-                                }
-                            }
-                        </style>
-
-                        <!-- Specifications Section -->
-                        <div class="product-specification-section mb-5">
-                            <div class="pill-header-wrapper">
-                                <div class="pill-header">Product Specification</div>
-                            </div>
-                            <div class="specification-content">
-                                <ul class="row product-specification-list list-unstyled">
-                                    @php
-                                        $specs = [
-                                            'UPC' => $product->upc,
-                                            'Condition' => $product->condition ? $product->condition->condition : null,
-                                            'Brand' => $product->brand ? $product->brand->brand_name : null,
-                                            'Material' => $product->material ? $product->material->material_name : null,
-                                            'Warranty' => $product->warranty ? $product->warranty->title : null,
-                                            'Weight' => $product->weight ? $product->weight . ' ' . ($product->unit ? $product->unit->unit : '') : null,
-                                            'Length' => $product->length ?: null,
-                                            'Breadth' => $product->breadth ?: null,
-                                            'Height' => $product->height ?: null,
-                                            'Width' => $product->width ?: null,
-                                        ];
-                                    @endphp
-
-                                    @foreach($specs as $label => $value)
-                                        @if($value && $value != '0' && $value != '-')
-                                            <li class="col-md-4 mb-1">
-                                                <div class="d-flex align-items-center spec-item">
-                                                    <strong class="text-dark spec-label">{{ $label }}:</strong>
-                                                    <span class="text-muted ms-2 spec-value">{{ $value }}</span>
-                                                </div>
-                                            </li>
-                                        @endif
-                                    @endforeach
-
-                                    {{-- Custom Fields --}}
-                                    @if(isset($product->custom_fields) && count($product->custom_fields) > 0)
-                                        @foreach ($product->custom_fields as $field)
-                                            <li class="col-md-4 mb-1">
-                                                <div class="d-flex align-items-center spec-item">
-                                                    <strong class="text-dark spec-label">{{ $field->field_name }}:</strong>
-                                                    <span class="text-muted ms-2 spec-value">{{ $field->field_value }}</span>
-                                                </div>
-                                            </li>
-                                        @endforeach
+                                @foreach ($specs as $label => $value)
+                                    @if ($value && $value != '0' && $value != '-')
+                                        <li class="col-md-4 mb-1">
+                                            <div class="d-flex align-items-center spec-item">
+                                                <strong class="text-dark spec-label">{{ $label }}:</strong>
+                                                <span class="text-muted ms-2 spec-value">{{ $value }}</span>
+                                            </div>
+                                        </li>
                                     @endif
-                                </ul>
-                            </div>
-                        </div>
+                                @endforeach
 
-                        <!-- Description Section -->
-                        <div class="product-description-section mb-5">
+                                {{-- Custom Fields --}}
+                                @if (isset($product->custom_fields) && count($product->custom_fields) > 0)
+                                    @foreach ($product->custom_fields as $field)
+                                        <li class="col-md-4 mb-1">
+                                            <div class="d-flex align-items-center spec-item">
+                                                <strong class="text-dark spec-label">{{ $field->field_name }}:</strong>
+                                                <span class="text-muted ms-2 spec-value">{{ $field->field_value }}</span>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Description Section -->
+                    <div class="product-description-section mb-5">
+                        <div class="pill-header-wrapper">
+                            <div class="pill-header">Description</div>
+                        </div>
+                        <div class="description-content">
+                            {!! $product->description !!}
+                        </div>
+                    </div>
+
+
+                    <!-- Reviews Section -->
+                    @if (count($product->reviews) && $product->review_status)
+                        <div class="product-reviews-section mt-5">
                             <div class="pill-header-wrapper">
-                                <div class="pill-header">Description</div>
+                                <div class="pill-header">Customer Reviews</div>
                             </div>
-                            <div class="description-content">
-                                {!! $product->description !!}
-                            </div>
-                        </div>
-
-
-                        <!-- Reviews Section -->
-                        @if (count($product->reviews) && $product->review_status)
-                            <div class="product-reviews-section mt-5">
-                                <div class="pill-header-wrapper">
-                                    <div class="pill-header">Customer Reviews</div>
-                                </div>
-                                <div class="customer-reviews">
-                                    <section class="testimonial-6 p-0">
-                                        <div class="container p-0">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="testi-6 owl-carousel owl-theme">
-                                                        @foreach ($product->reviews as $review)
-                                                            <div class="items">
-                                                                <div class="testimonial-content">
-                                                                    <div class="testimonial-area">
-                                                                        <div class="testi-name">
-                                                                            <span class="tsti-title">{{ $review->name }}</span>
-                                                                            @if ($review->rating)
-                                                                                <span>
-                                                                                    @for ($i = 1; $i <= $review->rating; $i++)
-                                                                                        <i class="fa fa-star e-star"></i>
-                                                                                    @endfor
-                                                                                    @for ($i = 1; $i <= 5 - $review->rating; $i++)
-                                                                                        <i class="fa fa-star-o"></i>
-                                                                                    @endfor
-                                                                                </span>
-                                                                            @endif
-                                                                        </div>
+                            <div class="customer-reviews">
+                                <section class="testimonial-6 p-0">
+                                    <div class="container p-0">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="testi-6 owl-carousel owl-theme">
+                                                    @foreach ($product->reviews as $review)
+                                                        <div class="items">
+                                                            <div class="testimonial-content">
+                                                                <div class="testimonial-area">
+                                                                    <div class="testi-name">
+                                                                        <span
+                                                                            class="tsti-title">{{ $review->name }}</span>
+                                                                        @if ($review->rating)
+                                                                            <span>
+                                                                                @for ($i = 1; $i <= $review->rating; $i++)
+                                                                                    <i class="fa fa-star e-star"></i>
+                                                                                @endfor
+                                                                                @for ($i = 1; $i <= 5 - $review->rating; $i++)
+                                                                                    <i class="fa fa-star-o"></i>
+                                                                                @endfor
+                                                                            </span>
+                                                                        @endif
                                                                     </div>
-                                                                    <p>{{ $review->comment }}</p>
-                                                                    <h6>{{ date('F d, Y', strtotime($review->created_at)) }}</h6>
                                                                 </div>
+                                                                <p>{{ $review->comment }}</p>
+                                                                <h6>{{ date('F d, Y', strtotime($review->created_at)) }}
+                                                                </h6>
                                                             </div>
-                                                        @endforeach
-                                                    </div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>
-                                </div>
+                                    </div>
+                                </section>
                             </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </div>
+        </div>
         </div>
     </section>
     <!-- product page tab end -->
@@ -731,7 +738,7 @@
                         var starting_price = data.starting_price;
                         var getDiff = mrp - starting_price;
                         var getOffer = Math.round((getDiff / mrp) * 100, 0);
-                        if(getOffer > 0) {
+                        if (getOffer > 0) {
                             $('.pro-price .Pro-lable').show();
                             $('.pro-price .p-discount').html(getOffer + "% off");
                         } else {
