@@ -105,9 +105,9 @@
                                 @forelse ($products as $product)
                                     @php
                                         $colors = explode(',', $product->color_codes);
-                                        $getDiff = $product->mrp - $product->starting_price;
-                                        if ($getDiff > 0 && $product->mrp > 0) {
-                                            $getOffer = round(($getDiff / $product->mrp) * 100, 0);
+                                        $getDiff = $product->starting_price - $product->mrp;
+                                        if ($getDiff > 0) {
+                                            $getOffer = round(($getDiff / $product->starting_price) * 100, 0);
                                         } else {
                                             $getOffer = 0;
                                         }
@@ -188,10 +188,10 @@
                                                     @endif
                                                     <div class="pro-price pull-left">
                                                         <span class="new-price"><i class="fa fa-inr"></i>
-                                                            {{ $product->starting_price }}</span>
-                                                        @if ($product->starting_price < $product->mrp)
+                                                            {{ $product->mrp }}</span>
+                                                        @if ($product->mrp < $product->starting_price)
                                                             <span class="old-price"><del><i class="fa fa-inr"></i>
-                                                                    {{ $product->mrp }}</del></span>
+                                                                    {{ $product->starting_price }}</del></span>
                                                         @endif
                                                     </div>
                                                 </div>

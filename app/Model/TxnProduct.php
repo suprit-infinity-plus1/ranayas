@@ -60,6 +60,11 @@ class TxnProduct extends Model
         return $this->belongsTo(TxnWeight::class, 'weight_unit', 'id');
     }
 
+    public function dim_unit()
+    {
+        return $this->belongsTo(TxnLengthUnit::class, 'dimension_unit', 'id');
+    }
+
     public function condition()
     {
         return $this->belongsTo(TxnCondition::class);

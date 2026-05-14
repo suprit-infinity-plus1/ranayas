@@ -46,8 +46,8 @@
                             <div class="s-box">
                                 <i class="ti-truck"></i>
                                 <div class="service-content">
-                                    <span class="text--1">Free delivery</span>
-                                    <p class="text--1">Orders from all item</p>
+                                    <span class="text--1">100% Original Products</span>
+                                    <p class="text--1">Free Delivery On Product</p>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +55,8 @@
                             <div class="s-box">
                                 <i class="ti-money"></i>
                                 <div class="service-content">
-                                    <span class="text--2">Return & refund</span>
-                                    <p class="text--2">Money back guarantee</p>
+                                    <span class="text--2">Return and Refund</span>
+                                    <p class="text--2">Money Back Guarantee ₹</p>
                                 </div>
                             </div>
                         </div>
@@ -64,8 +64,8 @@
                             <div class="s-box">
                                 <i class="ti-headphone"></i>
                                 <div class="service-content">
-                                    <span class="text--1">Quality support</span>
-                                    <p class="text--1">Always online 24/7</p>
+                                    <span class="text--1">Secure Transaction</span>
+                                    <p class="text--1">Top Brands</p>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +73,8 @@
                             <div class="s-box">
                                 <i class="ti-email"></i>
                                 <div class="service-content">
-                                    <span class="text--2">Offer updates</span>
-                                    <p class="text--2">24/7 support </p>
+                                    <span class="text--2">Warranty Policy</span>
+                                    <p class="text--2">100% Assured Support</p>
                                 </div>
                             </div>
                         </div>
@@ -122,6 +122,7 @@
             padding: 0 !important;
             margin: 0 !important;
         }
+
         .offer-slider-ui .img-back {
             width: 100% !important;
             max-width: 100% !important;
@@ -135,7 +136,8 @@
                     <div class="swiper-wrapper">
                         @foreach ($homeOfferSliders as $homeOfferSlider)
                             <div class="swiper-slide">
-                                <div class="img-back s-image1 deal5-back" style="background-image:url({!! asset('storage/images/home-offer-sliders/' . $homeOfferSlider->image_url) !!});"
+                                <div class="img-back s-image1 deal5-back"
+                                    style="background-image:url({!! asset('storage/images/home-offer-sliders/' . $homeOfferSlider->image_url) !!});"
                                     onclick="window.location.href='{{ $homeOfferSlider->url ? $homeOfferSlider->url : 'javascript:void(0)' }}'">
                                     <div class="container">
                                         <div class="row">
@@ -145,7 +147,8 @@
                                                         <h2>{{ $homeOfferSlider->title }}</h2>
                                                     </div>
                                                     @if (!empty($homeOfferSlider->url))
-                                                        <a href="{{ $homeOfferSlider->url }}" class="btn btn-style1">Shop collection</a>
+                                                        <a href="{{ $homeOfferSlider->url }}" class="btn btn-style1">Shop
+                                                            collection</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -535,8 +538,8 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                                                                                                                                        width: 100% !important;
-                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                    width: 100% !important;
+                                                                                                                                                                                                                                                                                                } */
     </style>
 @endsection
 

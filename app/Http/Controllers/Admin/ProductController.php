@@ -12,6 +12,7 @@ use App\Model\MasterWarranty;
 use App\Model\MstColor;
 use App\Model\MstOffer;
 use App\Model\MstSize;
+use App\Model\Product;
 use App\Model\ProductFaq;
 use App\Model\TxnBrand;
 use App\Model\TxnCategory;
@@ -19,40 +20,42 @@ use App\Model\TxnCondition;
 use App\Model\TxnCustomField;
 use App\Model\TxnImage;
 use App\Model\TxnKeyword;
+use App\Model\TxnLengthUnit;
 use App\Model\TxnMasterGst;
 use App\Model\TxnMaterial;
 use App\Model\TxnProduct;
 use App\Model\TxnWeight;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\FacadesLog;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Validators\ValidationException;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $products = TxnProduct::with('category')->orderBy('id')->paginate(3000);
         $gsts = TxnMasterGst::where('status', true)->get();
+
         return view('backend.admin.products.index', compact('products', 'gsts'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -62,18 +65,19 @@ class ProductController extends Controller
         $colors = MstColor::where('status', true)->get();
         $materials = TxnMaterial::where('status', true)->get();
         $units = TxnWeight::where('status', true)->get();
+        $lengthUnits = TxnLengthUnit::where('status', true)->get();
         $conditions = TxnCondition::where('status', true)->get();
         $gsts = TxnMasterGst::where('status', true)->get();
         $warranties = MasterWarranty::where('status', true)->get();
         $categories = TxnCategory::where('status', true)->orderBy('name', 'ASC')->get();
 
-        return view('backend.admin.products.create', compact('brands', 'sizes', 'colors', 'materials', 'units', 'conditions', 'gsts', 'categories', 'warranties', 'gsts'));
+        return view('backend.admin.products.create', compact('brands', 'sizes', 'colors', 'materials', 'units', 'lengthUnits', 'conditions', 'gsts', 'categories', 'warranties', 'gsts'));
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -88,12 +92,13 @@ class ProductController extends Controller
                 'brand_id' => 'required|integer|exists:txn_brands,id',
                 'category_id' => 'required|exists:txn_categories,id',
                 'color_id' => 'required|integer|exists:mst_colors,id',
-                'size_id' => 'required|exists:mst_sizes,id',
+                'size_id' => 'nullable|exists:mst_sizes,id',
                 'material_id' => 'required|integer|exists:txn_materials,id',
                 'weight_id' => 'nullable|integer|exists:txn_weights,id',
                 'condition_id' => 'nullable|integer|exists:txn_conditions,id',
                 'warranty_id' => 'nullable|integer|exists:master_warranties,id',
                 'gst_id' => 'nullable|integer|exists:txn_master_gsts,id',
+                'dimension_unit' => 'nullable|integer|exists:txn_length_units,id',
                 'breadth' => 'nullable|string|max:191',
                 'height' => 'nullable|string|max:191',
                 'weight' => 'nullable|string|max:191',
@@ -109,7 +114,7 @@ class ProductController extends Controller
             ],
             [
                 'title.required' => 'Please Enter Product Name',
-                'title.unique' => $request->title . ' Product Already Available',
+                'title.unique' => $request->title.' Product Already Available',
                 'image_url.required' => 'Please Choose Front Image',
                 'image_url.image' => 'Please Choose Proper front Image',
                 'image_url.mimes' => 'Please Choose Front Image of type JPG, PNG & WEBP Only',
@@ -135,7 +140,7 @@ class ProductController extends Controller
                 'image_urls.*.image' => 'Please Choose Proper Multiple Image',
                 'image_urls.*.mimes' => 'Please Choose Multiple Image of type JPG, PNG & WEBP Only',
                 'image_urls.*.max' => 'Please Choose Multiple Image of Maximum Size 2MB Only',
-                'size_id.required' => 'Please Select Sizes',
+                // 'size_id.required' => 'Please Select Sizes',
                 'size_id.exists' => 'Size does not exists',
                 'description.required' => 'Please Enter Description',
                 'sizecart.required' => 'Please Enter sizecart',
@@ -156,12 +161,12 @@ class ProductController extends Controller
         // dd($request->image_url);
 
         if ($request->hasFile('image_url')) {
-            $request['img'] = "front_" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
+            $request['img'] = 'front_'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
             $request->image_url->storeAs('images/products', $request->img, 'public');
         }
 
         if ($request->hasFile('image_url1')) {
-            $request['img1'] = "back_" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
+            $request['img1'] = 'back_'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
             $request->image_url1->storeAs('images/products', $request->img1, 'public');
         }
 
@@ -169,9 +174,9 @@ class ProductController extends Controller
         // dd("hello");
         if ($validator->fails()) {
             connectify('error', 'Add Product', $validator->errors()->first());
+
             return redirect(route('admin.products.create'))->withInput();
         }
-
 
         $category = TxnCategory::where('id', $request->category_id)->first();
 
@@ -190,6 +195,7 @@ class ProductController extends Controller
             'weight' => $request->weight,
             'width' => $request->width,
             'upc' => $request->upc,
+            'dimension_unit' => $request->dimension_unit,
             'category_id' => $request->category_id,
             'warranty_id' => $request->warranty_id,
             'gst_id' => $request->gst_id,
@@ -203,7 +209,7 @@ class ProductController extends Controller
             'wrong_products' => $request->wrong_products,
             'faulty_products' => $request->faulty_products,
             'quality_issue' => $request->quality_issue,
-            'slug_url' => Str::slug($category->name . '-' . $request->title . '-' . rand(1000, 9999), '-'),
+            'slug_url' => Str::slug($category->name.'-'.$request->title.'-'.rand(1000, 9999), '-'),
         ]);
 
         // dd($product);
@@ -221,9 +227,9 @@ class ProductController extends Controller
         if ($request->hasFile('image_urls')) {
 
             foreach ($request->image_urls as $images) {
-                $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['image'] = uniqid().'.'.pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
                 $images->storeAs('images/multi-products', $request->image, 'public');
-
+                dd($request->size_id);
                 TxnImage::create([
                     'product_id' => $product->id,
                     'image_url' => $request->image,
@@ -269,7 +275,7 @@ class ProductController extends Controller
         }
 
         if (array_key_exists('field_name', $request->all())) {
-            if (!in_array(null, $request->field_name, true)) {
+            if (! in_array(null, $request->field_name, true)) {
                 foreach ($request->field_name as $index => $name) {
                     TxnCustomField::create([
                         'field_name' => $name,
@@ -288,8 +294,8 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param  Product  $product
+     * @return Response
      */
     public function show(TxnProduct $product)
     {
@@ -299,8 +305,8 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param  Product  $product
+     * @return Response
      */
     public function edit($id)
     {
@@ -312,6 +318,7 @@ class ProductController extends Controller
             $colors = MstColor::where('status', true)->get();
             $materials = TxnMaterial::where('status', true)->get();
             $units = TxnWeight::where('status', true)->get();
+            $lengthUnits = TxnLengthUnit::where('status', true)->get();
             $conditions = TxnCondition::where('status', true)->get();
             $gsts = TxnMasterGst::where('status', true)->get();
             $categories = TxnCategory::where('status', true)->get();
@@ -322,16 +329,16 @@ class ProductController extends Controller
             $offers = MstOffer::where('status', true)->get();
 
             $product_details = DB::table('map_color_sizes as m')
-                ->selectRaw("m.*, s.title as size_name, c.title as color_name")
+                ->selectRaw('m.*, s.title as size_name, c.title as color_name')
                 ->join('mst_sizes as s', 's.id', 'm.size_id')
                 ->join('mst_colors as c', 'c.id', 'm.color_id')
                 ->Where('m.product_id', $product->id)
                 ->orderBy('m.sort_index')
                 ->get();
 
-            return view('backend.admin.products.edit', compact('product_details', 'product', 'brands', 'sizes', 'colors', 'materials', 'units', 'conditions', 'gsts', 'keywords', 'categories', 'warranties', 'offers'));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            return view('backend.admin.products.edit', compact('product_details', 'product', 'brands', 'sizes', 'colors', 'materials', 'units', 'lengthUnits', 'conditions', 'gsts', 'keywords', 'categories', 'warranties', 'offers'));
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Edit Product', 'Whoops Product Not found !');
 
@@ -349,9 +356,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param  Product  $product
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -375,6 +381,7 @@ class ProductController extends Controller
                 'keywords' => 'required|string',
                 'warranty_id' => 'nullable|integer|exists:master_warranties,id',
                 'is_cod' => 'required|numeric|max:1',
+                'dimension_unit' => 'nullable|integer|exists:txn_length_units,id',
                 'review_status' => 'required|numeric|min:0|max:1',
             ],
             [
@@ -405,6 +412,7 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'update Product', $validator->errors()->first());
+
             return redirect(route('admin.products.edit', $id))->withInput();
         }
 
@@ -414,13 +422,13 @@ class ProductController extends Controller
 
             if ($request->hasFile('image_url')) {
 
-                $old_image = public_path('/storage/images/products/' . $product->image_url);
+                $old_image = public_path('/storage/images/products/'.$product->image_url);
 
                 if (File::exists($old_image)) {
                     File::delete($old_image);
                 }
 
-                $request['img'] = "front-" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['img'] = 'front-'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $request->image_url->storeAs('images/products', $request->img, 'public');
 
@@ -433,13 +441,13 @@ class ProductController extends Controller
 
             if ($request->hasFile('image_url1')) {
 
-                $old_image = public_path('/storage/images/products/' . $product->image_url1);
+                $old_image = public_path('/storage/images/products/'.$product->image_url1);
 
                 if (File::exists($old_image)) {
                     File::delete($old_image);
                 }
 
-                $request['img1'] = "back-" . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['img1'] = 'back-'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $request->image_url1->storeAs('images/products', $request->img1, 'public');
 
@@ -473,6 +481,7 @@ class ProductController extends Controller
                 'isCodAvailable' => $request->is_cod,
                 'within_days' => $request->within_days,
                 'non_returnable' => $request->non_returnable,
+                'dimension_unit' => $request->dimension_unit,
                 'review_status' => $request->review_status,
                 'wrong_products' => $request->wrong_products,
                 'faulty_products' => $request->faulty_products,
@@ -511,7 +520,7 @@ class ProductController extends Controller
             }
 
             if (array_key_exists('field_name', $request->all())) {
-                if ($request->field_name && !in_array(null, $request->field_name, true)) {
+                if ($request->field_name && ! in_array(null, $request->field_name, true)) {
                     foreach ($request->field_name as $index => $name) {
                         if ($name && $request->field_value[$index]) {
                             TxnCustomField::create([
@@ -527,8 +536,8 @@ class ProductController extends Controller
             connectify('success', 'Product Updated', 'Product has been Updated successfully !');
 
             return redirect(route('admin.products.edit', $product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'update Product', 'Whoops Product Not found !');
 
@@ -546,12 +555,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param  Product  $product
+     * @return Response
      */
-    public function destroy($id)
-    {
-    }
+    public function destroy($id) {}
 
     public function addImages(Request $request, $id)
     {
@@ -569,9 +576,9 @@ class ProductController extends Controller
             ]
         );
 
-
         if ($validator->fails()) {
             connectify('error', 'Add More Images', $validator->errors()->first());
+
             return back()->withInput();
         }
 
@@ -582,7 +589,7 @@ class ProductController extends Controller
             if ($request->hasFile('image_urls')) {
                 foreach ($request->image_urls as $images) {
 
-                    $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $request['image'] = uniqid().'.'.pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
                     $images->storeAs('images/multi-products', $request->image, 'public');
                     $storagePath = $request->image;
                     TxnImage::create([
@@ -597,8 +604,8 @@ class ProductController extends Controller
             connectify('success', 'Images Added', 'Images has been added successfully !');
 
             return back();
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Add Image', 'Whoops Image Not found !');
 
@@ -619,7 +626,7 @@ class ProductController extends Controller
 
             $image = TxnImage::where('id', $request->image_id)->with('product')->firstOrFail();
 
-            $old_image = public_path('/storage/images/multi-products/' . $image->image_url);
+            $old_image = public_path('/storage/images/multi-products/'.$image->image_url);
 
             if (File::exists($old_image)) {
                 File::delete($old_image);
@@ -630,8 +637,8 @@ class ProductController extends Controller
             connectify('success', 'Image Added', 'Image has been Deleted Successfully !');
 
             return back();
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Delete Image', 'Whoops Image Not found !');
 
@@ -672,8 +679,8 @@ class ProductController extends Controller
             connectify('success', 'Custom Field Added', 'Custom Field has been Added Successfully !');
 
             return redirect(route('admin.products.edit', $product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Add Custom Field', 'Whoops Custom Field Not found !');
 
@@ -724,6 +731,7 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Add Color & Size', $validator->errors()->first());
+
             return back()->withInput();
         }
 
@@ -735,7 +743,7 @@ class ProductController extends Controller
 
             if ($colorSize) {
 
-                connectify('error', 'Error', 'Color & Size already Available with "' . $product->title . '"');
+                connectify('error', 'Error', 'Color & Size already Available with "'.$product->title.'"');
 
                 return redirect(route('admin.products.edit', $product->slug_url))->withInput($request->all());
             }
@@ -743,7 +751,7 @@ class ProductController extends Controller
             if ($request->hasFile('image_urls')) {
 
                 foreach ($request->image_urls as $images) {
-                    $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $request['image'] = uniqid().'.'.pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
                     $images->storeAs('images/multi-products', $request->image, 'public');
                     $storagePath = $request->image;
 
@@ -794,8 +802,8 @@ class ProductController extends Controller
             connectify('success', 'Color & Size Added', 'Color & Size has been Added Successfully !');
 
             return redirect(route('admin.products.edit', $product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Add Color & Size', 'Whoops Color Not found !');
 
@@ -821,8 +829,8 @@ class ProductController extends Controller
             $images = TxnImage::where('color_id', $cl->color_id)->where('size_id', $cl->size_id)->where('product_id', $cl->product_id)->orderBy('id', 'ASC')->get();
 
             return view('backend.admin.products.color-edit', compact('cl', 'product', 'images'));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Update Custom Field', 'Whoops Custom Field Not found !');
 
@@ -869,6 +877,7 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Error', $validator->errors()->first());
+
             return redirect(route('admin.products.color.edit', $id))->withInput();
         }
 
@@ -889,8 +898,8 @@ class ProductController extends Controller
             connectify('success', 'Color & Size Added', 'Data has been Updated Successfully !');
 
             return redirect(route('admin.products.color.edit', $id));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Update Custom Field', 'Whoops Custom Field Not found !');
 
@@ -922,6 +931,7 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Update Custom Field', $validator->errors()->first());
+
             return back()->withInput();
         }
 
@@ -935,8 +945,8 @@ class ProductController extends Controller
             connectify('success', 'Custom Field Updated', 'Custom Field Updated Successfully !');
 
             return redirect(route('admin.products.edit', $field->product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Update Custom Field', 'Whoops Custom Field Not found !');
 
@@ -962,8 +972,8 @@ class ProductController extends Controller
             connectify('success', 'Deleted Custom Field', 'Custom Field Deleted Successfully !');
 
             return redirect(route('admin.products.edit', $field->product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Delete Custom Field', 'Whoops Custom Field Not found !');
 
@@ -988,7 +998,7 @@ class ProductController extends Controller
 
             foreach ($images as $image) {
 
-                $old_image = public_path('/storage/images/multi-products/' . $image->image_url);
+                $old_image = public_path('/storage/images/multi-products/'.$image->image_url);
 
                 if (File::exists($old_image)) {
                     File::delete($old_image);
@@ -1002,8 +1012,8 @@ class ProductController extends Controller
             connectify('success', 'Deleted Color & Size', 'Color & Size Deleted Successfully !');
 
             return redirect(route('admin.products.edit', $color->product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Delete Color & Size', 'Whoops Color & Size Not found !');
 
@@ -1051,6 +1061,7 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Add Color & Size', $validator->errors()->first());
+
             return back()->withInput();
         }
 
@@ -1084,8 +1095,8 @@ class ProductController extends Controller
             connectify('success', 'Color & Size Updated', 'Color & Size Updated Successfully !');
 
             return redirect(route('admin.products.edit', $mapColorSize->product->slug_url));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Update Color & Size', 'Whoops Color & Size Not found !');
 
@@ -1107,12 +1118,14 @@ class ProductController extends Controller
         try {
 
             $product = TxnProduct::where('slug_url', $slug)->with('qnas')->firstOrFail();
+
             return view('backend.admin.products.qnas', compact('product'));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
                 return redirect(route('admin.products.all'))->with('messageDanger', 'We can\'t find Product !');
             } else {
                 Log::error(['Product Get All Question' => $ex->getMessage()]);
+
                 return redirect(route('admin.products.all'))->with('messageDanger', 'Whoops, Something Went Wrong, try again later');
             }
         }
@@ -1123,12 +1136,14 @@ class ProductController extends Controller
         try {
 
             $faq = ProductFaq::where('id', $id)->with('product')->firstOrFail();
+
             return view('backend.admin.products.qna-edit', compact('faq'));
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
                 return redirect(route('admin.products.all'))->with('messageDanger', 'We can\'t find question !');
             } else {
                 Log::error(['Product Get Question' => $ex->getMessage()]);
+
                 return redirect(route('admin.products.all'))->with('messageDanger', 'Whoops, Something Went Wrong, try again later');
             }
         }
@@ -1140,12 +1155,14 @@ class ProductController extends Controller
 
             $faq = ProductFaq::where('id', $id)->firstOrFail();
             $faq->delete();
+
             return redirect(route('admin.products.all'))->with('messageSuccess', 'Data has been deleted successfully !');
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
                 return redirect(route('admin.products.all'))->with('messageDanger', 'We can\'t find question !');
             } else {
                 Log::error(['Product Delete Question' => $ex->getMessage()]);
+
                 return redirect(route('admin.products.all'))->with('messageDanger', 'Whoops, Something Went Wrong, try again later');
             }
         }
@@ -1180,11 +1197,12 @@ class ProductController extends Controller
             ]);
 
             return redirect(route('admin.products.all'))->with('messageSuccess', 'Data has been updated successfully !');
-        } catch (\Exception $ex) {
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (Exception $ex) {
+            if ($ex instanceof ModelNotFoundException) {
                 return redirect(route('admin.products.all'))->with('messageDanger', 'We can\'t find question !');
             } else {
                 Log::error(['Product Update Questions' => $ex->getMessage()]);
+
                 return redirect(route('admin.products.all'))->with('messageDanger', 'Whoops, Something Went Wrong, try again later');
             }
         }
@@ -1205,6 +1223,7 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             connectify('error', 'Add Product Size', $validator->errors()->first());
+
             return redirect(route('admin.products.edit', $id))->withInput();
         }
 
@@ -1223,9 +1242,9 @@ class ProductController extends Controller
             connectify('success', 'Add Size', 'Size Added Successfully !');
 
             return redirect(route('admin.products.edit', $product->slug_url));
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
 
-            if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            if ($ex instanceof ModelNotFoundException) {
 
                 connectify('error', 'Error Add Product Size', 'Whoops Size Not found !');
 
@@ -1253,11 +1272,13 @@ class ProductController extends Controller
             Excel::import(new ProductImport, $file);
 
             connectify('success', 'Product Imported ', 'Product has been added successfully !');
+
             return back();
         } catch (ImportException $ex) {
             return back()->withErrors($ex->getOptions());
         } catch (Exception $ex) {
             connectify('error', 'Error', $ex->getMessage());
+
             return back();
         }
     }

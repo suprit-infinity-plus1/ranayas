@@ -119,18 +119,21 @@
                             <div class="pro-price">
                                 @if (count($product->colors) > 0)
                                     <span class="new-price main-new-price"><i class="fa fa-inr"></i>
-                                        {{ $product->colors[0]->starting_price }}</span>
-                                    @if ($product->colors[0]->starting_price < $product->colors[0]->mrp)
+                                        {{ $product->colors[0]->mrp }}</span>
+                                    @if ($product->colors[0]->mrp < $product->colors[0]->starting_price)
                                         <span class="old-price main-old-price">
                                             <del>
-                                                <i class="fa fa-inr"></i> {{ $product->colors[0]->mrp }}
+                                                <i class="fa fa-inr"></i> {{ $product->colors[0]->starting_price }}
                                             </del>
                                         </span>
                                     @endif
                                     @php
-                                        $getDiff = $product->colors[0]->mrp - $product->colors[0]->starting_price;
+                                        $getDiff = $product->colors[0]->starting_price - $product->colors[0]->mrp;
                                         if ($getDiff > 0) {
-                                            $getOffer = round(($getDiff / $product->colors[0]->mrp) * 100, 0);
+                                            $getOffer = round(
+                                                ($getDiff / $product->colors[0]->starting_price) * 100,
+                                                0,
+                                            );
                                         } else {
                                             $getOffer = 0;
                                         }
@@ -146,7 +149,7 @@
                             </div>
 
                             @if (count($product->sizes) > 0)
-                                <div class="pro-items d-none">
+                                <div class="pro-items">
                                     <span class="pro-size">Size:</span>
                                     <ul class="pro-wight">
                                         @foreach ($product->sizes as $key => $item)
@@ -161,17 +164,16 @@
                                                 </a>
                                             </li>
                                             {{-- @else
-                                                <li>
-                                                    <a href="javascript:void(0)"
-                                                        class="size_btn {{ $key == 0 ? 'active' : '' }}"
-                                                        data-toggle="tooltip" data-placement="top"
-                                                        title="{{ $item->title . ' GM' }}"
-                                                        data-size-id="{{ $item->size_id }}"
-                                                        data-prod-id="{{ $product->id }}">
-                                                        {{ $item->title . ' GM' }}
-                                                    </a>
-                                                </li>
-                                            @endif --}}
+                                            <li>
+                                                <a href="javascript:void(0)"
+                                                    class="size_btn {{ $key == 0 ? 'active' : '' }}" data-toggle="tooltip"
+                                                    data-placement="top" title="{{ $item->title . ' GM' }}"
+                                                    data-size-id="{{ $item->size_id }}"
+                                                    data-prod-id="{{ $product->id }}">
+                                                    {{ $item->title . ' GM' }}
+                                                </a>
+                                            </li>
+                                        @endif --}}
                                         @endforeach
                                     </ul>
                                 </div>
@@ -184,7 +186,7 @@
                                 {!! $product->sizecart !!}
                             </div>
 
-                            @if ($product->offer)
+                            @if ($product->offer && $product->offer->purchase_quantity > 0 && $product->offer->offered_quantity > 0)
                                 <div class="product-offer-notice mb-3">
                                     <div class="offer-box p-2"
                                         style="background-color: #fff9e6; border: 1px dashed #fcca2f; border-radius: 5px;">
@@ -241,6 +243,16 @@
                                 </a>
                                 {{-- <a href="javascript:void(0)" class="btn btn-style1">Buy now</a> --}}
 
+                                @if ($product->length || $product->width || $product->height)
+                                    <div class="product-dimensions-info mt-3">
+                                        <span class="text-muted" style="font-size: 14px;">
+                                            <strong>Dimensions:</strong> {{ $product->length ?: '-' }} x
+                                            {{ $product->width ?: '-' }} x {{ $product->height ?: '-' }}
+                                            {{ $product->dim_unit ? $product->dim_unit->unit : '' }}
+                                        </span>
+                                    </div>
+                                @endif
+
                                 @if ($product->non_returnable)
                                     <div class="return-policy-notice mt-3">
                                         <span class="text-danger fw-bold" style="font-size: 14px;">Non Returnable</span>
@@ -295,8 +307,8 @@
                         }
 
                         /* .specification{
-                                                                                                                        display: flex;
-                                                                                                                    } */
+                                                                                                                                                                display: flex;
+                                                                                                                                                            } */
                     </style>
 
                     <style>
@@ -369,27 +381,67 @@
                         }
 
                         /* .read-more-btn{
-                                                                                                                        position: relative;
-                                                                                                                        font-size:18px;
-                                                                                                                        cursor: pointer;
-                                                                                                                    } */
+                                                                                                                                                                position: relative;
+                                                                                                                                                                font-size:18px;
+                                                                                                                                                                cursor: pointer;
+                                                                                                                                                            } */
                         /* .read-more-btn:before{
-                                                                                                                        position: absolute;
-                                                                                                                        content:"";
-                                                                                                                        width: 100%;
-                                                                                                                        height: 30px;
-                                                                                                                        background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
-                                                                                                                        left: 0;
-                                                                                                                        top: -30px;
-                                                                                                                    } */
+                                                                                                                                                                position: absolute;
+                                                                                                                                                                content:"";
+                                                                                                                                                                width: 100%;
+                                                                                                                                                                height: 30px;
+                                                                                                                                                                background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
+                                                                                                                                                                left: 0;
+                                                                                                                                                                top: -30px;
+                                                                                                                                                            } */
                         /* .tech-spec, .pack-detl, .certification{
-                                                                                                                        display: none;
-                                                                                                                    } */
+                                                                                                                                                                display: none;
+                                                                                                                                                            } */
                         @media screen and (max-width: 768px) {
                             .specification {
                                 display: block;
                                 border: 1px solid #d6d6d6;
                             }
+                        }
+
+                        /* Specification Standalone Card Styling */
+                        .product-specification-list {
+                            margin: 0 -10px;
+                            /* Offset the padding of columns */
+                        }
+
+                        .spec-box {
+                            border: 1px solid #eee;
+                            padding: 15px 20px;
+                            margin-bottom: 15px;
+                            border-radius: 8px;
+                            transition: all 0.3s ease;
+                            background: #fff;
+                            height: calc(100% - 15px);
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+                        }
+
+                        .spec-box:hover {
+                            border-color: #d6d6d6;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+                            transform: translateY(-2px);
+                        }
+
+                        .spec-label {
+                            font-size: 11px;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            color: #999 !important;
+                            display: block;
+                            margin-bottom: 4px;
+                            font-weight: 700;
+                        }
+
+                        .spec-value {
+                            font-size: 15px;
+                            font-weight: 500;
+                            color: #333 !important;
+                            display: block;
                         }
                     </style>
 
@@ -402,27 +454,38 @@
                             <ul class="row product-specification-list list-unstyled">
                                 @php
                                     $specs = [
-                                        'UPC' => $product->upc,
-                                        'Condition' => $product->condition ? $product->condition->condition : null,
                                         'Brand' => $product->brand ? $product->brand->brand_name : null,
+                                        'EAN/UPC' => $product->upc,
+                                        'Length' => $product->length
+                                            ? $product->length .
+                                                ' ' .
+                                                ($product->dim_unit ? $product->dim_unit->unit : '')
+                                            : null,
+                                        'Width' => $product->width
+                                            ? $product->width .
+                                                ' ' .
+                                                ($product->dim_unit ? $product->dim_unit->unit : '')
+                                            : null,
+                                        'Height' => $product->height
+                                            ? $product->height .
+                                                ' ' .
+                                                ($product->dim_unit ? $product->dim_unit->unit : '')
+                                            : null,
+                                        'Condition' => $product->condition ? $product->condition->condition : null,
                                         'Material' => $product->material ? $product->material->material_name : null,
                                         'Warranty' => $product->warranty ? $product->warranty->title : null,
                                         'Weight' => $product->weight
                                             ? $product->weight . ' ' . ($product->unit ? $product->unit->unit : '')
                                             : null,
-                                        'Length' => $product->length ?: null,
-                                        'Breadth' => $product->breadth ?: null,
-                                        'Height' => $product->height ?: null,
-                                        'Width' => $product->width ?: null,
                                     ];
                                 @endphp
 
                                 @foreach ($specs as $label => $value)
                                     @if ($value && $value != '0' && $value != '-')
-                                        <li class="col-md-4 mb-1">
-                                            <div class="d-flex align-items-center spec-item">
-                                                <strong class="text-dark spec-label">{{ $label }}:</strong>
-                                                <span class="text-muted ms-2 spec-value">{{ $value }}</span>
+                                        <li class="col-md-4 p-2">
+                                            <div class="spec-box">
+                                                <strong class="spec-label">{{ $label }}</strong>
+                                                <span class="spec-value">{{ $value }}</span>
                                             </div>
                                         </li>
                                     @endif
@@ -431,10 +494,10 @@
                                 {{-- Custom Fields --}}
                                 @if (isset($product->custom_fields) && count($product->custom_fields) > 0)
                                     @foreach ($product->custom_fields as $field)
-                                        <li class="col-md-4 mb-1">
-                                            <div class="d-flex align-items-center spec-item">
-                                                <strong class="text-dark spec-label">{{ $field->field_name }}:</strong>
-                                                <span class="text-muted ms-2 spec-value">{{ $field->field_value }}</span>
+                                        <li class="col-md-4 p-2">
+                                            <div class="spec-box">
+                                                <strong class="spec-label">{{ $field->field_name }}</strong>
+                                                <span class="spec-value">{{ $field->field_value }}</span>
                                             </div>
                                         </li>
                                     @endforeach
@@ -736,16 +799,17 @@
                         var data = result.success[0];
                         var mrp = data.mrp;
                         var starting_price = data.starting_price;
-                        var getDiff = mrp - starting_price;
-                        var getOffer = Math.round((getDiff / mrp) * 100, 0);
+                        var getDiff = starting_price - mrp;
+                        var getOffer = Math.round((getDiff / starting_price) * 100, 0);
                         if (getOffer > 0) {
                             $('.pro-price .Pro-lable').show();
                             $('.pro-price .p-discount').html(getOffer + "% off");
                         } else {
                             $('.pro-price .Pro-lable').hide();
                         }
-                        $('.main-new-price').html('<i class="fa fa-inr"></i> ' + starting_price);
-                        $('.main-old-price').html('<del><i class="fa fa-inr"></i> ' + mrp + '</del>');
+                        $('.main-new-price').html('<i class="fa fa-inr"></i> ' + mrp);
+                        $('.main-old-price').html('<del><i class="fa fa-inr"></i> ' + starting_price +
+                            '</del>');
                         $('#cart_prod_id').val(param.product_id);
                         $('#cart_qty').val($('#qty').val());
                         $('#cart_color_id').val(data.color_id);

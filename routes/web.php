@@ -219,6 +219,13 @@ Route::namespace('App\Http\Controllers')->group(function () {
                 Route::POST('/edit/{id}', 'Admin\UnitController@update');
             });
 
+            Route::prefix('/manage-length-units')->group(function () {
+                Route::GET('/', 'Admin\LengthUnitController@index')->name('admin.length_units.all');
+                Route::POST('/', 'Admin\LengthUnitController@store');
+                Route::GET('/edit/{id}', 'Admin\LengthUnitController@edit')->name('admin.length_units.edit');
+                Route::POST('/edit/{id}', 'Admin\LengthUnitController@update');
+            });
+
             Route::prefix('/manage-sizes')->group(function () {
                 Route::GET('/', 'Admin\MstSizeController@index')->name('admin.sizes.all');
                 Route::POST('/', 'Admin\MstSizeController@store');
