@@ -49,9 +49,22 @@ class SMS implements ShouldQueue
                 ]);
                 $res = $client->get($baseUrl);
                 Log::info('SMS API Response Headers: ' . json_encode($res->getHeaders()));
-                Log::info('SMS API Response Body: ' . $res->getBody());
+                $body = (string) $res->getBody();
+                Log::info('SMS API Response Body: ' . $body);
 
-                return;
+                // If provider returned XML (SmsResponse), parse it and return structured result
+                $parsed = null;
+                if (stripos($body, '<SmsResponse') !== false || stripos($res->getHeaderLine('Content-Type'), 'xml') !== false) {
+                    libxml_use_internal_errors(true);
+                    $xml = simplexml_load_string($body);
+                    if ($xml !== false) {
+                        $parsed = json_decode(json_encode($xml), true);
+                    } else {
+                        Log::warning('Failed to parse SMS provider XML response.');
+                    }
+                }
+
+                return ['success' => $res->getStatusCode() >= 200 && $res->getStatusCode() < 300, 'status' => $res->getStatusCode(), 'body' => $body, 'parsed' => $parsed];
             } catch (\Exception $ex) {
                 Log::info('Error : '.$ex->getMessage());
 
