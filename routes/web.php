@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\StarttestController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
-Route::namespace('App\Http\Controllers')->group(function () {
+Route::
+namespace('App\Http\Controllers')->group(function () {
     /*
     |--------------------------------------------------------------------------
     | Web Routes
@@ -439,3 +442,85 @@ Route::namespace('App\Http\Controllers')->group(function () {
     });
 
 });
+
+// Test route to send SMS: /test-sms?mobile=9876543210&text=Hello
+Route::get('/test-sms', function (Request $request) {
+    $mobile = $request->query('mobile');
+    $otp = $request->query('otp');
+    $templateid = $request->query('templateid', '');
+
+    if (empty($mobile)) {
+        return response()->json(['success' => false, 'message' => 'Provide mobile query param, e.g. ?mobile=9876543210']);
+    }
+
+    if (!empty($otp)) {
+        // Build exact template text replacing placeholder with OTP (single-line)
+        $text = 'Dear user, Your OTP for login to Dekha OTT is ' . $otp . '. Enjoy the videos. Regards, Dekha Team';
+    } else {
+        $text = $request->query('text', 'Test message from application');
+    }
+
+    $result = \App\Model\SMS::send($mobile, $text, $templateid);
+    return response()->json($result);
+})->name('test.sms');
+
+// Quick test route to call provider URL directly.
+// Usage examples:
+// 1) Provide full URL: /test-sms-send?url=<encoded_url>
+// 2) Provide components: /test-sms-send?user=Rajat.seth&password=xxxxx&senderid=DEKHAQ&number=919870306295&text=test%20message&route=6&Peid=1201159168809423304&DLTTemplateId=1207174850771033756
+Route::get('/test-sms-send', function (Request $request) {
+
+    $user = $request->query('user', 'Rajat.seth');
+    $password = $request->query('password', 'Alw@2025');
+    $senderid = $request->query('senderid', 'DEKHAQ');
+    $channel = $request->query('channel', 'Trans');
+    $dcs = $request->query('DCS', '0');
+    $flashsms = $request->query('flashsms', '0');
+    $number = $request->query('number', '919870306295');
+    $route = $request->query('route', '6');
+    $peid = $request->query('Peid', '1201159168809423304');
+    $template = $request->query('DLTTemplateId', '1207174850771033756');
+
+    $otp = $request->query('otp', '1234');
+
+    // EXACT TEMPLATE MATCH
+    // $text = "Dear user,\n\nYour OTP for login to Dekha OTT is {$otp}. Enjoy the videos.\n\nRegards,";
+    $text = "Dear user, \n\nYour OTP for login to Dekha OTT is {$otp}. Enjoy the videos.\n\nRegards,\n\nDekha Team";
+
+    $url = 'https://login.businesslead.co.in/api/mt/SendSMS?' . http_build_query([
+        'user' => $user,
+        'password' => $password,
+        'senderid' => $senderid,
+        'channel' => $channel,
+        'DCS' => $dcs,
+        'flashsms' => $flashsms,
+        'number' => $number,
+        'text' => $text,
+        'route' => $route,
+        'Peid' => $peid,
+        'DLTTemplateId' => $template,
+    ]);
+
+    try {
+
+        $client = new \GuzzleHttp\Client([
+            'http_errors' => false,
+            'timeout' => 30,
+        ]);
+
+        $res = $client->get($url);
+
+        return response()->json([
+            'status' => $res->getStatusCode(),
+            'response' => json_decode($res->getBody(), true),
+            'final_url' => $url
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 500);
+    }
+
+})->name('test.sms.send');
