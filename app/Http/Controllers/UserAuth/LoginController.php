@@ -111,10 +111,14 @@ class LoginController extends Controller
         );
         // dd('i m here');
 
-        Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-            $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
-            $message->from(config('mail.from.address'), config('mail.from.name'));
-        });
+        try {
+            Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
+                $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Mail Error (Register): ' . $e->getMessage());
+        }
 
         return redirect()->route('user.otp');
     }
@@ -138,10 +142,14 @@ class LoginController extends Controller
                 1507164000218506867
             );
 
-            Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
-                $message->from(config('mail.from.address'), config('mail.from.name'));
-            });
+            try {
+                Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
+                    $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
+                    $message->from(config('mail.from.address'), config('mail.from.name'));
+                });
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Mail Error (Resend OTP): ' . $e->getMessage());
+            }
             connectify('success', 'Resend Otp', 'Otp has been resend on registed mobile and email');
 
             return redirect()->route('user.otp');
@@ -277,10 +285,14 @@ class LoginController extends Controller
                 1507164000218506867
             );
 
-            Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
-                $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
-                $message->from(config('mail.from.address'), config('mail.from.name'));
-            });
+            try {
+                Mail::send(['html' => 'backend.mails.otp'], ['user' => $user], function ($message) use ($user) {
+                    $message->to($user['email'])->subject(config('app.name').', One Time Password(OTP)');
+                    $message->from(config('mail.from.address'), config('mail.from.name'));
+                });
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Mail Error (OTP Login): ' . $e->getMessage());
+            }
 
             connectify('success', 'Otp Send', 'Otp has been sent on mobile & email !');
 

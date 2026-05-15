@@ -641,7 +641,15 @@
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" id="txtPincode" name="pincode">
+                            <div class="form-row mb--5">
+                                <div class="form__group col-12">
+                                    <label for="pincode_modal" class="form__label form__label--2">Pincode
+                                        <span class="required">*</span></label>
+                                    <input type="text" name="pincode" id="pincode_modal"
+                                        class="form__input form__input--2" placeholder="Pincode"
+                                        required>
+                                </div>
+                            </div>
                             <div class="form-row mb--5">
                                 <div class="form__group col-12">
                                     <label for="address" class="form__label form__label--2">Street Address <span
@@ -857,10 +865,10 @@
 
             var pincode = $("input[name='choose_address']:checked").attr('data-pincode');
 
-            $('#pincode').val(pincode);
-            var pincode = $('#pincode').val();
-
-            chkPindode(pincode);
+            if (pincode) {
+                $('#pincode').val(pincode);
+                chkPindode(pincode);
+            }
 
             $('.radio-cont').change(function() {
                 var pincode = $("input[name='choose_address']:checked").attr('data-pincode');
@@ -1145,6 +1153,19 @@
                     },
                 },
                 submitHandler: function(form) {
+                    var pincodeInput = $(form).find('input[name="pincode"]');
+                    var pincodeVal = pincodeInput.val();
+                    
+                    if (!pincodeVal || pincodeVal.length < 6) {
+                        alert("Please enter a valid 6-digit Pincode.");
+                        if ($(form).attr('id') === 'formAddAddress' && !pincodeInput.is(':visible')) {
+                             $('#pincode_add').focus();
+                        } else {
+                             pincodeInput.focus();
+                        }
+                        return false;
+                    }
+                    
                     $('.btnSubmit').attr('disabled', 'disabled');
                     $(".btnSubmit").html('<span class="fa fa-spinner fa-spin"></span> Loading...');
                     form.submit();
@@ -1387,7 +1408,7 @@
 
         function chkPindode(val, container) {
             container = container || $('.checkout-form').first();
-            if (val == '') {
+            if (val == '' || val === undefined || val === null) {
                 container.find('.pincode-code').focus();
                 container.find('.pincode_error').html('Please Enter Pincode');
                 container.find('.pincode_button').html('<i class="fa fa-search" aria-hidden="true"></i>');

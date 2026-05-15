@@ -72,7 +72,7 @@ namespace('App\Http\Controllers')->group(function () {
 
         // Subscriber
 
-        Route::POST('/subscriber', 'MainController@subscribers')->name('subscribe');
+        // Route::POST('/subscriber', 'MainController@subscribers')->name('subscribe');
         Route::GET('/unsubscriber/{email}', 'Admin\SubscriberController@unsubscribe')->name('unsubscribe');
 
         // Cart & Checkout
@@ -220,6 +220,13 @@ namespace('App\Http\Controllers')->group(function () {
                 Route::POST('/', 'Admin\UnitController@store');
                 Route::GET('/edit/{id}', 'Admin\UnitController@edit')->name('admin.units.edit');
                 Route::POST('/edit/{id}', 'Admin\UnitController@update');
+            });
+
+            Route::prefix('/manage-length-units')->group(function () {
+                Route::GET('/', 'Admin\LengthUnitController@index')->name('admin.length_units.all');
+                Route::POST('/', 'Admin\LengthUnitController@store');
+                Route::GET('/edit/{id}', 'Admin\LengthUnitController@edit')->name('admin.length_units.edit');
+                Route::POST('/edit/{id}', 'Admin\LengthUnitController@update');
             });
 
             Route::prefix('/manage-sizes')->group(function () {

@@ -505,20 +505,15 @@
                                         <div class="search-content">
                                             <div class="search-engine">
                                                 <input name="q" type="text" value="{{ Request::get('q') }}"
-                                                    list="suggestion" id="search-box" class="searchform__input"
+                                                    id="search-box" class="searchform__input"
                                                     autocomplete="off" placeholder="Search by product, category..." />
                                                 <button class="search-btn" type="submit"><i
                                                         class="ion-ios-search-strong"></i></button>
+                                                <div id="custom-suggestion-box"></div>
                                             </div>
                                             <button type="button" class="close" data-bs-dismiss="modal"
                                                 aria-label="Close"><i class="ion-close-round"></i></button>
                                         </div>
-                                        <datalist id="suggestion">
-                                            @foreach ($keywords as $key)
-                                                <option value="{{ $key->keyword }}">
-                                            @endforeach
-                                            </option>
-                                        </datalist>
                                     </form>
                                 </div>
                             </div>
@@ -538,7 +533,7 @@
             <div class="container container_WidthMas1">
                 <div class="row">
                     <div class="col">
-                        <div class="news-5">
+                        {{-- <div class="news-5">
                             <style>
                                 .news-content h2 {
                                     padding-top: 25px;
@@ -552,7 +547,7 @@
                                 <a href="javascript:void(0)" class="btn btn-style1"><i
                                         class="ion-paper-airplane"></i></a>
                             </form>
-                        </div>
+                        </div> --}}
                         <div class="home5-footer">
                             <div class="f-logo">
                                 <ul class="footer-ul">
@@ -922,6 +917,82 @@
             var socialIcons = document.querySelector('.social-icons');
             socialIcons.style.display = (socialIcons.style.display === 'block') ? 'none' : 'block';
         }
+    </script>
+
+    <!-- Custom Search JS - Luxury Implementation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBox = document.getElementById('search-box');
+            const suggestionBox = document.getElementById('custom-suggestion-box');
+            const keywords = {!! json_encode($keywords->pluck('keyword')) !!};
+
+            function showSuggestions(list, title = "Search Results") {
+                if (list.length > 0) {
+                    suggestionBox.innerHTML = `
+                        <div class="suggestion-group-title">${title}</div>
+                        ${list.map(k => `
+                            <div class="suggestion-item">
+                                <i class="fa fa-search"></i>
+                                ${k}
+                            </div>
+                        `).join('')}
+                    `;
+                    suggestionBox.classList.add('active');
+                } else {
+                    suggestionBox.classList.remove('active');
+                }
+            }
+
+            searchBox.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                if (query.length > 0) {
+                    const filtered = keywords.filter(k => k && k.toLowerCase().includes(query)).slice(0, 8);
+                    showSuggestions(filtered, "Suggested Keywords");
+                } else {
+                    // Show top trending when empty
+                    showSuggestions(keywords.slice(0, 5), "Trending Searches");
+                }
+            });
+
+            // Focus handling
+            searchBox.addEventListener('focus', function() {
+                if (this.value.length === 0) {
+                    showSuggestions(keywords.slice(0, 5), "Trending Searches");
+                } else {
+                    searchBox.dispatchEvent(new Event('input'));
+                }
+            });
+
+            // Click on suggestion
+            suggestionBox.addEventListener('click', function(e) {
+                const item = e.target.closest('.suggestion-item');
+                if (item) {
+                    searchBox.value = item.innerText.trim();
+                    suggestionBox.classList.remove('active');
+                    setTimeout(() => {
+                        searchBox.form.submit();
+                    }, 100);
+                }
+            });
+
+            // Close on outside click
+            document.addEventListener('click', function(e) {
+                if (!searchBox.contains(e.target) && !suggestionBox.contains(e.target)) {
+                    suggestionBox.classList.remove('active');
+                }
+            });
+
+            // Modal handling
+            const searchModal = document.getElementById('search-modal');
+            if (searchModal) {
+                searchModal.addEventListener('shown.bs.modal', function() {
+                    searchBox.focus();
+                });
+                searchModal.addEventListener('hidden.bs.modal', function() {
+                    suggestionBox.classList.remove('active');
+                });
+            }
+        });
     </script>
 
 </body>

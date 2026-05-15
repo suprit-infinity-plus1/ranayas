@@ -104,7 +104,7 @@ class MainController extends Controller
         return view('frontend.newproduct.index', compact('sliders', 'section_products', 'reviews', 'homeOfferSliders', 'categories'));
     }
 
-    public function subscribers(Request $request)
+    /* public function subscribers(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
@@ -131,14 +131,14 @@ class MainController extends Controller
         connectify('success', 'Subscribed', 'Thank you for Subscribing with us !');
 
         return back();
-    }
+    } */
 
     public function getProduct($slug)
     {
 
         try {
 
-            $product = TxnProduct::where('status', true)->where('slug_url', $slug)->with(['images', 'condition', 'sizes', 'unit', 'colors', 'colors.images', 'wishlist', 'category', 'warranty', 'reviews'])->firstOrFail();
+            $product = TxnProduct::where('status', true)->where('slug_url', $slug)->with(['images', 'condition', 'sizes', 'unit', 'dim_unit', 'colors', 'colors.images', 'wishlist', 'category', 'warranty', 'reviews', 'brand', 'material', 'custom_fields'])->firstOrFail();
             // dd($product);
 
             $related_products = DB::table('txn_products as p')

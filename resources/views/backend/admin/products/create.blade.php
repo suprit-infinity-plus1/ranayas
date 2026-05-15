@@ -115,8 +115,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gst_id">Gst <span class="text-danger">*</span></label>
-                                    <select name="gst_id" id="gst_id" class="form-control select2" required>
+                                    <label for="gst_id">Gst </label>
+                                    <select name="gst_id" id="gst_id" class="form-control select2">
                                         <option value="">--Select Gst--</option>
                                         @foreach ($gsts as $gst)
                                             <option value="{{ $gst->id }}"
@@ -157,9 +157,9 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="upc">UPC </label>
+                                    <label for="upc">EAN/UPC </label>
                                     <input type="text" name="upc" id="upc" class="form-control"
-                                        value="{{ old('upc') }}" placeholder="Enter UPC">
+                                        value="{{ old('upc') }}" placeholder="Enter EAN/UPC">
                                 </div>
                             </div>
 
@@ -171,13 +171,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            {{--                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="breadth">Breadth </label>
                                     <input type="text" name="breadth" id="breadth" class="form-control"
                                         value="{{ old('breadth') }}" placeholder="Enter breadth">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -195,11 +195,25 @@
                                 </div>
                             </div>
 
-{{-- <div class="col-md-4 d-none">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="dimension_unit">Length Unit </label>
+                                    <select name="dimension_unit" id="dimension_unit" class="form-control">
+                                        <option value="">--Select Unit--</option>
+                                        @foreach ($lengthUnits as $unit)
+                                            <option value="{{ $unit->id }}"
+                                                {{ old('dimension_unit') == $unit->id ? 'selected' : '' }}>
+                                                {{ $unit->unit }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="weight_id">Unit </label>
                                     <select name="weight_id" id="weight_id" class="form-control select2">
-                                        <option value="1">--Select Unit--</option>
+                                        <option value="">--Select Unit--</option>
                                         @foreach ($units as $unit)
                                             <option value="{{ $unit->id }}"
                                                 {{ old('weight_id') == $unit->id ? 'selected' : '' }}>
@@ -209,7 +223,7 @@
                                     <label id="" class="error" for="weight_id"></label>
 
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -226,7 +240,8 @@
                                         <option value="">--Select Cod Availability--</option>
                                         <option value="1" {{ old('is_cod') == true ? 'selected' : '' }}>Available
                                         </option>
-                                        <option value="0" {{ old('is_cod') == false ? 'selected' : '' }}>Not Available
+                                        <option value="0" {{ old('is_cod') == false ? 'selected' : '' }}>Not
+                                            Available
                                         </option>
                                     </select>
                                 </div>
@@ -263,10 +278,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 d-none">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="size_id">Sizes <span class="text-danger">*</span></label>
-                                    <select name="size_id" id="size_id" class="form-control select2" required>
+                                    {{-- <label for="size_id">Sizes <span class="text-danger">*</span></label>
+                                    <select name="size_id" id="size_id" class="form-control select2" required> --}}
+                                    <label for="size_id">Sizes</label>
+                                    <select name="size_id" id="size_id" class="form-control select2">
                                         <option value="1">--Select Sizes--</option>
                                         @foreach ($sizes as $size)
                                             <option value="{{ $size->id }}"
@@ -325,31 +342,23 @@
                                 </div>
                             </div>
 
+
+
                             <div class="col-md-8 mb-3">
                                 <label>Return Policy </label> <br>
                                 <div class="form-check form-check-inline">
                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
                                         <input type="checkbox" class="custom-control-input" id="within_days"
-                                            name="within_days" {{ old('within_days') ? 'selected' : '' }} value="1">
+                                            name="within_days" {{ old('within_days') ? 'checked' : '' }} value="1">
                                         <label class="custom-control-label" for="within_days">Within 7 Days</label>
                                     </div>
+
                                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" id="wrong_products"
-                                            value="1" name="wrong_products"
-                                            {{ old('wrong_products') ? 'selected' : '' }}>
-                                        <label class="custom-control-label" for="wrong_products">Wrong Products</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" id="faulty_products"
-                                            value="1" name="faulty_products"
-                                            {{ old('faulty_products') ? 'selected' : '' }}>
-                                        <label class="custom-control-label" for="faulty_products">Faulty Products</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                        <input type="checkbox" class="custom-control-input" id="quality_issue"
-                                            value="1" name="quality_issue"
-                                            {{ old('quality_issue') ? 'selected' : '' }}>
-                                        <label class="custom-control-label" for="quality_issue">Quality Issue</label>
+                                        <input type="checkbox" class="custom-control-input" id="non_returnable"
+                                            value="1" name="non_returnable"
+                                            {{ old('non_returnable') ? 'checked' : '' }}>
+                                        <label class="custom-control-label text-danger fw-bold" for="non_returnable">Non
+                                            Returnable</label>
                                     </div>
                                 </div>
                             </div>
@@ -476,10 +485,6 @@
                         required: true
                     },
 
-                    gst_id: {
-                        required: true
-                    },
-
                     image_url: {
                         required: true
                     },
@@ -512,9 +517,9 @@
                         required: true
                     },
 
-                    size_id: {
-                        required: true
-                    },
+                    // size_id: {
+                    //     required: true
+                    // },
 
                     mrp: {
                         required: true
@@ -558,16 +563,12 @@
                         required: "Please Upload Back Image"
                     },
 
-                    gst_id: {
-                        required: "Please Select GST"
-                    },
-
                     color_id: {
                         required: "Please Select Color"
                     },
-                    size_id: {
-                        required: "Please Select Sizes"
-                    },
+                    // size_id: {
+                    //     required: "Please Select Sizes"
+                    // },
 
                     is_cod: {
                         required: "Please Select COD Availability"

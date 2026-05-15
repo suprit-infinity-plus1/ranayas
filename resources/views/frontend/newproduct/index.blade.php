@@ -46,8 +46,8 @@
                             <div class="s-box">
                                 <i class="ti-truck"></i>
                                 <div class="service-content">
-                                    <span class="text--1">Free delivery</span>
-                                    <p class="text--1">Orders from all item</p>
+                                    <span class="text--1">100% Original Products</span>
+                                    <p class="text--1">Free Delivery On Product</p>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +55,8 @@
                             <div class="s-box">
                                 <i class="ti-money"></i>
                                 <div class="service-content">
-                                    <span class="text--2">Return & refund</span>
-                                    <p class="text--2">Money back guarantee</p>
+                                    <span class="text--2">Return and Refund</span>
+                                    <p class="text--2">Money Back Guarantee ₹</p>
                                 </div>
                             </div>
                         </div>
@@ -64,8 +64,8 @@
                             <div class="s-box">
                                 <i class="ti-headphone"></i>
                                 <div class="service-content">
-                                    <span class="text--1">Quality support</span>
-                                    <p class="text--1">Always online 24/7</p>
+                                    <span class="text--1">Secure Transaction</span>
+                                    <p class="text--1">Top Brands</p>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +73,8 @@
                             <div class="s-box">
                                 <i class="ti-email"></i>
                                 <div class="service-content">
-                                    <span class="text--2">Offer updates</span>
-                                    <p class="text--2">24/7 support </p>
+                                    <span class="text--2">Warranty Policy</span>
+                                    <p class="text--2">100% Assured Support</p>
                                 </div>
                             </div>
                         </div>
@@ -113,47 +113,61 @@
 
 
 
+    <style>
+        .offer-slider-ui.home-slider-5,
+        .offer-slider-ui .home-slider-main-5,
+        .offer-slider-ui .home5-slider {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .offer-slider-ui .img-back {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+    </style>
     <!-- deal of the day start -->
     @if (!empty($homeOfferSliders))
-        @foreach ($homeOfferSliders as $homeOfferSlider)
-            <section class="deal-day5">
-                <div class="deal5-back" style="background-image: url({!! asset('storage/images/home-offer-sliders/' . $homeOfferSlider->image_url) !!});">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <div class="deal-area5">
-                                    {{-- <div class="deal-content">
-                            <h2>Deal of the day! <span>Sale</span></h2>
-                            <span class="deal-slogan">We offer a hot deal offer every festival</span>
-                        </div>
-                        <ul class="contdown_row">
-                            <li class="countdown_section">
-                                <span id="days" class="countdown_timer">254</span>
-                                <span class="countdown_title">Days</span>
-                            </li>
-                            <li class="countdown_section">
-                                <span id="hours" class="countdown_timer">11</span>
-                                <span class="countdown_title">Hours</span>
-                            </li>
-                            <li class="countdown_section">
-                                <span id="minutes" class="countdown_timer">33</span>
-                                <span class="countdown_title">Minutes</span>
-                            </li>
-                            <li class="countdown_section">
-                                <span id="seconds" class="countdown_timer">36</span>
-                                <span class="countdown_title">Seconds</span>
-                            </li>
-                        </ul> --}}
-                                    @if (!empty($homeOfferSlider->url))
-                                        <a href="{{ $homeOfferSlider->url }}" class="btn btn-style1">Shop collection</a>
-                                    @endif
+        <section class="home-slider-5 offer-slider-ui">
+            <div class="home-slider-main-5">
+                <div class="home5-slider swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach ($homeOfferSliders as $homeOfferSlider)
+                            <div class="swiper-slide">
+                                <div class="img-back s-image1 deal5-back"
+                                    style="background-image:url({!! asset('storage/images/home-offer-sliders/' . $homeOfferSlider->image_url) !!});"
+                                    onclick="window.location.href='{{ $homeOfferSlider->url ? $homeOfferSlider->url : 'javascript:void(0)' }}'">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="deal-area5">
+                                                    <div class="deal-content">
+                                                        <h2>{{ $homeOfferSlider->title }}</h2>
+                                                    </div>
+                                                    @if (!empty($homeOfferSlider->url))
+                                                        <a href="{{ $homeOfferSlider->url }}" class="btn btn-style1">Shop
+                                                            collection</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
+                    @if (count($homeOfferSliders) > 1)
+                        <div class="swiper-buttons">
+                            <button class="swiper-prev"><i class="fa fa-angle-left"></i></button>
+                            <button class="swiper-next"><i class="fa fa-angle-right"></i></button>
+                        </div>
+                        <div class="swiper-pagination"><span></span></div>
+                    @endif
                 </div>
-            </section>
-        @endforeach
+            </div>
+        </section>
     @endif
     <!-- deal of the day end -->
 
@@ -524,8 +538,8 @@
 @section('extracss')
     <style>
         /* .home-slider-5 .home-slider-main-5 .home5-slider .img-back {
-                                                                                                                                                                                                                                                                        width: 100% !important;
-                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                    width: 100% !important;
+                                                                                                                                                                                                                                                                                                } */
     </style>
 @endsection
 
@@ -567,5 +581,27 @@
         // })
 
         // backBtn.addEventListener("click", () => form.classList.remove('secActive'));
+    </script>
+@endsection
+@section('extrajs')
+    <script>
+        $(document).ready(function() {
+            var swiperOffer = new Swiper(".offer-slider-ui .home5-slider", {
+                slidesPerColumn: 1,
+                slidesPerView: 1,
+                effect: "fade",
+                autoplay: {
+                    delay: 5000,
+                },
+                navigation: {
+                    nextEl: ".offer-slider-ui .swiper-next",
+                    prevEl: ".offer-slider-ui .swiper-prev",
+                },
+                pagination: {
+                    el: ".offer-slider-ui .swiper-pagination",
+                    clickable: true,
+                },
+            });
+        });
     </script>
 @endsection

@@ -185,12 +185,18 @@
 
                                         <!-- Color  -->
                                         @php
-                                            $getDiff = $product->starting_price - $product->mrp;
-                                            $getOffer = round(($getDiff / $product->starting_price) * 100, 0);
+                                            $getDiff = $product->mrp - $product->starting_price;
+                                            if($product->mrp > 0) {
+                                                $getOffer = round(($getDiff / $product->mrp) * 100, 0);
+                                            } else {
+                                                $getOffer = 0;
+                                            }
                                         @endphp
-
-
-                                        <!-- Color End -->
+                                        <div class="Pro-lable">
+                                            @if($getOffer > 0)
+                                                <span class="p-discount"> {{ $getOffer }}% off</span>
+                                            @endif
+                                        </div>
                                         <div class="product-info">
                                             <h3 class="product-title">
                                                 <a

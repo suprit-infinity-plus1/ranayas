@@ -1,5 +1,5 @@
 @extends('layouts.admin-master')
-@section('title', 'Manage Units')
+@section('title', 'Manage Length Units')
 @section('content')
 
     {{-- Model --}}
@@ -8,7 +8,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white-all">
-                    <h3 class="modal-title">Add Unit</h3>
+                    <h3 class="modal-title">Add Length Unit</h3>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -18,9 +18,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="unit">Unit <span class="text-danger">*</span></label>
+                                    <label for="unit">Length Unit <span class="text-danger">*</span></label>
                                     <input type="text" name="unit" id="unit" class="form-control"
-                                        value="{{ old('unit') }}" placeholder="Enter Unit" required>
+                                        value="{{ old('unit') }}" placeholder="Enter Length Unit" required>
                                 </div>
                             </div>
 
@@ -45,14 +45,14 @@
             <ol class="breadcrumb bg-dark text-white-all">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i>
                         Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i> Units</li>
+                <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i> Length Units</li>
                 <li class="breadcrumb-item"><a href="#addModal" data-toggle="modal" data-target="#addModal"><i
-                            class="fas fa-plus"></i> Add Unit</a></li>
+                            class="fas fa-plus"></i> Add Length Unit</a></li>
             </ol>
         </nav>
         <div class="card">
             <div class="card-header bg-dark text-white-all">
-                <h4>Manage Units</h4>
+                <h4>Manage Length Units</h4>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Unit</th>
+                                <th>Length Unit</th>
                                 <th>Status</th>
                                 <th>Added On</th>
                                 <th>Action</th>
@@ -83,7 +83,7 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a href="{{ route('admin.units.edit', $unit->id) }}"
+                                                <a href="{{ route('admin.length_units.edit', $unit->id) }}"
                                                     class="dropdown-item has-icon" title="Edit Detail">
                                                     <i class="fa fa-edit"></i> Edit
                                                 </a>
@@ -112,7 +112,7 @@
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Unit</th>
+                                <th>Length Unit</th>
                                 <th>Status</th>
                                 <th>Added On</th>
                                 <th>Action</th>
@@ -137,7 +137,7 @@
                 },
                 messages: {
                     unit: {
-                        required: "Please Enter Unit"
+                        required: "Please Enter Length Unit"
                     },
                 },
                 submitHandler: function(form) {

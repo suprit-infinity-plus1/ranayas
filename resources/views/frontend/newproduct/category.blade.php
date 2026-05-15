@@ -187,7 +187,6 @@
                                                         </div>
                                                     @endif
                                                     <div class="pro-price pull-left">
-                                                        {{-- {{ dd($product) }} --}}
                                                         <span class="new-price"><i class="fa fa-inr"></i>
                                                             {{ $product->mrp }}</span>
                                                         @if ($product->mrp < $product->starting_price)

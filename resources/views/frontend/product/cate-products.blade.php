@@ -138,9 +138,18 @@
                                         </figure>
                                         <!-- Color  -->
                                         @php
-                                        $getDiff = $product->starting_price - $product->mrp;
-                                        $getOffer = round(($getDiff / $product->starting_price) * 100, 0);
+                                        $getDiff = $product->mrp - $product->starting_price;
+                                        if($product->mrp > 0) {
+                                            $getOffer = round(($getDiff / $product->mrp) * 100, 0);
+                                        } else {
+                                            $getOffer = 0;
+                                        }
                                         @endphp
+                                        <div class="Pro-lable">
+                                            @if($getOffer > 0)
+                                                <span class="p-discount"> {{ $getOffer }}% off</span>
+                                            @endif
+                                        </div>
                                         <!-- Color End -->
                                         <div class="product-info">
                                             <h3 class="product-title">
@@ -148,14 +157,18 @@
                                                     }}</a>
                                             </h3>
                                             <span class="product-price-wrapper">
-                                                <span class="money"><i class="fa fa-inr"></i> {{ $product->mrp }}</span>
-                                                <span class="product-price-old">
-                                                    <span class="money"><i class="fa fa-inr"></i> {{
-                                                        $product->starting_price }}</span>
-                                                </span>
-                                                <span style="color:#388e3c">
-                                                    {{ $getOffer }}% off
-                                                </span>
+                                                <span class="money"><i class="fa fa-inr"></i> {{ $product->starting_price }}</span>
+                                                @if($product->starting_price < $product->mrp)
+                                                    <span class="product-price-old">
+                                                        <span class="money"><i class="fa fa-inr"></i> {{
+                                                            $product->mrp }}</span>
+                                                    </span>
+                                                @endif
+                                                @if($getOffer > 0)
+                                                    <span style="color:#388e3c">
+                                                        {{ $getOffer }}% off
+                                                    </span>
+                                                @endif
                                                 @if($product->review_status)
                                                 <span class="pull-right">
                                                     @for($i = 1; $i<= $product->rating; $i++)
