@@ -70,8 +70,9 @@ class ProductController extends Controller
         $gsts = TxnMasterGst::where('status', true)->get();
         $warranties = MasterWarranty::where('status', true)->get();
         $categories = TxnCategory::where('status', true)->orderBy('name', 'ASC')->get();
+        $offers = MstOffer::where('status', true)->get();
 
-        return view('backend.admin.products.create', compact('brands', 'sizes', 'colors', 'materials', 'units', 'lengthUnits', 'conditions', 'gsts', 'categories', 'warranties', 'gsts'));
+        return view('backend.admin.products.create', compact('brands', 'sizes', 'colors', 'materials', 'units', 'lengthUnits', 'conditions', 'gsts', 'categories', 'warranties', 'offers'));
     }
 
     /**
@@ -114,7 +115,7 @@ class ProductController extends Controller
             ],
             [
                 'title.required' => 'Please Enter Product Name',
-                'title.unique' => $request->title.' Product Already Available',
+                'title.unique' => $request->title . ' Product Already Available',
                 'image_url.required' => 'Please Choose Front Image',
                 'image_url.image' => 'Please Choose Proper front Image',
                 'image_url.mimes' => 'Please Choose Front Image of type JPG, PNG & WEBP Only',
@@ -161,12 +162,12 @@ class ProductController extends Controller
         // dd($request->image_url);
 
         if ($request->hasFile('image_url')) {
-            $request['img'] = 'front_'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
+            $request['img'] = 'front_' . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
             $request->image_url->storeAs('images/products', $request->img, 'public');
         }
 
         if ($request->hasFile('image_url1')) {
-            $request['img1'] = 'back_'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
+            $request['img1'] = 'back_' . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
             $request->image_url1->storeAs('images/products', $request->img1, 'public');
         }
 
@@ -201,16 +202,28 @@ class ProductController extends Controller
             'gst_id' => $request->gst_id,
             'image_url' => $request->img,
             'image_url1' => $request->img1,
-            'status' => true,
+            'status' => $request->status ?? true,
             'isCodAvailable' => $request->is_cod,
             'review_status' => $request->review_status,
-            'within_days' => $request->within_days,
-            'non_returnable' => $request->non_returnable,
-            'wrong_products' => $request->wrong_products,
-            'faulty_products' => $request->faulty_products,
-            'quality_issue' => $request->quality_issue,
-            'slug_url' => Str::slug($category->name.'-'.$request->title.'-'.rand(1000, 9999), '-'),
+            'within_days' => $request->has('within_days') ? 1 : 0,
+            'non_returnable' => $request->has('non_returnable') ? 1 : 0,
+            'wrong_products' => $request->has('wrong_products') ? 1 : 0,
+            'faulty_products' => $request->has('faulty_products') ? 1 : 0,
+            'quality_issue' => $request->has('quality_issue') ? 1 : 0,
+            'slug_url' => Str::slug($category->name . '-' . $request->title . '-' . rand(1000, 9999), '-'),
         ]);
+
+        if ($request->filled('offer_id')) {
+            MapOfferProduct::updateOrCreate([
+                'product_id' => $product->id,
+            ], [
+                'mst_offer_id' => $request->offer_id,
+                'purchase_quantity' => $request->purchase_quantity ?? 1,
+                'offered_quantity' => $request->offered_quantity ?? 1,
+                'product_id' => $product->id,
+                'status' => true,
+            ]);
+        }
 
         // dd($product);
         if ($request->filled('keywords')) {
@@ -227,9 +240,9 @@ class ProductController extends Controller
         if ($request->hasFile('image_urls')) {
 
             foreach ($request->image_urls as $images) {
-                $request['image'] = uniqid().'.'.pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
                 $images->storeAs('images/multi-products', $request->image, 'public');
-                dd($request->size_id);
+                // dd($request->size_id);
                 TxnImage::create([
                     'product_id' => $product->id,
                     'image_url' => $request->image,
@@ -275,7 +288,7 @@ class ProductController extends Controller
         }
 
         if (array_key_exists('field_name', $request->all())) {
-            if (! in_array(null, $request->field_name, true)) {
+            if (!in_array(null, $request->field_name, true)) {
                 foreach ($request->field_name as $index => $name) {
                     TxnCustomField::create([
                         'field_name' => $name,
@@ -422,13 +435,13 @@ class ProductController extends Controller
 
             if ($request->hasFile('image_url')) {
 
-                $old_image = public_path('/storage/images/products/'.$product->image_url);
+                $old_image = public_path('/storage/images/products/' . $product->image_url);
 
                 if (File::exists($old_image)) {
                     File::delete($old_image);
                 }
 
-                $request['img'] = 'front-'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['img'] = 'front-' . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $request->image_url->storeAs('images/products', $request->img, 'public');
 
@@ -441,13 +454,13 @@ class ProductController extends Controller
 
             if ($request->hasFile('image_url1')) {
 
-                $old_image = public_path('/storage/images/products/'.$product->image_url1);
+                $old_image = public_path('/storage/images/products/' . $product->image_url1);
 
                 if (File::exists($old_image)) {
                     File::delete($old_image);
                 }
 
-                $request['img1'] = 'back-'.Str::slug(Str::limit($request->title, 20), '-').'-'.rand(0000, 9999).'.'.pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
+                $request['img1'] = 'back-' . Str::slug(Str::limit($request->title, 20), '-') . '-' . rand(0000, 9999) . '.' . pathinfo($request->image_url1->getClientOriginalName(), PATHINFO_EXTENSION);
 
                 $request->image_url1->storeAs('images/products', $request->img1, 'public');
 
@@ -479,13 +492,13 @@ class ProductController extends Controller
                 'warranty_id' => $request->warranty_id,
                 'gst_id' => $request->gst_id,
                 'isCodAvailable' => $request->is_cod,
-                'within_days' => $request->within_days,
-                'non_returnable' => $request->non_returnable,
+                'within_days' => $request->has('within_days') ? 1 : 0,
+                'non_returnable' => $request->has('non_returnable') ? 1 : 0,
                 'dimension_unit' => $request->dimension_unit,
                 'review_status' => $request->review_status,
-                'wrong_products' => $request->wrong_products,
-                'faulty_products' => $request->faulty_products,
-                'quality_issue' => $request->quality_issue,
+                'wrong_products' => $request->has('wrong_products') ? 1 : 0,
+                'faulty_products' => $request->has('faulty_products') ? 1 : 0,
+                'quality_issue' => $request->has('quality_issue') ? 1 : 0,
             ]);
 
             if ($request->filled('keywords')) {
@@ -501,11 +514,9 @@ class ProductController extends Controller
                 }
             }
 
-            if ($product->offer && $request->offer_id == null) {
-
+            if ($product->offer && !$request->filled('offer_id')) {
                 $product->offer->delete();
-            } else {
-
+            } elseif ($request->filled('offer_id')) {
                 MapOfferProduct::updateOrCreate(
                     [
                         'product_id' => $product->id,
@@ -520,7 +531,7 @@ class ProductController extends Controller
             }
 
             if (array_key_exists('field_name', $request->all())) {
-                if ($request->field_name && ! in_array(null, $request->field_name, true)) {
+                if ($request->field_name && !in_array(null, $request->field_name, true)) {
                     foreach ($request->field_name as $index => $name) {
                         if ($name && $request->field_value[$index]) {
                             TxnCustomField::create([
@@ -558,7 +569,9 @@ class ProductController extends Controller
      * @param  Product  $product
      * @return Response
      */
-    public function destroy($id) {}
+    public function destroy($id)
+    {
+    }
 
     public function addImages(Request $request, $id)
     {
@@ -589,7 +602,7 @@ class ProductController extends Controller
             if ($request->hasFile('image_urls')) {
                 foreach ($request->image_urls as $images) {
 
-                    $request['image'] = uniqid().'.'.pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
                     $images->storeAs('images/multi-products', $request->image, 'public');
                     $storagePath = $request->image;
                     TxnImage::create([
@@ -626,7 +639,7 @@ class ProductController extends Controller
 
             $image = TxnImage::where('id', $request->image_id)->with('product')->firstOrFail();
 
-            $old_image = public_path('/storage/images/multi-products/'.$image->image_url);
+            $old_image = public_path('/storage/images/multi-products/' . $image->image_url);
 
             if (File::exists($old_image)) {
                 File::delete($old_image);
@@ -743,7 +756,7 @@ class ProductController extends Controller
 
             if ($colorSize) {
 
-                connectify('error', 'Error', 'Color & Size already Available with "'.$product->title.'"');
+                connectify('error', 'Error', 'Color & Size already Available with "' . $product->title . '"');
 
                 return redirect(route('admin.products.edit', $product->slug_url))->withInput($request->all());
             }
@@ -751,7 +764,7 @@ class ProductController extends Controller
             if ($request->hasFile('image_urls')) {
 
                 foreach ($request->image_urls as $images) {
-                    $request['image'] = uniqid().'.'.pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $request['image'] = uniqid() . '.' . pathinfo($images->getClientOriginalName(), PATHINFO_EXTENSION);
                     $images->storeAs('images/multi-products', $request->image, 'public');
                     $storagePath = $request->image;
 
@@ -998,7 +1011,7 @@ class ProductController extends Controller
 
             foreach ($images as $image) {
 
-                $old_image = public_path('/storage/images/multi-products/'.$image->image_url);
+                $old_image = public_path('/storage/images/multi-products/' . $image->image_url);
 
                 if (File::exists($old_image)) {
                     File::delete($old_image);

@@ -262,17 +262,19 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="payment-group pymt-btn mb--10">
-                                                            <div class="payment-radio">
-                                                                <label for="cod" class="cb-container">
-                                                                    CASH ON DELIVERY
-                                                                    <input type="radio" value="cod"
-                                                                        name="payment_mode" id="cod"
-                                                                        checked="">
-                                                                    <span class="rb-checkmark"></span>
-                                                                </label>
+                                                        @if ($isCodAvailable)
+                                                            <div class="payment-group pymt-btn mb--10">
+                                                                <div class="payment-radio">
+                                                                    <label for="cod" class="cb-container">
+                                                                        CASH ON DELIVERY
+                                                                        <input type="radio" value="cod"
+                                                                            name="payment_mode" id="cod"
+                                                                            {{ $isCodAvailable ? 'checked' : '' }}>
+                                                                        <span class="rb-checkmark"></span>
+                                                                    </label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
 
                                                         <div class="payment-group pymt-btn mb--10">
                                                             <div class="payment-radio">
@@ -280,7 +282,7 @@
                                                                     DEBIT/CREDIT/NETBANKING/PAYTM
                                                                     <input type="radio" value="paytm"
                                                                         name="payment_mode" id="paytm"
-                                                                        checked="">
+                                                                        {{ !$isCodAvailable ? 'checked' : '' }}>
                                                                     <span class="rb-checkmark"></span>
                                                                 </label>
                                                             </div>

@@ -150,6 +150,7 @@ class CartController extends Controller
                 'offer_map_id' => $cart->attributes->offer_map_id,
                 'offers' => $cart->attributes->offers,
                 'unit' => $product->unit ? $product->unit->unit : null,
+                'isCodAvailable' => $product->isCodAvailable,
             ),
         ));
 

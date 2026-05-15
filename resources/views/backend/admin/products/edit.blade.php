@@ -1,9 +1,26 @@
 @extends('layouts.admin-master')
 @section('title', 'Edit Product')
+@section('extracss')
+    <style>
+        .form-block {
+            border: 1px solid #e4e6fc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: #fdfdff;
+        }
+
+        .block-title {
+            color: #34395e;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e4e6fc;
+            padding-bottom: 10px;
+        }
+    </style>
+@endsection
+
 @section('content')
-
-
-    {{-- Model --}}
 
     <div class="modal" id="addModal">
         <div class="modal-dialog modal-md">
@@ -38,44 +55,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Model End --}}
-
-    {{-- Image Model --}}
-
-    {{-- <div class="modal" id="addImageModal">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white-all">
-                <h5 class="modal-title" id="formModal">Add More Images of {{ $product->title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{ route('admin.products.add.images', $product->id) }}" method="POST" class="needs-validation"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="image_urls"> Images <span class="text-danger">*</span></label>
-                        <input type="file" required="required" name="image_urls[]" class="form-control" id="image_urls"
-                            accept="image/jpeg, image/png" multiple>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btnSubmit">
-                        <i class="fa fa-plus"></i> Add Images
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
-
-    {{-- Model End --}}
-
-
-    {{-- Color & Size Model --}}
 
     <div class="modal" id="addColorModal">
         <div class="modal-dialog modal-md">
@@ -166,8 +145,6 @@
         </div>
     </div>
 
-    {{-- Model End --}}
-
     <section class="section">
 
         <nav aria-label="breadcrumb">
@@ -192,298 +169,313 @@
 
             <div class="card-body">
                 <form method="POST" role="form" class="needs-validation" enctype="multipart/form-data"
-                    id="formupdateProduct" enctype="multipart/form-data">
+                    id="formupdateProduct" autocomplete="off">
                     @csrf
+
+                    <!-- Block 1: Product Details -->
+                    <div class="form-block">
+                        <h6 class="block-title">Product Details</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id">Category <span class="text-danger">*</span></label>
+                                    <select name="category_id" id="category_id" class="form-control" required>
+                                        <option value="">--Select Category--</option>
+                                        @foreach ($categories as $cate)
+                                            <option value="{{ $cate->id }}"
+                                                {{ $cate->id == $product->category_id ? 'selected' : '' }}>
+                                                {{ $cate->pcategory ? $cate->pcategory->name . ' > ' . $cate->name : $cate->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="title">Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="title" id="title" class="form-control"
+                                        value="{{ $product->title }}" placeholder="Enter Product Name" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="brand_id">Brand <span class="text-danger">*</span></label>
+                                    <select name="brand_id" id="brand_id" class="form-control" required>
+                                        <option value="">--Select Brand--</option>
+                                        @foreach ($brands as $brand)
+                                            <option value="{{ $brand->id }}"
+                                                {{ $brand->id == $product->brand_id ? 'selected' : '' }}>
+                                                {{ $brand->brand_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="upc">EAN/UPC </label>
+                                    <input type="text" name="upc" id="upc" class="form-control"
+                                        value="{{ $product->upc }}" placeholder="Enter EAN/UPC">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="material_id">Material </label>
+                                    <select name="material_id" id="material_id" class="form-control">
+                                        <option value="">--Select Material--</option>
+                                        @foreach ($materials as $material)
+                                            <option value="{{ $material->id }}"
+                                                {{ $material->id == $product->material_id ? 'selected' : '' }}>
+                                                {{ $material->material_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="gst_id">Gst </label>
+                                    <select name="gst_id" id="gst_id" class="form-control select2">
+                                        <option value="">--Select Gst--</option>
+                                        @foreach ($gsts as $gst)
+                                            <option value="{{ $gst->id }}"
+                                                {{ $product->gst_id == $gst->id ? 'selected' : '' }}>
+                                                {{ $gst->gst_value }}%
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="" class="error" for="gst_id"></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="condition_id">Conditions </label>
+                                    <select name="condition_id" id="condition_id" class="form-control select2">
+                                        <option value="">--Select Condition--</option>
+                                        @foreach ($conditions as $condition)
+                                            <option value="{{ $condition->id }}"
+                                                {{ $condition->id == $product->condition_id ? 'selected' : '' }}>
+                                                {{ $condition->condition }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="warranty_id">Warranty</label>
+                                    <select name="warranty_id" id="warranty_id" class="form-control select2">
+                                        <option value="">--Select Warranty--</option>
+                                        @foreach ($warranties as $warranty)
+                                            <option value="{{ $warranty->id }}"
+                                                {{ $warranty->id == $product->warranty_id ? 'selected' : '' }}>
+                                                {{ $warranty->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="image_url">Change Front Image </label>
+                                    <input type="file" name="image_url" id="image_url" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="image_url1">Change Back Image </label>
+                                    <input type="file" name="image_url1" id="image_url1" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 2: Product Dimensions -->
+                    <div class="form-block">
+                        <h6 class="block-title">Product Dimensions</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="length">Length </label>
+                                    <input type="text" name="length" id="length" class="form-control"
+                                        value="{{ $product->length }}" placeholder="Enter length">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="width">Width </label>
+                                    <input type="text" name="width" id="width" class="form-control"
+                                        value="{{ $product->width }}" placeholder="Enter width">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="height">Height </label>
+                                    <input type="text" name="height" id="height" class="form-control"
+                                        value="{{ $product->height }}" placeholder="Enter height">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="dimension_unit">Length Unit </label>
+                                    <select name="dimension_unit" id="dimension_unit" class="form-control">
+                                        <option value="">--Select Unit--</option>
+                                        @foreach ($lengthUnits as $unit)
+                                            <option value="{{ $unit->id }}"
+                                                {{ $unit->id == $product->dimension_unit ? 'selected' : '' }}>
+                                                {{ $unit->unit }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="weight">Weight </label>
+                                    <input type="text" name="weight" id="weight" class="form-control"
+                                        value="{{ $product->weight }}" placeholder="Enter weight">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="weight_id">Unit </label>
+                                    <select name="weight_id" id="weight_id" class="form-control">
+                                        <option value="">--Select Unit--</option>
+                                        @foreach ($units as $unit)
+                                            <option value="{{ $unit->id }}"
+                                                {{ $unit->id == $product->weight_unit ? 'selected' : '' }}>
+                                                {{ $unit->unit }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block 3: Condition -->
+                    <div class="form-block">
+                        <h6 class="block-title">Condition</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="is_cod">Cod Available <span class="text-danger">*</span></label>
+                                    <select name="is_cod" id="is_cod" class="form-control" required>
+                                        <option value="">--Select Cod Availability--</option>
+                                        <option value="1" {{ $product->isCodAvailable == true ? 'selected' : '' }}>
+                                            Available
+                                        </option>
+                                        <option value="0" {{ $product->isCodAvailable == false ? 'selected' : '' }}>
+                                            Not
+                                            Available</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="review_status">Review Status <span class="text-danger">*</span></label>
+                                    <select name="review_status" id="review_status" class="form-control" required>
+                                        <option value="">-- Select --</option>
+                                        <option value="1" {{ $product->review_status == true ? 'selected' : '' }}>
+                                            Available
+                                        </option>
+                                        <option value="0" {{ $product->review_status == false ? 'selected' : '' }}>
+                                            Not
+                                            Available
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="status">Status <span class="text-danger">*</span></label>
+                                    <select name="status" id="status" class="form-control" required>
+                                        <option value="">--Select Status--</option>
+                                        <option value="1" {{ $product->status == true ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="0" {{ $product->status == false ? 'selected' : '' }}>Inactive
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="offer_id">Offer <span class="text-warning">( Select Any if want to
+                                            give offer
+                                            )</span></label>
+                                    <select name="offer_id" id="offer_id" class="form-control">
+                                        <option value="">--Select Offer--</option>
+                                        @foreach ($offers as $ofr)
+                                            <option value="{{ $ofr->id }}"
+                                                {{ $product->offer ? ($product->offer->mst_offer_id == $ofr->id ? 'selected' : '') : '' }}>
+                                                {{ $ofr->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 offer_div">
+                                <div class="form-group">
+                                    <label for="purchase_quantity">Purchase Quantity <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="purchase_quantity" id="purchase_quantity"
+                                        class="form-control"
+                                        value="{{ $product->offer ? ($product->offer->product_id == $product->id ? $product->offer->purchase_quantity : '') : '' }}"
+                                        placeholder="Enter Purchase Quantity">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 offer_div">
+                                <div class="form-group">
+                                    <label for="offered_quantity">Offered Quantity <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="offered_quantity" id="offered_quantity"
+                                        class="form-control"
+                                        value="{{ $product->offer ? ($product->offer->product_id == $product->id ? $product->offer->offered_quantity : '') : '' }}"
+                                        placeholder="Enter Offered Quantity">
+                                </div>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <label>Return Policy </label> <br>
+                                <div class="form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="within_days"
+                                            name="within_days" {{ $product->within_days == true ? 'checked' : '' }}
+                                            value="1">
+                                        <label class="custom-control-label" for="within_days">Within 7 Days</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                        <input type="checkbox" class="custom-control-input" id="non_returnable"
+                                            name="non_returnable" {{ $product->non_returnable == true ? 'checked' : '' }}
+                                            value="1">
+                                        <label class="custom-control-label text-danger fw-bold" for="non_returnable">Non
+                                            Returnable</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="category_id">Category <span class="text-danger">*</span></label>
-                                <select name="category_id" id="category_id" class="form-control" required>
-                                    <option value="">--Select Category--</option>
-                                    @foreach ($categories as $cate)
-                                        <option value="{{ $cate->id }}"
-                                            {{ $cate->id == $product->category_id ? 'selected' : '' }}>
-                                            {{ $cate->pcategory ? $cate->pcategory->name . ' > ' . $cate->name : $cate->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="title">Name <span class="text-danger">*</span></label>
-                                <input type="text" name="title" id="title" class="form-control"
-                                    value="{{ $product->title }}" placeholder="Enter Product Name" required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="brand_id">Brand <span class="text-danger">*</span></label>
-                                <select name="brand_id" id="brand_id" class="form-control" required>
-                                    <option value="">--Select Brand--</option>
-                                    @foreach ($brands as $brand)
-                                        <option value="{{ $brand->id }}"
-                                            {{ $brand->id == $product->brand_id ? 'selected' : '' }}>
-                                            {{ $brand->brand_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="material_id">Material </label>
-                                <select name="material_id" id="material_id" class="form-control">
-                                    <option value="">--Select Material--</option>
-                                    @foreach ($materials as $material)
-                                        <option value="{{ $material->id }}"
-                                            {{ $material->id == $product->material_id ? 'selected' : '' }}>
-                                            {{ $material->material_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="condition_id">Condition </label>
-                                <select name="condition_id" id="condition_id" class="form-control">
-                                    <option value="">--Select Condition--</option>
-                                    @foreach ($conditions as $condition)
-                                        <option value="{{ $condition->id }}"
-                                            {{ $condition->id == $product->condition_id ? 'selected' : '' }}>
-                                            {{ $condition->condition }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="warranty_id">Warranty</label>
-                                <select name="warranty_id" id="warranty_id" class="form-control">
-                                    <option value="">--Select Warranty--</option>
-                                    @foreach ($warranties as $warranty)
-                                        <option value="{{ $warranty->id }}"
-                                            {{ $warranty->id == $product->warranty_id ? 'selected' : '' }}>
-                                            {{ $warranty->title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="gst_id">Gst </label>
-                                <select name="gst_id" id="gst_id" class="form-control select2">
-                                    <option value="">--Select Gst--</option>
-                                    @foreach ($gsts as $gst)
-                                        <option value="{{ $gst->id }}"
-                                            {{ $product->gst_id == $gst->id ? 'selected' : '' }}>
-                                            {{ $gst->gst_value }}%
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <label id="" class="error" for="gst_id"></label>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="image_url">Change Front Image </label>
-                                <input type="file" name="image_url" id="image_url" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="image_url1">Change Back Image </label>
-                                <input type="file" name="image_url1" id="image_url1" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="upc">EAN/UPC </label>
-                                <input type="text" name="upc" id="upc" class="form-control"
-                                    value="{{ $product->upc }}" placeholder="Enter EAN/UPC">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="length">length </label>
-                                <input type="text" name="length" id="length" class="form-control"
-                                    value="{{ $product->length }}" placeholder="Enter length">
-                            </div>
-                        </div>
-
-                        {{--                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="breadth">breadth </label>
-                            <input type="text" name="breadth" id="breadth" class="form-control"
-                                value="{{ $product->breadth }}" placeholder="Enter breadth">
-                        </div>
-                    </div> --}}
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="height">height </label>
-                                <input type="text" name="height" id="height" class="form-control"
-                                    value="{{ $product->height }}" placeholder="Enter height">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="weight_id">Unit </label>
-                                <select name="weight_id" id="weight_id" class="form-control">
-                                    <option value="">--Select Unit--</option>
-                                    @foreach ($units as $unit)
-                                        <option value="{{ $unit->id }}"
-                                            {{ $unit->id == $product->weight_unit ? 'selected' : '' }}>{{ $unit->unit }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="width">Width </label>
-                                <input type="text" name="width" id="width" class="form-control"
-                                    value="{{ $product->width }}" placeholder="Enter width">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="dimension_unit">Length Unit </label>
-                                <select name="dimension_unit" id="dimension_unit" class="form-control">
-                                    <option value="">--Select Unit--</option>
-                                    @foreach ($lengthUnits as $unit)
-                                        <option value="{{ $unit->id }}"
-                                            {{ $unit->id == $product->dimension_unit ? 'selected' : '' }}>
-                                            {{ $unit->unit }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="weight">weight </label>
-                                <input type="text" name="weight" id="weight" class="form-control"
-                                    value="{{ $product->weight }}" placeholder="Enter weight">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="status">Status <span class="text-danger">*</span></label>
-                                <select name="status" id="status" class="form-control" required>
-                                    <option value="">--Select Status--</option>
-                                    <option value="1" {{ $product->status == true ? 'selected' : '' }}>Active
-                                    </option>
-                                    <option value="0" {{ $product->status == false ? 'selected' : '' }}>Inactive
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="is_cod">Cod Available <span class="text-danger">*</span></label>
-                                <select name="is_cod" id="is_cod" class="form-control" required>
-                                    <option value="">--Select Cod Availability--</option>
-                                    <option value="1" {{ $product->isCodAvailable == true ? 'selected' : '' }}>
-                                        Available
-                                    </option>
-                                    <option value="0" {{ $product->isCodAvailable == false ? 'selected' : '' }}>Not
-                                        Available</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="review_status">Review Status <span class="text-danger">*</span></label>
-                                <select name="review_status" id="review_status" class="form-control" required>
-                                    <option value="">-- Select --</option>
-                                    <option value="1" {{ $product->review_status == true ? 'selected' : '' }}>
-                                        Available
-                                    </option>
-                                    <option value="0" {{ $product->review_status == false ? 'selected' : '' }}>Not
-                                        Available
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="offer_id">Offer <span class="text-warning">( Select Any if want to give offer
-                                        )</span></label>
-                                <select name="offer_id" id="offer_id" class="form-control">
-                                    <option value="">--Select Offer--</option>
-                                    @foreach ($offers as $ofr)
-                                        <option value="{{ $ofr->id }}"
-                                            {{ $product->offer ? ($product->offer->mst_offer_id == $ofr->id ? 'selected' : '') : '' }}>
-                                            {{ $ofr->title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 offer_div">
-                            <div class="form-group">
-                                <label for="purchase_quantity">Purchase Quantity <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" name="purchase_quantity" id="purchase_quantity"
-                                    class="form-control"
-                                    value="{{ $product->offer ? ($product->offer->product_id == $product->id ? $product->offer->purchase_quantity : '') : '' }}"
-                                    placeholder="Enter Purchase Quantity">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 offer_div">
-                            <div class="form-group">
-                                <label for="offered_quantity">Offered Quantity <span class="text-danger">*</span></label>
-                                <input type="text" name="offered_quantity" id="offered_quantity" class="form-control"
-                                    value="{{ $product->offer ? ($product->offer->product_id == $product->id ? $product->offer->offered_quantity : '') : '' }}"
-                                    placeholder="Enter Offered Quantity">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-8 mb-3">
-                            <label>Return Policy </label> <br>
-                            <div class="form-check form-check-inline">
-                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="within_days"
-                                        name="within_days" {{ $product->within_days == true ? 'checked' : '' }}
-                                        value="1">
-                                    <label class="custom-control-label" for="within_days">Within 7 Days</label>
-                                </div>
-
-                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                    <input type="checkbox" class="custom-control-input" id="non_returnable"
-                                        name="non_returnable" {{ $product->non_returnable == true ? 'checked' : '' }}
-                                        value="1">
-                                    <label class="custom-control-label text-danger fw-bold" for="non_returnable">Non
-                                        Returnable</label>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="title">Description <span class="text-danger">*</span></label>
@@ -497,6 +489,7 @@
                                 <textarea name="sizecart" id="sizecart" rows="5" class="form-control summernote">{{ $product->sizecart }}</textarea>
                             </div>
                         </div>
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="keywords">Keywords </span><span class="text-danger">*</span> <span
@@ -1094,6 +1087,24 @@
                     form.submit();
                 }
             });
+
+            $("#offer_id").change(function() {
+                if ($(this).val() == "") {
+                    $(".offer_div").hide();
+                    $("#purchase_quantity").removeAttr('required');
+                    $("#offered_quantity").removeAttr('required');
+                } else {
+                    $(".offer_div").show();
+                    $("#purchase_quantity").attr('required', 'required');
+                    $("#offered_quantity").attr('required', 'required');
+                }
+            });
+
+            if ($("#offer_id").val() == "") {
+                $(".offer_div").hide();
+            } else {
+                $(".offer_div").show();
+            }
 
         });
 
