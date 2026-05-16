@@ -61,13 +61,18 @@
                         </div>
                         <div class="col-lg-6 col-xl-6 col-md-6 col-12 col-xs-12 pro-info">
                             <h4>{{ $product->title }}</h4>
+                            @if ($product->brand)
+                                <div class="pro-details">
+                                    <strong>Brand:</strong> {{ $product->brand->brand_name }}
+                                </div>
+                            @endif
                             @if ($product->category)
-                                <span class="pro-details">
+                                <div class="pro-details">
                                     <a href="{{ route('cate', [$product->category->slug_url]) }}"
                                         class="mb--10 text-black">
                                         <span>{{ $product->category->name }}</span>
                                     </a>
-                                </span>
+                                </div>
                             @endif
                             @if ($product->review_status)
                                 <div class="rating">
@@ -186,7 +191,7 @@
                                 {!! $product->sizecart !!}
                             </div>
 
-                            @if ($product->offer && $product->offer->purchase_quantity > 0 && $product->offer->offered_quantity > 0)
+                            {{-- @if ($product->offer && $product->offer->purchase_quantity > 0 && $product->offer->offered_quantity > 0)
                                 <div class="product-offer-notice mb-3">
                                     <div class="offer-box p-2"
                                         style="background-color: #fff9e6; border: 1px dashed #fcca2f; border-radius: 5px;">
@@ -197,7 +202,7 @@
                                         </p>
                                     </div>
                                 </div>
-                            @endif
+                            @endif --}}
 
                             <div class="product-color">
                                 <span class="color-label">Colors:</span>
@@ -255,7 +260,7 @@
 
                                 @if ($product->non_returnable)
                                     <div class="return-policy-notice mt-3">
-                                        <span class="text-danger fw-bold" style="font-size: 14px;">Non Returnable</span>
+                                        <span class="text-muted fw-bold" style="font-size: 14px;">Non Returnable</span>
                                     </div>
                                 @elseif($product->within_days)
                                     <div class="return-policy-notice mt-3">
@@ -307,8 +312,8 @@
                         }
 
                         /* .specification{
-                                                                                                                                                                display: flex;
-                                                                                                                                                            } */
+                                                                                                                                                                    display: flex;
+                                                                                                                                                                } */
                     </style>
 
                     <style>
@@ -381,22 +386,22 @@
                         }
 
                         /* .read-more-btn{
-                                                                                                                                                                position: relative;
-                                                                                                                                                                font-size:18px;
-                                                                                                                                                                cursor: pointer;
-                                                                                                                                                            } */
+                                                                                                                                                                    position: relative;
+                                                                                                                                                                    font-size:18px;
+                                                                                                                                                                    cursor: pointer;
+                                                                                                                                                                } */
                         /* .read-more-btn:before{
-                                                                                                                                                                position: absolute;
-                                                                                                                                                                content:"";
-                                                                                                                                                                width: 100%;
-                                                                                                                                                                height: 30px;
-                                                                                                                                                                background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
-                                                                                                                                                                left: 0;
-                                                                                                                                                                top: -30px;
-                                                                                                                                                            } */
+                                                                                                                                                                    position: absolute;
+                                                                                                                                                                    content:"";
+                                                                                                                                                                    width: 100%;
+                                                                                                                                                                    height: 30px;
+                                                                                                                                                                    background: linear-gradient(0deg, rgba(255,0,0,0.5) 0%, rgba(0,0,0,0) 80%);
+                                                                                                                                                                    left: 0;
+                                                                                                                                                                    top: -30px;
+                                                                                                                                                                } */
                         /* .tech-spec, .pack-detl, .certification{
-                                                                                                                                                                display: none;
-                                                                                                                                                            } */
+                                                                                                                                                                    display: none;
+                                                                                                                                                                } */
                         @media screen and (max-width: 768px) {
                             .specification {
                                 display: block;
@@ -455,7 +460,9 @@
                                 @php
                                     $specs = [
                                         'Brand' => $product->brand ? $product->brand->brand_name : null,
-                                        'EAN/UPC' => $product->upc,
+                                        'Material' => $product->material ? $product->material->material_name : null,
+                                        'Condition' => $product->condition ? $product->condition->condition : null,
+                                        'Warranty' => $product->warranty ? $product->warranty->title : null,
                                         'Length' => $product->length
                                             ? $product->length .
                                                 ' ' .
@@ -471,18 +478,16 @@
                                                 ' ' .
                                                 ($product->dim_unit ? $product->dim_unit->unit : '')
                                             : null,
-                                        'Condition' => $product->condition ? $product->condition->condition : null,
-                                        'Material' => $product->material ? $product->material->material_name : null,
-                                        'Warranty' => $product->warranty ? $product->warranty->title : null,
                                         'Weight' => $product->weight
                                             ? $product->weight . ' ' . ($product->unit ? $product->unit->unit : '')
                                             : null,
+                                        'EAN/UPC' => $product->upc,
                                     ];
                                 @endphp
 
                                 @foreach ($specs as $label => $value)
                                     @if ($value && $value != '0' && $value != '-')
-                                        <li class="col-md-4 p-2">
+                                        <li class="col-lg-3 col-md-4 col-sm-6 p-2">
                                             <div class="spec-box">
                                                 <strong class="spec-label">{{ $label }}</strong>
                                                 <span class="spec-value">{{ $value }}</span>
@@ -494,7 +499,7 @@
                                 {{-- Custom Fields --}}
                                 @if (isset($product->custom_fields) && count($product->custom_fields) > 0)
                                     @foreach ($product->custom_fields as $field)
-                                        <li class="col-md-4 p-2">
+                                        <li class="col-lg-3 col-md-4 col-sm-6 p-2">
                                             <div class="spec-box">
                                                 <strong class="spec-label">{{ $field->field_name }}</strong>
                                                 <span class="spec-value">{{ $field->field_value }}</span>

@@ -1,59 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ranayas - E-commerce Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ranayas is a robust, full-featured e-commerce platform built with Laravel. It features a modern frontend for customers, a comprehensive admin dashboard for management, and a dedicated user panel for order tracking and profile management.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🛒 Customer Frontend
+- **Product Discovery**: Dynamic product listing with category and price filters.
+- **Search**: Fast and relevant search functionality.
+- **Shopping Cart**: Easy add-to-cart, update, and remove items using `darryldecode/cart`.
+- **Wishlist**: Save favorite products for later.
+- **Checkout**: Streamlined checkout process with address management and pincode verification.
+- **Responsive Design**: Fully optimized for mobile and desktop views.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👤 User Panel
+- **Dashboard**: Overview of recent activity and orders.
+- **Order Tracking**: Real-time status updates and tracking for all orders.
+- **Profile Management**: Update personal information and change passwords.
+- **Address Book**: Manage multiple shipping and billing addresses.
+- **Invoices**: View and download PDF invoices for all purchases.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🛠️ Admin Dashboard
+- **Product Management**: Comprehensive control over products, categories, brands, colors, and sizes.
+- **Order Management**: Process orders, update statuses, assign shipments, and generate labels.
+- **User Management**: Manage registered customers and system administrators.
+- **Content Management**: Update homepage sliders, FAQs, About page, and policies.
+- **Offer Management**: Create coupons, manage product discounts, and home offer sliders.
+- **Reports & Analytics**: Generate and export detailed reports in Excel and PDF formats.
+- **Customer Support**: Manage enquiries and support tickets.
 
-## Learning Laravel
+### 🔐 Security & Authentication
+- **Multi-Auth**: Separate authentication guards for Users, Admins, and Shops.
+- **Social Login**: Seamless Google OAuth integration via Laravel Socialite.
+- **OTP Verification**: Enhanced security for login and password resets.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🗄️ Database Schema
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The project uses a structured MySQL database. Key table groups include:
 
-## Laravel Sponsors
+### 👤 Core Entities
+- `admins`: System administrators.
+- `txn_users`: Registered customers.
+- `shops`: Vendor/Shop information.
+- `addresses`: User-managed shipping and billing addresses.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 📦 Product Catalog
+- `txn_products`: Central product data (names, slugs, descriptions, specs).
+- `txn_categories`: Hierarchical category structure.
+- `txn_brands`: Brand management.
+- `mst_colors` & `mst_sizes`: Master lists for product variations.
+- `map_color_sizes`: Mapping of product variations to inventory and status.
+- `txn_images`: Multi-image support for products.
 
-### Premium Partners
+### 💳 Order Management
+- `txn_orders`: Order headers (totals, status, payment info, tracking).
+- `txn_order_details`: Line items for each order.
+- `transactions`: Payment transaction logs.
+- `bulk_orders`: Special handling for wholesale or bulk enquiries.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 📣 Marketing & Content
+- `sliders` & `home_offer_sliders`: Homepage promotional banners.
+- `mst_offers`: Coupon and discount rules.
+- `map_offer_products`: Linking offers to specific products.
+- `subscribers`: Email newsletter subscriptions.
 
-## Contributing
+### 💬 Customer Interaction
+- `txn_reviews`: Product ratings and feedback.
+- `tickets` & `returntickets`: Support and return/refund request tracking.
+- `wishlists`: Customer saved items.
+- `faqs` & `product_faqs`: General and product-specific frequently asked questions.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 💻 Tech Stack
+- **Framework**: Laravel 12.x
+- **Language**: PHP 8.2+
+- **Database**: MySQL
+- **Frontend**: Blade Templates, JavaScript (Vanilla), CSS (Vanilla/Bootstrap)
+- **Email**: PHPMailer & Brevo API
+- **Notifications**: Laravel Notify
+- **Integrations**: Google OAuth, SMS API, Paytm Payment Callback
 
-## Code of Conduct
+## 🛠️ Installation & Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Follow these steps to set up the project locally:
 
-## Security Vulnerabilities
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd ranayas
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **Install PHP dependencies**:
+   ```bash
+   composer install
+   ```
 
-## License
+3. **Install Frontend dependencies**:
+   ```bash
+   npm install
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. **Environment Configuration**:
+   Copy `.env.example` to `.env` and configure your database and other services.
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Database Setup**:
+   Run migrations and seeders (if available).
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Build Frontend Assets**:
+   ```bash
+   npm run dev
+   # or for production
+   npm run build
+   ```
+
+7. **Run the Application**:
+   ```bash
+   php artisan serve
+   ```
+
+## 📂 Directory Structure Highlights
+- `app/Http/Controllers`: Contains logic for Admin, User, Shop, and Frontend.
+- `resources/views`: Blade templates organized by panel (admin, frontend, layouts).
+- `routes/web.php`: Defines all application routes and multi-auth groups.
+- `app/Models`: Database models and relationships.
+
+## 📄 License
+This project is proprietary and all rights are reserved.

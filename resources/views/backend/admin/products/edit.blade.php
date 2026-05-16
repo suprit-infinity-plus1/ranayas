@@ -294,6 +294,29 @@
                                     <input type="file" name="image_url1" id="image_url1" class="form-control">
                                 </div>
                             </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="weight">Weight </label>
+                                    <input type="text" name="weight" id="weight" class="form-control"
+                                        value="{{ $product->weight }}" placeholder="Enter weight">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="weight_id">Unit </label>
+                                    <select name="weight_id" id="weight_id" class="form-control">
+                                        <option value="">--Select Unit--</option>
+                                        @foreach ($units as $unit)
+                                            <option value="{{ $unit->id }}"
+                                                {{ $unit->id == $product->weight_unit ? 'selected' : '' }}>
+                                                {{ $unit->unit }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -327,7 +350,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="dimension_unit">Length Unit </label>
+                                    <label for="dimension_unit">Unit </label>
                                     <select name="dimension_unit" id="dimension_unit" class="form-control">
                                         <option value="">--Select Unit--</option>
                                         @foreach ($lengthUnits as $unit)
@@ -340,28 +363,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="weight">Weight </label>
-                                    <input type="text" name="weight" id="weight" class="form-control"
-                                        value="{{ $product->weight }}" placeholder="Enter weight">
-                                </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="weight_id">Unit </label>
-                                    <select name="weight_id" id="weight_id" class="form-control">
-                                        <option value="">--Select Unit--</option>
-                                        @foreach ($units as $unit)
-                                            <option value="{{ $unit->id }}"
-                                                {{ $unit->id == $product->weight_unit ? 'selected' : '' }}>
-                                                {{ $unit->unit }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -413,7 +415,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="offer_id">Offer <span class="text-warning">( Select Any if want to
                                             give offer
@@ -450,7 +452,7 @@
                                         value="{{ $product->offer ? ($product->offer->product_id == $product->id ? $product->offer->offered_quantity : '') : '' }}"
                                         placeholder="Enter Offered Quantity">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-8 mb-3">
                                 <label>Return Policy </label> <br>
@@ -831,13 +833,8 @@
         $(document).ready(function() {
 
 
-            var offer_id = $('#offer_id').val();
-            if (offer_id.length > 0) {
-                $('.offer_div').show();
-            } else {
 
-                $('.offer_div').hide();
-            }
+
 
             $(".delete-object").click(function() {
                 if (window.confirm("Are you sure to delete this Custom Field ?")) {
@@ -900,15 +897,8 @@
 
             });
 
-            $("#offer_id").change(function() {
-                var offer_id = $(this).val();
-                if (offer_id.length > 0) {
-                    $('.offer_div').show();
-                } else {
 
-                    $('.offer_div').hide();
-                }
-            });
+
 
             $("#formupdateProduct").validate({
                 rules: {
@@ -939,12 +929,12 @@
                     keywords: {
                         required: true
                     },
-                    purchase_quantity: {
+                    /* purchase_quantity: {
                         required: true
                     },
                     offered_quantity: {
                         required: true
-                    },
+                    }, */
 
                 },
                 messages: {
@@ -975,12 +965,12 @@
                     keywords: {
                         required: "Please Enter Keywords of Product"
                     },
-                    purchase_quantity: {
+                    /* purchase_quantity: {
                         required: "Please Enter Purchase Quantity"
                     },
                     offered_quantity: {
                         required: "Please Enter Offered Quantity"
-                    },
+                    }, */
 
                 },
                 submitHandler: function(form) {
@@ -1088,23 +1078,8 @@
                 }
             });
 
-            $("#offer_id").change(function() {
-                if ($(this).val() == "") {
-                    $(".offer_div").hide();
-                    $("#purchase_quantity").removeAttr('required');
-                    $("#offered_quantity").removeAttr('required');
-                } else {
-                    $(".offer_div").show();
-                    $("#purchase_quantity").attr('required', 'required');
-                    $("#offered_quantity").attr('required', 'required');
-                }
-            });
 
-            if ($("#offer_id").val() == "") {
-                $(".offer_div").hide();
-            } else {
-                $(".offer_div").show();
-            }
+
 
         });
 

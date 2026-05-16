@@ -270,6 +270,29 @@
                                             placeholder="Enter Sort Index" required>
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="weight">Weight </label>
+                                        <input type="text" name="weight" id="weight" class="form-control"
+                                            value="{{ old('weight') }}" placeholder="Enter weight">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="weight_id">Unit </label>
+                                        <select name="weight_id" id="weight_id" class="form-control select2">
+                                            <option value="">--Select Unit--</option>
+                                            @foreach ($units as $unit)
+                                                <option value="{{ $unit->id }}"
+                                                    {{ old('weight_id') == $unit->id ? 'selected' : '' }}>
+                                                    {{ $unit->unit }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label id="" class="error" for="weight_id"></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -303,7 +326,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="dimension_unit">Length Unit </label>
+                                        <label for="dimension_unit">Unit </label>
                                         <select name="dimension_unit" id="dimension_unit" class="form-control">
                                             <option value="">--Select Unit--</option>
                                             @foreach ($lengthUnits as $unit)
@@ -315,28 +338,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="weight">Weight </label>
-                                        <input type="text" name="weight" id="weight" class="form-control"
-                                            value="{{ old('weight') }}" placeholder="Enter weight">
-                                    </div>
-                                </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="weight_id">Unit </label>
-                                        <select name="weight_id" id="weight_id" class="form-control select2">
-                                            <option value="">--Select Unit--</option>
-                                            @foreach ($units as $unit)
-                                                <option value="{{ $unit->id }}"
-                                                    {{ old('weight_id') == $unit->id ? 'selected' : '' }}>
-                                                    {{ $unit->unit }}</option>
-                                            @endforeach
-                                        </select>
-                                        <label id="" class="error" for="weight_id"></label>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -388,7 +390,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="offer_id">Offer <span class="text-warning">( Select Any if want to
                                                 give offer )</span></label>
@@ -422,7 +424,7 @@
                                             class="form-control" value="{{ old('offered_quantity') }}"
                                             placeholder="Enter Offered Quantity">
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-8 mb-3">
                                     <label>Return Policy </label> <br>
@@ -679,7 +681,7 @@
                 }
             });
 
-            $(".offer_div").hide();
+            /* $(".offer_div").hide();
             $("#offer_id").change(function() {
                 if ($(this).val() == "") {
                     $(".offer_div").hide();
@@ -690,7 +692,7 @@
                     $("#purchase_quantity").attr('required', 'required');
                     $("#offered_quantity").attr('required', 'required');
                 }
-            });
+            }); */
 
         });
 

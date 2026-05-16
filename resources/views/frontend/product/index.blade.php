@@ -104,12 +104,12 @@
                                         value="10001_plus">
                                     <label for="price_10001">10001 & more</label>
                                 </li> --}}
-                                {{-- <p>
-                                    <input type="text" id="amount" name="amount"
-                                        style="border:0; color:#ed1f21; font-weight:bold;" />
-                                </p>
+                                <div class="input-group mb-3 mt-3 price-filter-group">
+                                    <input type="text" id="amount" name="amount" class="form-control" />
+                                    <button class="btn price-filter-btn" type="submit">Filter</button>
+                                </div>
 
-                                <div id="slider-range"></div> --}}
+                                <div id="slider-range"></div>
                             </ul>
                         </div>
                     </form>
@@ -230,7 +230,7 @@
     $(document).ready(function() {
 
         $('.filter').click(function(){
-            filter();
+            submitFilterForm();
         });
 
         var old_category = {!! json_encode($input->category) !!};
@@ -264,7 +264,7 @@
                     max = ui.values[1];
 
                 $("#amount").val('₹' + min + " - ₹" + max);
-                filter();
+                // filter();
             }
         }, min, max;
 
@@ -276,7 +276,7 @@
         $("#amount").val('₹' + min + " - ₹" + max);
     });
 
-    function filter() {
+    function submitFilterForm() {
         $('#searchForm').submit();
     }
 </script>

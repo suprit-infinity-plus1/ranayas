@@ -257,7 +257,11 @@ class MainController extends Controller
         if ($request->filled('amount')) {
             $replaced_amt = str_replace('₹', '', $request->amount);
             $explode_amt = explode('-', $replaced_amt);
-            $products = $products->whereBetween('map.mrp', $explode_amt);
+            if (count($explode_amt) == 2) {
+                $products = $products->whereBetween('map.mrp', [trim($explode_amt[0]), trim($explode_amt[1])]);
+            } elseif (count($explode_amt) == 1) {
+                $products = $products->where('map.mrp', '<=', trim($explode_amt[0]));
+            }
         }
 
         $products = $products->orderBy('p.id', 'DESC')->groupBy("p.id")->paginate(50);
@@ -404,14 +408,24 @@ class MainController extends Controller
             }
 
             if ($request->filled('amount')) {
-                // dd('i m here');
                 $replaced_amt = str_replace('₹', '', $request->amount);
                 $explode_amt = explode('-', $replaced_amt);
-                $products = $products->whereBetween('map.mrp', $explode_amt);
+
+                if (count($explode_amt) == 2) {
+                    $products = $products->whereBetween('map.mrp', [trim($explode_amt[0]), trim($explode_amt[1])]);
+                } elseif (count($explode_amt) == 1) {
+                    $products = $products->where('map.mrp', '<=', trim($explode_amt[0]));
+                }
             }
 
+            $max_price = DB::table('map_color_sizes as map')
+                ->join('txn_products as p', 'p.id', '=', 'map.product_id')
+                ->whereIn('p.category_id', $cateLists)
+                ->where('p.status', true)
+                ->max('map.mrp') ?? 5000;
+
             $products = $products->orderBy('p.id', 'DESC')->groupBy("p.id")->paginate(50);
-            return view('frontend.newproduct.category', compact('products', 'category', 'categories', 'colors', 'sizes'))->with('input', $request);
+            return view('frontend.newproduct.category', compact('products', 'category', 'categories', 'colors', 'sizes', 'max_price'))->with('input', $request);
         } catch (\Exception $ex) {
             if ($ex instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
 

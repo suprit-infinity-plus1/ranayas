@@ -185,7 +185,8 @@
                                 <li><a class="nav-link" href="{{ route('admin.colors.all') }}">Colors</a></li>
                                 <li><a class="nav-link" href="{{ route('admin.materials.all') }}">Materials</a></li>
                                 <li><a class="nav-link" href="{{ route('admin.units.all') }}">Units</a></li>
-                                <li><a class="nav-link" href="{{ route('admin.length_units.all') }}">Length Units</a></li>
+                                <li><a class="nav-link" href="{{ route('admin.length_units.all') }}">Length Units</a>
+                                </li>
                                 <li><a class="nav-link" href="{{ route('admin.conditions.all') }}">Conditions</a>
                                 </li>
                                 <li><a class="nav-link" href="{{ route('admin.gsts.all') }}">GST</a></li>

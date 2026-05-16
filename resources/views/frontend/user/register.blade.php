@@ -1,4 +1,4 @@
-@extends('layouts.master') @section('title','Register') @section('content')
+@extends('layouts.master') @section('title', 'Register') @section('content')
 
 
 <div class="signUp-page signUp-minimal">
@@ -6,7 +6,8 @@
         <div class="title-area text-center">
             <h3>Sign Up</h3>
         </div>
-        <form id="login-form" action="{{ route('user.register') }}" method="POST" autocomplete="off" class="register needs-validation">
+        <form id="login-form" action="{{ route('user.register') }}" method="POST" autocomplete="off"
+            class="register needs-validation">
             @csrf
             <div class="row">
                 <div class="col-12">
@@ -20,7 +21,8 @@
                 <!-- /.col- -->
                 <div class="col-12">
                     <div class="input-group mb-0">
-                        <input type="number" name="mobile" id="mobile" value="{{ old('mobile') }}" minlength="10" maxlength="10" min="0000000000" required />
+                        <input type="number" name="mobile" id="mobile" value="{{ old('mobile') }}" minlength="10"
+                            maxlength="10" min="0000000000" required />
                         <label>Mobile Number <span style="color:red">*</span></label>
                     </div>
                     <label for="mobile" class="error"></label>
@@ -64,12 +66,14 @@
         </p>
         <p class="or-text"><span>or</span></p>
         <ul class="social-icon-wrapper row">
-            <li class="col-12"><a href="{{ route('user.login.otp') }}" class="otp"><i class="fa fa-key" aria-hidden="true"></i>
+            <li class="col-12"><a href="{{ route('user.login.otp') }}" class="otp"><i class="fa fa-key"
+                        aria-hidden="true"></i>
                     Login With OTP</a></li>
-            {{-- <li class="col-12">
-                <a href="{{ route('user.auth.socialite', 'google') }}" class="gmail"><i class="fa fa-envelope-o" aria-hidden="true"></i>
-                    Gmail</a>
-            </li> --}}
+            <li class="col-12">
+                <a href="{{ route('user.auth.socialite', 'google') }}" class="gmail"><i class="fa fa-google"
+                        aria-hidden="true"></i>
+                    Google</a>
+            </li>
             {{-- <li class="col-12">
                 <a href="{{ route('user.auth.socialite', 'facebook') }}" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i>
             Facebook</a>
@@ -141,7 +145,7 @@
     });
 </script>
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         $('.show-password').on('click', function() {
             var passwordInput = $(this).prev('input');
             var icon = $(this).find('i');

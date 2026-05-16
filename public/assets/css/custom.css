@@ -8,6 +8,35 @@ span.p-discount {
     background-color: #fcca2f !important;
 }
 
+/* Price Filter Styling */
+.price-filter-group {
+    border: 1px solid #ced4da !important;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.price-filter-group #amount {
+    border: none !important;
+    color: #000 !important;
+    font-weight: 600;
+}
+
+.price-filter-btn {
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    color: #000 !important;
+    border: none !important;
+    border-left: 1px solid #ced4da !important;
+    font-weight: 600;
+    padding: 5px 15px !important;
+    transition: all 0.3s ease;
+}
+
+.price-filter-btn:hover {
+    background-color: var(--theme-color) !important;
+    color: #fff !important;
+}
+
 .btn-close,
 .modal-header .close,
 .search-model .close,

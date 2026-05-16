@@ -1,4 +1,4 @@
-@extends('layouts.master') @section('title','Login') @section('content')
+@extends('layouts.master') @section('title', 'Login') @section('content')
 
 
 <div class="signUp-page signUp-minimal">
@@ -30,7 +30,8 @@
             <!-- /.row -->
             <div class="agreement-checkbox d-flex justify-content-between align-items-center">
                 <div>
-                    <input type="checkbox" name="remember" {{ old("remember") ? "checked" : "" }} checked id="remember">
+                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} checked
+                        id="remember">
                     <label for="remember">Remember Me</label>
                 </div>
                 <a href="{{ route('user.password.request') }}">Forget Password?</a>
@@ -48,11 +49,11 @@
             <li class="col-12"><a href="{{ route('user.login.otp') }}" class="otp"><i class="fa fa-key"
                         aria-hidden="true"></i>
                     Login With OTP</a></li>
-            {{-- <li class="col-12">
-                <a href="{{ route('user.auth.socialite', 'google') }}" class="gmail"><i class="fa fa-envelope-o"
+            <li class="col-12">
+                <a href="{{ route('user.auth.socialite', 'google') }}" class="gmail"><i class="fa fa-google"
                         aria-hidden="true"></i>
-                    Gmail</a>
-            </li> --}}
+                    Google</a>
+            </li>
             {{-- <li class="col-12">
                 <a href="{{ route('user.auth.socialite', 'facebook') }}" class="facebook"><i class="fa fa-facebook"
                         aria-hidden="true"></i>

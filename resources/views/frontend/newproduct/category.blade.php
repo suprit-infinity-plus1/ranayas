@@ -86,13 +86,12 @@
                                     </span><i class="fa fa-angle-down"></i></a>
                                 <ul class="all-price collapse" id="price-filter">
 
-                                    {{-- price start here --}}
-                                    <p>
-                                        <input type="text" id="amount" name="amount"
-                                            style="border:0; color:#ed1f21; font-weight:bold;" />
-                                    </p>
+                                    <div class="price-range-display mb-3 mt-3">
+                                        <span id="price-range-label" style="font-weight: 600; color: #333;">Price: ₹0 - ₹{{ $max_price }}</span>
+                                        <input type="hidden" id="amount" name="amount" />
+                                    </div>
 
-                                    <div id="slider-range"></div>
+                                    <div id="slider-range" class="mb-4"></div>
                                 </ul>
                             </div>
                         </form>
@@ -216,68 +215,125 @@
 
 @endsection
 @section('extracss')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <style>
+        #slider-range {
+            height: 6px !important;
+            background: #e9ecef !important;
+            border: none !important;
+            border-radius: 10px !important;
+            margin: 25px 10px 15px 10px !important;
+            position: relative;
+        }
+
+        #slider-range .ui-slider-range {
+            background: #670cb1 !important;
+            border: none !important;
+        }
+
+        #slider-range .ui-slider-handle {
+            width: 22px !important;
+            height: 22px !important;
+            background: #fff !important;
+            border: 3px solid #670cb1 !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            top: -9px !important;
+            outline: none !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+            z-index: 2;
+        }
+
+        #slider-range .ui-slider-handle:hover {
+            background: #670cb1 !important;
+        }
+
+        #price-range-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
 @endsection
 @section('extrajs')
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function() {
-
+            console.log("Slider script initializing...");
+            
             $('.filter').click(function() {
-                filter();
+                submitFilterForm();
             });
 
-            var old_category = {
-                !!json_encode($input - > category) !!
-            };
+            var old_category = {!! json_encode($input->category) !!};
             if (old_category && typeof old_category == "object") {
                 for (x of old_category) {
                     $(".cb_category[value=" + x + "]").attr("checked", "checked");
                 }
             }
 
-            var old_colors = {
-                !!json_encode($input - > colors) !!
-            };
+            var old_colors = {!! json_encode($input->colors) !!};
             if (old_colors && typeof old_colors == "object") {
                 for (x of old_colors) {
                     $(".cb_colors[value=" + x + "]").attr("checked", "checked");
                 }
             }
 
-            var old_sizes = {
-                !!json_encode($input - > sizes) !!
-            };
+            var old_sizes = {!! json_encode($input->sizes) !!};
             if (old_sizes && typeof old_sizes == "object") {
                 for (x of old_sizes) {
                     $(".cb_sizes[value=" + x + "]").attr("checked", "checked");
                 }
             }
 
-            var options = {
+            // Wait a bit to ensure jQuery UI is fully ready
+            setTimeout(function() {
+                if (typeof $.fn.slider === 'undefined') {
+                    console.error("jQuery UI Slider is not loaded!");
+                    return;
+                }
+                
+                var max_price = {{ $max_price ?? 5000 }};
+                var current_min = 0;
+                var current_max = max_price;
+
+                // Parse existing amount if present
+                var amount_val = "{{ $input->amount ?? '' }}";
+                if (amount_val) {
+                    var cleaned_amt = amount_val.replace(/₹/g, '');
+                    var parts = cleaned_amt.split('-');
+                    if (parts.length === 2) {
+                        current_min = parseInt(parts[0].trim());
+                        current_max = parseInt(parts[1].trim());
+                    }
+                }
+
+                console.log("Initializing slider with max:", max_price, "values:", [current_min, current_max]);
+
+                $("#slider-range").slider({
                     range: true,
                     min: 0,
-                    max: 2000,
-                    values: [0, 500],
+                    max: max_price,
+                    values: [current_min, current_max],
                     slide: function(event, ui) {
-                        var min = ui.values[0],
-                            max = ui.values[1];
-
-                        $("#amount").val('₹' + min + " - ₹" + max);
-                        filter();
+                        $("#amount").val('₹' + ui.values[0] + " - ₹" + ui.values[1]);
+                        $("#price-range-label").text('Price: ₹' + ui.values[0] + " - ₹" + ui.values[1]);
+                    },
+                    stop: function(event, ui) {
+                        submitFilterForm();
                     }
-                },
-                min, max;
+                });
 
-            $("#slider-range").slider(options);
-
-            min = $("#slider-range").slider("values", 0);
-            max = $("#slider-range").slider("values", 1);
-
-            $("#amount").val('₹' + min + " - ₹" + max);
+                $("#amount").val('₹' + $("#slider-range").slider("values", 0) + " - ₹" + $("#slider-range").slider("values", 1));
+                $("#price-range-label").text('Price: ₹' + $("#slider-range").slider("values", 0) + " - ₹" + $("#slider-range").slider("values", 1));
+                
+                console.log("Slider initialized successfully.");
+            }, 500);
         });
 
-        function filter() {
+        function submitFilterForm() {
             $('#searchForm').submit();
         }
     </script>
